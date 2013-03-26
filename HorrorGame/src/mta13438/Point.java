@@ -1,6 +1,5 @@
 package mta13438;
 
-public class Obs {
+public class Point {
 	
-
 }

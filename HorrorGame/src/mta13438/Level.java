@@ -1,6 +1,7 @@
 package mta13438;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Level {
@@ -25,7 +26,7 @@ public class Level {
 	}
 
 	public List<Room> getRoomList() {
-		return roomList;
+		return Collections.unmodifiableList(roomList);
 	}
 	public void setRoomList(List<Room> roomList) {
 		this.roomList.clear();
@@ -58,6 +59,4 @@ public class Level {
 				+ height + ", length=" + length + "]";
 	}
 	
-	
-
 }

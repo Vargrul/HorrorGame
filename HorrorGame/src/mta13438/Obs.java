@@ -92,8 +92,4 @@ public class Obs {
 		if (getSabins() > obs.getSabins()) return 1;
 		return -1;
 	}*/
-	
-	public void collide(){
-		// collide?
-	}
 }

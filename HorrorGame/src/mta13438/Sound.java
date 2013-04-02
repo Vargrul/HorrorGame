@@ -48,18 +48,18 @@ public class Sound {
 		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    1.0f          );
 		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     1.0f          );
-		AL10.alSource (source.get(0), AL10.AL_POSITION, sourcePos     );
+		AL10.alSource3f (source.get(0), AL10.AL_POSITION, point.getX(), point.getY(), point.getZ());
 		AL10.alSource (source.get(0), AL10.AL_VELOCITY, sourceVel     );
 		
 		//Setup setListenerValues
-		setListenerValues(); // Need 3 FloatBuffers as input
+		setListenerValues(); // Need 3 Points as input
 		
 	}// need killALData() and AL.destroy() before program close
 	
-	public void setListenerValues(FloatBuffer Position, FloatBuffer Velocity, FloatBuffer Orientation){
-		AL10.alListener(AL10.AL_POSITION,    Position);
-		AL10.alListener(AL10.AL_VELOCITY,    Velocity);
-		AL10.alListener(AL10.AL_ORIENTATION, Orientation);
+	public void setListenerValues(Point Position, Point Velocity, Point Orientation){
+		AL10.alListener3f(AL10.AL_POSITION,    Position.getX(), Position.getY(), Position.getZ());
+		AL10.alListener3f(AL10.AL_VELOCITY,    Velocity.getX(), Velocity.getY(), Velocity.getZ());
+		AL10.alListener3f(AL10.AL_ORIENTATION, Orientation.getX(), Orientation.getY(), Orientation.getZ());
 	}
 	public void reverb(){
 		//Do reverb effect

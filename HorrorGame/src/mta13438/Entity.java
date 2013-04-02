@@ -7,7 +7,7 @@ public class Entity {
 	private float angle;
 	
 	public Entity() {
-		setPos(0);
+		setPos(null);
 		setSpeed(1);
 		setAngle(0);
 	}
@@ -23,6 +23,11 @@ public class Entity {
 	}
 	public void setPos(Point pos) {
 		this.pos = pos;
+	}
+	public void setPos(float x, float y, float z) {
+		this.pos.setX(x);
+		this.pos.setY(y);
+		this.pos.setZ(z);
 	}
 	public float getSpeed() {
 		return speed;
@@ -55,9 +60,12 @@ public class Entity {
 		setAngle(getAngle()+(float)0.1);
 	}
 	
-	public void walk() {
-		Point.X += getSpeed() * Math.cos(getAngle());
-		Point.Y += getSpeed() * Math.sin(getAngle());
+	public void foward() {
+		setPos( + (float)(getSpeed() * Math.cos(getAngle())), + (float)(getSpeed() * Math.sin(getAngle())), 0);
+	}
+	
+	public void backward() {
+		setPos( - (float)(getSpeed() * Math.cos(getAngle())), - (float)(getSpeed() * Math.sin(getAngle())), 0);
 	}
 	
 	public void walkSound() {

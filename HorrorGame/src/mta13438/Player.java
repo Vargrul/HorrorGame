@@ -8,7 +8,7 @@ public class Player extends Entity {
 		super();
 		setHealth(0);
 	}
-	public Player(Point pos, float speed, float angle, int health) {
+	public Player(Point pos, float speed, float orientation, int health) {
 		super();
 		setHealth(health);
 	}	
@@ -22,7 +22,7 @@ public class Player extends Entity {
 	
 	@Override
 	public String toString() {
-		return "Player [health=" + getHealth() + "speed=" + super.getSpeed() + ", angle=" + super.getAngle() + "]";
+		return "Player [health=" + getHealth() + "speed=" + super.getSpeed() + ", orientation=" + super.getOrientation() + "]";
 	}
 	
 }

@@ -2,7 +2,9 @@ package mta13438;
 
 public class Room {
 
-	float width, length, height, entrance, exit, sabins;
+	float width, length, height, sabins;
+	Point entrance;
+	Point exit;
 	// Points for entrance and exit
 	// Need something to indicate what walls are made of.
 	// Maybe something to indicate what the floor is made of.
@@ -14,7 +16,7 @@ public class Room {
 		// a no args constructor.
 	}
 	
-	public Room(float width, float length, float height, float entrance, float exit){
+	public Room(float width, float length, float height, Point entrance, Point exit){
 		this.width = width;
 		this.length = length;
 		this.height = height;
@@ -31,14 +33,17 @@ public class Room {
 	public float getLength(){
 		return length;
 	}
-	public float getEntrance(){
+	public Point getEntrance(){
 		return entrance;
 	}
-	public float getExit(){
+	public Point getExit(){
 		return exit;
 	}
 	public float getSabins(){
 		return sabins;
+	}
+	public float getRoomSize(){
+		return height*length;
 	}
 	
 	public void setWidth(float width){
@@ -50,10 +55,10 @@ public class Room {
 	public void setLength(float length){
 		this.length = length;
 	}
-	public void setEntrance(float entrance){
+	public void setEntrance(Point entrance){
 		this.entrance = entrance;
 	}
-	public void setExit(float exit){
+	public void setExit(Point exit){
 		this.exit = exit;
 	}
 	public void setSabins(float sabins){

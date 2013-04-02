@@ -26,12 +26,12 @@ public class Sound {
 	IntBuffer buffer = BufferUtils.createIntBuffer(1);
 	IntBuffer source = BufferUtils.createIntBuffer(1);
 	
-	FloatBuffer sourcePos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+	FloatBuffer sourcePos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { point.getX(), point.getY(), point.getZ() }).rewind();
 	FloatBuffer sourceVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 		
 	
 	//Figured out that we needed a constructor;
-	public Sound(){
+	public Sound(SOUNDS soundname){
 	
 		AL10.alGenBuffers(buffer);
 		

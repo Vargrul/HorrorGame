@@ -66,7 +66,7 @@ public class Obs {
 				+ ", lenght=" + lenght + ", sabins=" + sabins + "]";
 	}
 	
-	public boolean equals(Object obj){
+	/*public boolean equals(Object obj){
 		if (obj == null) return false;
 		if (!(obj instanceof Obs)) return false;
 		Obs obs = (Obs)obj;
@@ -91,7 +91,7 @@ public class Obs {
 		if (getPos().compareTo(obs.getPos()) < 0) return -1;
 		if (getSabins() > obs.getSabins()) return 1;
 		return -1;
-	}
+	}*/
 	
 	public void collide(){
 		// collide?

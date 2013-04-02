@@ -36,7 +36,7 @@ public class Sound {
 		AL10.alGenBuffers(buffer);
 		
 		//Loads the wave file from this class's package in your classpath
-		WaveData waveFile = WaveData.create(soundname);
+		WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("res" + File.separatorChar + soundname)));
 		
 		//Puts Sound data in buffer and disposes afterwards
 		AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);

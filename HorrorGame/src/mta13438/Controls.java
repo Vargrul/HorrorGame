@@ -3,7 +3,7 @@ package mta13438;
 import org.lwjgl.input.Keyboard; // allows to call different keyboard events.
 import org.lwjgl.input.Mouse;
 
-public class controls {
+public class Controls {
 
 	public void takeInput(){
 		int back = 0, forward = 0, left = 0, right = 0, escape = 0; //variables to call in order to control the state of the directions.

@@ -4,7 +4,7 @@ public class Entity {
 
 	private Point pos;
 	private float speed;
-	private float angle;
+	private float orientation;
 	
 	public Entity() {
 		setPos(null);
@@ -12,10 +12,10 @@ public class Entity {
 		setAngle(0);
 	}
 	
-	public Entity(Point pos, float speed, float angle) {
+	public Entity(Point pos, float speed, float orientation) {
 		setPos(pos);
 		setSpeed(speed);
-		setAngle(angle);
+		setAngle(orientation);
 	}
 
 	public Point getPos() {
@@ -35,37 +35,37 @@ public class Entity {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	public float getAngle() {
-		return angle;
+	public float getOrientation() {
+		return orientation;
 	}
-	public void setAngle(float angle) {
-		this.angle = angle;
+	public void setAngle(float orientation) {
+		this.orientation = orientation;
 	}
 
 	public String toString() {
-		return "Entity [speed=" + speed + ", angle=" + angle + "]";
+		return "Entity [speed=" + speed + ", orientation=" + orientation + "]";
 	}
 
 	public void turnLeft() {
-		if(getAngle() >= 0){
+		if(getOrientation() >= 0){
 			setAngle(360);
 		}
-		setAngle(getAngle()-(float)0.1);
+		setAngle(getOrientation()-(float)0.1);
 	}
 	
 	public void turnRight(boolean turn) {
-		if(getAngle() <= 360 ){
+		if(getOrientation() <= 360 ){
 			setAngle(0);
 		}
-		setAngle(getAngle()+(float)0.1);
+		setAngle(getOrientation()+(float)0.1);
 	}
 	
 	public void foward() {
-		setPos( + (float)(getSpeed() * Math.cos(getAngle())), + (float)(getSpeed() * Math.sin(getAngle())), 0);
+		setPos( + (float)(getSpeed() * Math.cos(getOrientation())), + (float)(getSpeed() * Math.sin(getOrientation())), 0);
 	}
 	
 	public void backward() {
-		setPos( - (float)(getSpeed() * Math.cos(getAngle())), - (float)(getSpeed() * Math.sin(getAngle())), 0);
+		setPos( - (float)(getSpeed() * Math.cos(getOrientation())), - (float)(getSpeed() * Math.sin(getOrientation())), 0);
 	}
 	
 	public void walkSound() {

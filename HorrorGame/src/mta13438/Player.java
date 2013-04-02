@@ -4,12 +4,10 @@ public class Player extends Entity {
 	
 	private int health;
 	
-	@Override
 	public Player() {
 		super();
 		setHealth(0);
 	}
-	@Override
 	public Player(Point pos, float speed, float angle, int health) {
 		super();
 		setHealth(health);

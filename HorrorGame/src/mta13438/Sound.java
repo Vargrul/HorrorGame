@@ -21,19 +21,21 @@ import org.lwjgl.util.WaveData;
 
 public class Sound {
 	
-	SOUNDS soundname;
-	Point point;
+	
 	IntBuffer buffer = BufferUtils.createIntBuffer(1);
 	IntBuffer source = BufferUtils.createIntBuffer(1);
-	
-	FloatBuffer sourcePos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { point.getX(), point.getY(), point.getZ() }).rewind();
-	FloatBuffer sourceVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
-		
+	Point pos;
 	
 	//Figured out that we needed a constructor;
-	public Sound(SOUNDS soundname){
+	public Sound(SOUNDS soundname, Point point, Float gain, Float pitch){
 	
 		AL10.alGenBuffers(buffer);
+		
+		this.pos = point;
+		
+		// Keep FloatBuffer for possible use later
+		//FloatBuffer sourcePos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { point.getX(), point.getY(), point.getZ() }).rewind();
+		FloatBuffer sourceVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 		
 		//Loads the wave file from this class's package in your classpath
 		WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("res" + File.separatorChar + soundname)));
@@ -46,20 +48,27 @@ public class Sound {
 		AL10.alGenSources(source);
 		
 		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
-		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    1.0f          );
-		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     1.0f          );
-		AL10.alSource3f (source.get(0), AL10.AL_POSITION, point.getX(), point.getY(), point.getZ());
+		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    pitch          );
+		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
+		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 		AL10.alSource (source.get(0), AL10.AL_VELOCITY, sourceVel     );
 		
 		//Setup setListenerValues
-		setListenerValues(); // Need 3 Points as input
+		setListenerValues(player.getPos(), point, point); // Need 3 Points as input
 		
 	}// need killALData() and AL.destroy() before program close
 	
-	public void setListenerValues(Point Position, Point Velocity, Point Orientation){
+	public void setListenerValues(Point Position, Point Velocity, Float Orientation){
 		AL10.alListener3f(AL10.AL_POSITION,    Position.getX(), Position.getY(), Position.getZ());
 		AL10.alListener3f(AL10.AL_VELOCITY,    Velocity.getX(), Velocity.getY(), Velocity.getZ());
-		AL10.alListener3f(AL10.AL_ORIENTATION, Orientation.getX(), Orientation.getY(), Orientation.getZ());
+		AL10.alListenerf(AL10.AL_ORIENTATION, Orientation);
+		//Possibly put into player Class
+	}
+	public void update(Point point, float pitch, float gain){
+		this.pos = point;
+		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    pitch          );
+		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
+		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
 	public void reverb(){
 		//Do reverb effect
@@ -76,6 +85,14 @@ public class Sound {
 	public void loop(){
 		AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 	}
+	public Point getPos(){
+		return this.pos;
+	}
+	public void setPos(Point point){
+		this.pos = point;
+		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
+	}
+	
 	public void delete(){
 		AL10.alDeleteSources(source);
 		AL10.alDeleteBuffers(buffer);

@@ -3,27 +3,33 @@ package mta13438;
 public class Room {
 
 	float width, length, height, sabins;
+	MATERIALS material;
+	Point pos;
 	Point entrance;
 	Point exit;
-	// Points for entrance and exit
-	// Need something to indicate what walls are made of.
-	// Maybe something to indicate what the floor is made of.
-	// I am thinking Enums.
 	
 	public Room(){
-		// Guess we need a standard setup
-		// for the rooms when created with
-		// a no args constructor.
+		this.pos = new Point();
+		this.width = 10;
+		this.height = 10;
+		this.length = 10;
+		this.entrance = new Point(0, length/2, 0);
+		this.exit = new Point(10, length/2, 0);
+		this.material = MATERIALS.ROCK;//Need to add default material
 	}
 	
-	public Room(float width, float length, float height, Point entrance, Point exit){
+	public Room(Point pos, float width, float length, float height, Point entrance, Point exit, MATERIALS material){
+		this.pos = pos;
 		this.width = width;
 		this.length = length;
 		this.height = height;
 		this.entrance = entrance;
 		this.exit = exit;
+		this.material = material;
 	}
-	
+	public Point getPos(){
+		return pos;
+	}
 	public float getWidth(){
 		return width;
 	}
@@ -45,7 +51,17 @@ public class Room {
 	public float getRoomSize(){
 		return height*length;
 	}
+	public MATERIALS getMaterial(){
+		return material;
+	}
 	
+	
+	public void setPos(Point pos){
+		this.pos = pos;
+	}
+	public void setMaterial(MATERIALS material){
+		this.material = material;
+	}
 	public void setWidth(float width){
 		this.width = width;
 	}
@@ -64,8 +80,18 @@ public class Room {
 	public void setSabins(float sabins){
 		this.sabins = sabins;
 	}
+	public boolean isNearEntrance(){
+		// Check Entrance X and Y with pos X and Y; Ignore Z value
+		
+		return false;
+	}
+	public boolean isNearExit(){
+		// Check Exit X and Y with pos X and Y; Ignore Z value
+		
+		return false;
+	}
 	
-	public String toString(){
+	public String toString(){ // not updated
 		return "ROOM: \n Width = " + width + ".\n Height = " +
 				height + ".\n Length = " + length + ".\n Entrance = " 
 				+ entrance + ".\n Exit = " + exit + ".\n Sabins = " +

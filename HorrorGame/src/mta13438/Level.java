@@ -5,24 +5,26 @@ import java.util.Collections;
 import java.util.List;
 
 public class Level {
-	
+
 	private List<Room> roomList = new ArrayList<Room>();
-	private float width;
-	private float height;
-	private float length;
-	
+	private float dx;
+	private float dz;
+	private float dy;
+
 	public Level() {
 		this.roomList = null;
-		this.width = 0;
-		this.height = 0;
-		this.length = 0;
+		this.dx = 0;
+		this.dz = 0;
+		this.dy = 0;
+		updateLevelSize();
 	}
 
-	public Level(List<Room> roomList, float width, float height, float length) {
+	public Level(List<Room> roomList, float dx, float dz, float dy) {
 		this.roomList.addAll(roomList);
-		this.width = width;
-		this.height = height;
-		this.length = length;
+		this.dx = dx;
+		this.dz = dz;
+		this.dy = dy;
+		updateLevelSize();
 	}
 
 	public List<Room> getRoomList() {
@@ -35,28 +37,66 @@ public class Level {
 	public void addRoomList(Room room){
 		this.roomList.add(room);
 	}
-	public float getWidth() {
-		return width;
+	public float getDx() {
+		return dx;
 	}
-	public void setWidth(float width) {
-		this.width = width;
+	public void setDx(float dx) {
+		this.dx = dx;
 	}
-	public float getHeight() {
-		return height;
+	public float getDz() {
+		return dz;
 	}
-	public void setHeight(float height) {
-		this.height = height;
+	public void setDz(float dz) {
+		this.dz = dz;
 	}
-	public float getLength() {
-		return length;
+	public float getDy() {
+		return dy;
 	}
-	public void setLength(float length) {
-		this.length = length;
+	public void setDy(float dy) {
+		this.dy = dy;
 	}
 
 	public String toString() {
-		return "Level [roomList=" + roomList + ", width=" + width + ", height="
-				+ height + ", length=" + length + "]";
+		return "Level [roomList=" + roomList + ", dx=" + dx + ", dz="
+				+ dz + ", dy=" + dy + "]";
 	}
-	
+
+	public void updateLevelSize() {
+		if(roomList.isEmpty() == false){
+			float dxp = 0;
+			float dzp = 0;
+			float dyp = 0;
+			float dxm = 0;
+			float dzm = 0;
+			float dym = 0;
+
+			for (int i = 0; i < roomList.size(); i++) {
+				if(roomList.get(i).getPos().getX() > 0 && roomList.get(i).getPos().getY() > 0 && roomList.get(i).getPos().getZ() > 0){
+					if(dxp < roomList.get(i).getPos().getX() + roomList.get(i).getDx()){
+						dxp = roomList.get(i).getPos().getX() + roomList.get(i).getDx();
+					}
+					if(dyp < roomList.get(i).getPos().getY() + roomList.get(i).getDy()){
+						dyp = roomList.get(i).getPos().getY() + roomList.get(i).getDy();
+					}
+					if(dzp < roomList.get(i).getPos().getZ() + roomList.get(i).getDz()){
+						dzp = roomList.get(i).getPos().getZ() + roomList.get(i).getDz();
+					}
+				}else{
+					if(dxm > roomList.get(i).getPos().getX()){
+						dxm = roomList.get(i).getPos().getX();
+					}
+					if(dym > roomList.get(i).getPos().getY()){
+						dym = roomList.get(i).getPos().getY();
+					}
+					if(dzm > roomList.get(i).getPos().getZ()){
+						dzm = roomList.get(i).getPos().getZ();
+					}
+				}
+			}		
+
+			setDx(dxp+Math.abs(dxm));
+			setDz(dzp+Math.abs(dzm));
+			setDy(dyp+Math.abs(dym));
+		}
+	}
 }

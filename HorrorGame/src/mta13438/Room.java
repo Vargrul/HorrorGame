@@ -2,7 +2,7 @@ package mta13438;
 
 public class Room {
 
-	float width, length, height, sabins;
+	float dx, dy, dz, sabins;
 	MATERIALS material;
 	Point pos;
 	Point entrance;
@@ -10,19 +10,19 @@ public class Room {
 	
 	public Room(){
 		this.pos = new Point();
-		this.width = 10;
-		this.height = 10;
-		this.length = 10;
-		this.entrance = new Point(0, length/2, 0);
-		this.exit = new Point(10, length/2, 0);
+		this.dx = 10;
+		this.dz = 10;
+		this.dy = 10;
+		this.entrance = new Point(0, dy/2, 0);
+		this.exit = new Point(10, dy/2, 0);
 		this.material = MATERIALS.ROCK;//Need to add default material
 	}
 	
-	public Room(Point pos, float width, float length, float height, Point entrance, Point exit, MATERIALS material){
+	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
 		this.pos = pos;
-		this.width = width;
-		this.length = length;
-		this.height = height;
+		this.dx = dx;
+		this.dy = dy;
+		this.dz = dz;
 		this.entrance = entrance;
 		this.exit = exit;
 		this.material = material;
@@ -31,13 +31,13 @@ public class Room {
 		return pos;
 	}
 	public float getWidth(){
-		return width;
+		return dx;
 	}
 	public float getHeight(){
-		return height;
+		return dz;
 	}
 	public float getLength(){
-		return length;
+		return dy;
 	}
 	public Point getEntrance(){
 		return entrance;
@@ -49,7 +49,7 @@ public class Room {
 		return sabins;
 	}
 	public float getRoomSize(){
-		return height*length;
+		return dz*dy;
 	}
 	public MATERIALS getMaterial(){
 		return material;
@@ -62,14 +62,14 @@ public class Room {
 	public void setMaterial(MATERIALS material){
 		this.material = material;
 	}
-	public void setWidth(float width){
-		this.width = width;
+	public void setWidth(float dx){
+		this.dx = dx;
 	}
-	public void setHeight(float height){
-		this.height = height;
+	public void setHeight(float dz){
+		this.dz = dz;
 	}
-	public void setLength(float length){
-		this.length = length;
+	public void setLength(float dy){
+		this.dy = dy;
 	}
 	public void setEntrance(Point entrance){
 		this.entrance = entrance;
@@ -92,8 +92,8 @@ public class Room {
 	}
 	
 	public String toString(){ // not updated
-		return "ROOM: \n Width = " + width + ".\n Height = " +
-				height + ".\n Length = " + length + ".\n Entrance = " 
+		return "ROOM: \n Width = " + dx + ".\n Height = " +
+				dz + ".\n Length = " + dy + ".\n Entrance = " 
 				+ entrance + ".\n Exit = " + exit + ".\n Sabins = " +
 				 sabins + ".\n";
 		// When variable changes have been decided, changes method.

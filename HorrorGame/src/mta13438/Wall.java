@@ -10,7 +10,7 @@ public class Wall extends Obs {
 	
 	@Override
 	public String toString() {
-		return "Wall [pos=" + getPos() + ", width=" + getWidth() + ", height=" + getHeight()
+		return "Wall [pos=" + getPos() + ", dx=" + getWidth() + ", dz=" + getHeight()
 				+ ", lenght=" + getLenght() + ", sabins=" + getSabins() + "]";
 	}
 }

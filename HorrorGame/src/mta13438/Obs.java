@@ -2,7 +2,7 @@ package mta13438;
 
 public class Obs {
 	private Point pos;
-	private float width,height,lenght,sabins;
+	private float dx,dz,lenght,sabins;
 	
 	public Obs(){
 		setPos(new Point());
@@ -12,10 +12,10 @@ public class Obs {
 		setSabins(0);
 	}
 	
-	public Obs(Point point,float width,float height,float lenght,float sabins){
+	public Obs(Point point,float dx,float dz,float lenght,float sabins){
 		setPos(point);
-		setWidth(width);
-		setHeight(height);
+		setWidth(dx);
+		setHeight(dz);
 		setLenght(lenght);
 		setSabins(sabins);
 	}
@@ -29,19 +29,19 @@ public class Obs {
 	}
 
 	public float getWidth() {
-		return width;
+		return dx;
 	}
 
-	public void setWidth(float width) {
-		this.width = width;
+	public void setWidth(float dx) {
+		this.dx = dx;
 	}
 
 	public float getHeight() {
-		return height;
+		return dz;
 	}
 
-	public void setHeight(float height) {
-		this.height = height;
+	public void setHeight(float dz) {
+		this.dz = dz;
 	}
 
 	public float getLenght() {
@@ -62,7 +62,7 @@ public class Obs {
 
 	@Override
 	public String toString() {
-		return "Obs [pos=" + pos + ", width=" + width + ", height=" + height
+		return "Obs [pos=" + pos + ", dx=" + dx + ", dz=" + dz
 				+ ", lenght=" + lenght + ", sabins=" + sabins + "]";
 	}
 	

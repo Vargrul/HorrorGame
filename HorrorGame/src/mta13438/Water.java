@@ -9,7 +9,7 @@ public class Water extends Obs {
 	
 	@Override
 	public String toString() {
-		return "Water [pos=" + getPos() + ", dx=" + getWidth() + ", dz=" + getHeight()
+		return "Water [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
 				+ ", lenght=" + getLenght() + ", sabins=" + getSabins() + "]";
 	}
 }

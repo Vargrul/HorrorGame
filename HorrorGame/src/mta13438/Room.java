@@ -30,13 +30,13 @@ public class Room {
 	public Point getPos(){
 		return pos;
 	}
-	public float getWidth(){
+	public float getDx(){
 		return dx;
 	}
-	public float getHeight(){
+	public float getDz(){
 		return dz;
 	}
-	public float getLength(){
+	public float getDy(){
 		return dy;
 	}
 	public Point getEntrance(){
@@ -62,13 +62,13 @@ public class Room {
 	public void setMaterial(MATERIALS material){
 		this.material = material;
 	}
-	public void setWidth(float dx){
+	public void setDx(float dx){
 		this.dx = dx;
 	}
-	public void setHeight(float dz){
+	public void setDz(float dz){
 		this.dz = dz;
 	}
-	public void setLength(float dy){
+	public void setDy(float dy){
 		this.dy = dy;
 	}
 	public void setEntrance(Point entrance){

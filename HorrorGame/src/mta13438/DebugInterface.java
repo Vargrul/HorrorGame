@@ -48,5 +48,4 @@ public class DebugInterface {
    	 Display.destroy();
    	 System.exit(0);
     }
-
 }

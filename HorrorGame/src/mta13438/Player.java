@@ -22,7 +22,7 @@ public class Player extends Entity {
 	
 	@Override
 	public String toString() {
-		return "Player [health=" + getHealth() + "speed=" + super.getSpeed() + ", orientation=" + super.getOrientation() + "]";
+		return "Player [health=" + getHealth() + ", speed=" + super.getSpeed() + ", orientation=" + super.getOrientation() + "]";
 	}
 	
 }

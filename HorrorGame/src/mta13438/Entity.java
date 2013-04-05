@@ -9,15 +9,15 @@ public class Entity {
 	private float orientation;
 
 	public Entity() {
-		setPos(null);
+		setPos(new Point(0,0,0));
 		setSpeed(1);
-		setAngle(0);
+		setOrientation(0);
 	}
 
 	public Entity(Point pos, float speed, float orientation) {
 		setPos(pos);
 		setSpeed(speed);
-		setAngle(orientation);
+		setOrientation(orientation);
 	}
 
 	public Point getPos() {
@@ -46,7 +46,7 @@ public class Entity {
 		return orientation;
 	}
 
-	public void setAngle(float orientation) {
+	public void setOrientation(float orientation) {
 		this.orientation = orientation;
 	}
 
@@ -55,38 +55,38 @@ public class Entity {
 	}
 
 	public void turnLeft() {
-		if (getOrientation() >= 0) {
-			setAngle(360);
+		setOrientation(getOrientation() - 0.1f);
+		if (getOrientation() <= 0) {
+			setOrientation((float)(2*Math.PI));
 		}
-		setAngle(getOrientation() - (float) 0.1);
 	}
 
-	public void turnRight(boolean turn) {
-		if (getOrientation() <= 360) {
-			setAngle(0);
+	public void turnRight() {
+		setOrientation(getOrientation() + 0.1f);
+		if (getOrientation() >= 2*Math.PI) {
+			setOrientation(0);
 		}
-		setAngle(getOrientation() + (float) 0.1);
 	}
 
 	public void foward() {
-		setPos(+(float) (getSpeed() * Math.cos(getOrientation())),
-				+(float) (getSpeed() * Math.sin(getOrientation())), 0);
+		setPos(+(float) (getSpeed() * Math.cos(getOrientation())) + getPos().getX(),
+				+(float) (getSpeed() * Math.sin(getOrientation())) + getPos().getY(), getPos().getZ());
 	}
 
 	public void backward() {
-		setPos(-(float) (getSpeed() * Math.cos(getOrientation())),
-				-(float) (getSpeed() * Math.sin(getOrientation())), 0);
+		setPos(-(float) (getSpeed() * Math.cos(getOrientation())) + getPos().getX(),
+				-(float) (getSpeed() * Math.sin(getOrientation())) + getPos().getY(), getPos().getZ());
 	}
 
 	public void walkSound() {
 		// Something to play the sound
 	}
 
-	public void draw(Point pos) {
+	public void draw() {
 		glColor3f(0f, 0f, 1.0f);
 		glPointSize(5);
 		glBegin(GL_POINTS);
-		glVertex2f(pos.getX(), pos.getY());
+		glVertex2f(getPos().getX(), getPos().getY());
 		glEnd();
 
 		/*

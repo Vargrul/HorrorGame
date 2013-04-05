@@ -21,26 +21,19 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Loader {
 
 	private static Texture texturePlay;
-
 	private static Texture texturePlayCheck;
-
 	private static Texture textureExit;
-
 	private static Texture textureExitCheck;
-
 	private static Texture textureHelp;
-
 	private static Texture textureHelpCheck;
 
 	private static int menuNumber;
-	
 	private static Obs waterPit, wall, trap;
-	
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
-
 	private static boolean showMainMenu;
-
 	private static boolean showHelpMenu;
+	private static Controls controls = new Controls();
+	private static Player player = new Player(new Point(15,310,10),1,0,10);
 
 	public void start() {
 		menuNumber = 0;
@@ -52,7 +45,7 @@ public class Loader {
 		while (true) {
 			glClear(GL_COLOR_BUFFER_BIT);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-			
+
 			render();
 
 			Display.update();
@@ -81,9 +74,9 @@ public class Loader {
 		wall = new Obs(new Point(330, 280, 0), 10, 70, 0, 0);
 		trap = new Obs(new Point(410, 210, 0), 30, 30, 0, 0);
 	}
-	
+
 	private void initGL(int width, int height) {
-	   	
+
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -122,52 +115,72 @@ public class Loader {
 	}
 
 	public static void input() {
-		while (Keyboard.next()) { // looping through the different controls
-			if (Keyboard.getEventKeyState()) { // nested if statements checking
-												// to see if buttons are pressed
-				if (Keyboard.getEventKey() == Keyboard.KEY_UP) {
-					if (menuNumber != 0 && showMainMenu == true) {
-						menuNumber -= 1;
-					} 
-					if (menuNumber < 0 | menuNumber > 2 && showMainMenu == true){
-						menuNumber = 0;
+
+		if(showHelpMenu || showMainMenu){
+			while (Keyboard.next()) { // looping through the different controls
+				if (Keyboard.getEventKeyState()) { // nested if statements checking
+					// to see if buttons are pressed
+					if (Keyboard.getEventKey() == Keyboard.KEY_UP) {
+						if (menuNumber != 0 && showMainMenu == true) {
+							menuNumber -= 1;
+						} 
+						if (menuNumber < 0 | menuNumber > 2 && showMainMenu == true){
+							menuNumber = 0;
+						}
 					}
-				}
-				if (Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
-					if (menuNumber != 2  && showMainMenu == true) {
-						menuNumber += 1;
+					if (Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
+						if (menuNumber != 2  && showMainMenu == true) {
+							menuNumber += 1;
+						}
+						if (menuNumber < 0 | menuNumber > 2 && showMainMenu == true){
+							menuNumber = 0;
+						}
 					}
-					if (menuNumber < 0 | menuNumber > 2 && showMainMenu == true){
-						menuNumber = 0;
+					if (Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
+						if(showHelpMenu == true){
+							showHelpMenu = false;
+							showMainMenu = true;
+						}
+						if (menuNumber == 0 ) {
+							showHelpMenu = false;
+							showMainMenu = false;
+							Display.destroy();
+							DebugInterface.Initialize(800, 600); // Width and Length of display
+							DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
+							loadTutorialLevel();
+						}
+						if (menuNumber == 1) {
+							showMainMenu = false;
+							showHelpMenu = true;
+							menuNumber = -1;
+						}
+						if (menuNumber == 2) {
+							System.exit(0);
+						}
 					}
-				}
-				if (Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
-					if(showHelpMenu == true){
-						showHelpMenu = false;
-						showMainMenu = true;
-					}
-					if (menuNumber == 0 ) {
-						showHelpMenu = false;
-						showMainMenu = false;
-						Display.destroy();
-						DebugInterface.Initialize(800, 600); // Width and Length of display
-						DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
-						loadTutorialLevel();
-					}
-					if (menuNumber == 1) {
-						showMainMenu = false;
-						showHelpMenu = true;
-						menuNumber = -1;
-					}
-					if (menuNumber == 2) {
+					if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 						System.exit(0);
 					}
+				}
 			}
-				if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
-					System.exit(0);
+		}else{
+			controls.takeInput();
+			if(controls.getKEY_UP()){
+				player.foward();
+			}
+			if(controls.getKEY_DOWN()){
+				player.backward();
+			}
+			if(controls.getKEY_LEFT()){
+				player.turnLeft();
+			}
+			if(controls.getKEY_RIGHT()){
+				player.turnRight();
 			}
 		}
-		}
+		
+		
+		
 	}
 
 	public static void render() {
@@ -228,7 +241,7 @@ public class Loader {
 		if (showHelpMenu == true && showMainMenu == false) {
 			input();
 			textureExitCheck.bind();
-			
+
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
 			GL11.glVertex2f(10, 150);
@@ -247,6 +260,7 @@ public class Loader {
 			waterPit.draw();
 			wall.draw();
 			trap.draw();
+			player.draw();
 		}
 	}
 

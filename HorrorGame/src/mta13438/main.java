@@ -13,11 +13,11 @@ public class main {
     public static int CurrentLevel = 0;
     
     public static void main(String[] args) {
-   	 Loader loader = new Loader();
-   	 loader.start();
+   	/* Loader loader = new Loader();
+   	 loader.start();*/
    	 System.out.println("HelloWorld GitHub is working!!!");
    	 DebugInterface.Initialize(800, 600); // Width and Length of display
-   	 DebugInterface.InitOpenGL(150, 150); // Width and Length inside the display (Scaling of perspective here)
+   	 DebugInterface.InitOpenGL(300, 300); // Width and Length inside the display (Scaling of perspective here)
    	 Render();
     }
     

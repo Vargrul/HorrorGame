@@ -77,17 +77,17 @@ public class Loader {
 		try {
 			// load texture from PNG file
 			texturePlay = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("res/Play.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Play.png"));
 			texturePlayCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("res/PlayCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/PlayCheck.png"));
 			textureHelp = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("res/Help.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Help.png"));
 			textureHelpCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("res/HelpCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/HelpCheck.png"));
 			textureExit = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("res/Exit.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Exit.png"));
 			textureExitCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("res/ExitCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/ExitCheck.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

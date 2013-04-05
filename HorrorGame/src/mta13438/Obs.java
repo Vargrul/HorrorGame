@@ -4,21 +4,21 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Obs {
 	private Point pos;
-	private float dx,dz,lenght,sabins;
+	private float dx,dz,dy,sabins;
 	
 	public Obs(){
 		setPos(new Point());
 		setDx(0);
 		setDz(0);
-		setLenght(0);
+		setDy(0);
 		setSabins(0);
 	}
 	
-	public Obs(Point point,float dx,float dz,float lenght,float sabins){
+	public Obs(Point point,float dx,float dz,float dy,float sabins){
 		setPos(point);
 		setDx(dx);
 		setDz(dz);
-		setLenght(lenght);
+		setDy(dy);
 		setSabins(sabins);
 	}
 
@@ -46,12 +46,12 @@ public class Obs {
 		this.dz = dz;
 	}
 
-	public float getLenght() {
-		return lenght;
+	public float getDy() {
+		return dy;
 	}
 
-	public void setLenght(float lenght) {
-		this.lenght = lenght;
+	public void setDy(float dy) {
+		this.dy = dy;
 	}
 
 	public float getSabins() {
@@ -68,23 +68,23 @@ public class Obs {
 	   	 glBegin(GL_LINES);
 	   		 //Bottom Line
 	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
 	   		 //Left Line
 	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
 	   		 //Top Line
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
 	   		 //Right Line
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
 	   	 glEnd();
 	}
 
 	@Override
 	public String toString() {
 		return "Obs [pos=" + pos + ", dx=" + dx + ", dz=" + dz
-				+ ", lenght=" + lenght + ", sabins=" + sabins + "]";
+				+ ", lenght=" + dy + ", sabins=" + sabins + "]";
 	}
 	
 	/*public boolean equals(Object obj){

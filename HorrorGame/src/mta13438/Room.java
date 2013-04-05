@@ -99,16 +99,16 @@ public class Room {
 	   	 glBegin(GL_LINES);
 	   		 //Bottom Line
 	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
 	   		 //Left Line
 	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
 	   		 //Top Line
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
 	   		 //Right Line
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
 	   	 glEnd();
 	   	 
 	   	 if(entrance != null || entrance.getX()!=0 && entrance.getY()!=0 && entrance.getZ()!=0){//Check if there are an entrance point, then draw RED circle

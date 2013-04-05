@@ -14,7 +14,7 @@ public class Obs {
 		setSabins(0);
 	}
 	
-	public Obs(Point point,float dx,float dz,float dy,float sabins){
+	public Obs(Point point,float dx,float dy,float dz,float sabins){
 		setPos(point);
 		setDx(dx);
 		setDz(dz);

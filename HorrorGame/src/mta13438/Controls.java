@@ -5,14 +5,15 @@ import org.lwjgl.input.Mouse;
 
 public class Controls {
 
-	Boolean back, forward, left, right, escape; //variables to call in order to control the state of the directions.
+	Boolean keyBack, keyForward, keyLeft, keyRight, keyEscape, keyEnter; //variables to call in order to control the state of the directions.
 	
 	public Controls() {
-		this.back = false;
-		this.forward = false;
-		this.left = false;
-		this.right = false;
-		this.escape = false;		
+		this.keyBack = false;
+		this.keyForward = false;
+		this.keyLeft = false;
+		this.keyRight = false;
+		this.keyEscape = false;	
+		this.keyEnter = false;
 	}
 
 	public void takeInput(){
@@ -22,61 +23,69 @@ public class Controls {
 			if(Keyboard.getEventKeyState()){ //nested if statements checking to see if buttons are pressed
 
 				if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
-					back = true;
-					System.out.println("got KEY_DOWN");
+					this.keyBack = true;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_UP){
-					forward = true;
-					System.out.println("Got KEY_UP");
+					this.keyForward = true;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT){
-					right = true;
+					this.keyRight = true;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_LEFT){
-					left = true;
+					this.keyLeft = true;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
-					escape = true;
+					this.keyEscape = true;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_RETURN){
+					this.keyEnter = true;
 				}
 
 			}else{ //nested Else If to check that buttons are not pressed
 				if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
-					back = false;
+					this.keyBack = false;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_UP){
-					forward = false;
+					this.keyForward = false;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT){
-					right = false;
+					this.keyRight = false;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_LEFT){
-					left = false;
+					this.keyLeft = false;
 				}
 				if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
-					escape = false;
+					this.keyEscape = false;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_RETURN){
+					this.keyEnter = false;
 				}
 
 			}
 		}
 	}
 
-	public Boolean getBack() {
-		return back;
+	public Boolean getKEY_DOWN() {
+		return this.keyBack;
 	}
 
-	public Boolean getForward() {
-		return forward;
+	public Boolean getKEY_UP() {
+		return this.keyForward;
 	}
 
-	public Boolean getLeft() {
-		return left;
+	public Boolean getKEY_LEFT() {
+		return this.keyLeft;
 	}
 
-	public Boolean getRight() {
-		return right;
+	public Boolean getKEY_RIGHT() {
+		return this.keyRight;
 	}
 
-	public Boolean getEscape() {
-		return escape;
+	public Boolean getKEY_ESCAPE() {
+		return this.keyEscape;
+	}
+	
+	public Boolean getKEY_ENTER() {
+		return this.keyEnter;
 	}
 }

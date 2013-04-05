@@ -49,16 +49,16 @@ public class main {
 			
 			//Game loop
 			controls.takeInput();
-			if(controls.getForward()){
+			if(controls.getKEY_UP()){
 				player.foward();
 			}
-			if(controls.getBack()){
+			if(controls.getKEY_DOWN()){
 				player.backward();
 			}
-			if(controls.getLeft()){
+			if(controls.getKEY_LEFT()){
 				player.turnLeft();
 			}
-			if(controls.getRight()){
+			if(controls.getKEY_RIGHT()){
 				player.turnRight();
 			}
 			System.out.println(player);

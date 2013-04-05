@@ -9,7 +9,7 @@ public class Player extends Entity {
 		setHealth(0);
 	}
 	public Player(Point pos, float speed, float orientation, int health) {
-		super();
+		super(pos, speed, orientation);
 		setHealth(health);
 	}	
 	

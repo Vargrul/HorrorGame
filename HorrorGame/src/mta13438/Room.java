@@ -1,5 +1,7 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.*;
+
 public class Room {
 
 	float dx, dy, dz, sabins;
@@ -90,6 +92,49 @@ public class Room {
 		
 		return false;
 	}
+	
+	public void draw() {
+	   	 glColor3f(1.0f, 1.0f, 1.0f);
+	   	 glLineWidth(1.5f);
+	   	 glBegin(GL_LINES);
+	   		 //Bottom Line
+	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   		 //Left Line
+	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
+	   		 //Top Line
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
+	   		 //Right Line
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   	 glEnd();
+	   	 
+	   	 if(entrance != null || entrance.getX()!=0 && entrance.getY()!=0 && entrance.getZ()!=0){//Check if there are an entrance point, then draw RED circle
+	   		 glColor3f(1.0f, 0f, 0f);
+	   		 glBegin(GL_LINE_STRIP);
+	   		 float f = 0.0f;
+	   		 for(int i = 0; i<30;i++){
+	   			 glVertex3f(entrance.getX()+(float)Math.cos(f), entrance.getY()+(float)Math.sin(f), 0);
+	   			 f = (float) (f +(2*Math.PI/30));
+	   		 }
+	   		 glEnd();
+	   	 }
+	   	 
+	   	 if(exit != null || exit.getX()!=0 && exit.getY()!=0 && exit.getZ()!=0){ //Check if there are an exit point, then draw ORANGE circle
+	   		 glColor3f(1.0f, 0.6f, 0f);
+	   		 glBegin(GL_LINE_STRIP);
+	   		 float h = 0.0f;
+	   		 for(int i = 0; i<30;i++){
+	   			 glVertex3f(exit.getX()+(float)Math.cos(h), exit.getY()+(float)Math.sin(h), 0);
+	   			 h = (float) (h +(2*Math.PI/30));
+	   		 }
+	   		 glEnd();
+	   	 }
+	   	 
+	}
+
 	
 	public String toString(){ // not updated
 		return "ROOM: \n Width = " + dx + ".\n Height = " +

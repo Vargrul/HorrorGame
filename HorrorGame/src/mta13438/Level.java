@@ -55,6 +55,12 @@ public class Level {
 	public void setDy(float dy) {
 		this.dy = dy;
 	}
+	
+	public void Draw(){
+	   	 for(Room room : this.roomList){
+	   		 room.draw();
+	   	 }
+	}
 
 	public String toString() {
 		return "Level [roomList=" + roomList + ", dx=" + dx + ", dz="

@@ -1,5 +1,7 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.*;
+
 public class Obs {
 	private Point pos;
 	private float dx,dz,lenght,sabins;
@@ -58,6 +60,25 @@ public class Obs {
 
 	public void setSabins(float sabins) {
 		this.sabins = sabins;
+	}
+	
+	public void draw() {
+	   	 glColor4f(0.2f, 1.0f, 0.2f, 0.5f);
+	   	 glLineWidth(1.5f);
+	   	 glBegin(GL_LINES);
+	   		 //Bottom Line
+	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   		 //Left Line
+	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
+	   		 //Top Line
+	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
+	   		 //Right Line
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)(this.pos.getY()+this.getLength()));
+	   		 glVertex2i((int)(this.pos.getX()+this.getWidth()), (int)this.pos.getY());
+	   	 glEnd();
 	}
 
 	@Override

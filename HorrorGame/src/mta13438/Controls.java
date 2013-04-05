@@ -5,48 +5,78 @@ import org.lwjgl.input.Mouse;
 
 public class Controls {
 
-	public void takeInput(){
-		int back = 0, forward = 0, left = 0, right = 0, escape = 0; //variables to call in order to control the state of the directions.
-		
-		while(Keyboard.next()){ //looping through the different controls
-			
-		if(Keyboard.getEventKeyState()){ //nested if statements checking to see if buttons are pressed
-		
-			if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
-			back = 1;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_UP){
-			forward = 1;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT){
-			right = 1;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_LEFT){
-			left = 1;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
-			escape = 1;
-			}
+	Boolean back, forward, left, right, escape; //variables to call in order to control the state of the directions.
+	
+	public Controls() {
+		this.back = false;
+		this.forward = false;
+		this.left = false;
+		this.right = false;
+		this.escape = false;		
+	}
 
-		}else{ //nested Else If to check that buttons are not pressed
-			if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
-			back = 0;
+	public void takeInput(){
+
+		while(Keyboard.next()){ //looping through the different controls
+
+			if(Keyboard.getEventKeyState()){ //nested if statements checking to see if buttons are pressed
+
+				if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
+					back = true;
+					System.out.println("got KEY_DOWN");
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_UP){
+					forward = true;
+					System.out.println("Got KEY_UP");
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT){
+					right = true;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LEFT){
+					left = true;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
+					escape = true;
+				}
+
+			}else{ //nested Else If to check that buttons are not pressed
+				if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
+					back = false;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_UP){
+					forward = false;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT){
+					right = false;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LEFT){
+					left = false;
+				}
+				if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
+					escape = false;
+				}
+
 			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_UP){
-			forward = 0;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_RIGHT){
-			right = 0;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_LEFT){
-			left = 0;
-			}
-			if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE){
-			escape = 0;
-			}
-			
 		}
 	}
-	
+
+	public Boolean getBack() {
+		return back;
+	}
+
+	public Boolean getForward() {
+		return forward;
+	}
+
+	public Boolean getLeft() {
+		return left;
+	}
+
+	public Boolean getRight() {
+		return right;
+	}
+
+	public Boolean getEscape() {
+		return escape;
 	}
 }

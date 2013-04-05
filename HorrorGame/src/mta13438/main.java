@@ -35,8 +35,11 @@ public class main {
 		levelTutorial.addRoomList(new Room(new Point(70, 82, 0), 35, 25, 8, new Point(80, 83, 0), new Point(105, 103, 0), MATERIALS.ROCK));
 		levelTutorial.addRoomList(new Room(new Point(105, 100, 0), 20, 6, 8, new Point(106, 103, 0), new Point(125, 103, 0), MATERIALS.ROCK));
 		levelTutorial.addRoomList(new Room(new Point(125, 70, 0), 10, 40, 8, new Point(125, 104, 0), new Point(), MATERIALS.ROCK));
-		Player player = new Player(new Point(15, 20, 4), 0, 0, 50);
+		
+		//Set player pos as it don't work from the Constructor
 		player.setPos(new Point(15, 20, 4));
+		
+		//Create the control object for catching key presses
 		Controls controls = new Controls();
 		//End of setting up Room list
 

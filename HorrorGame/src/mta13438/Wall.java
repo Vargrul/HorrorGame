@@ -11,6 +11,6 @@ public class Wall extends Obs {
 	@Override
 	public String toString() {
 		return "Wall [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
-				+ ", lenght=" + getLenght() + ", sabins=" + getSabins() + "]";
+				+ ", lenght=" + getDy() + ", sabins=" + getSabins() + "]";
 	}
 }

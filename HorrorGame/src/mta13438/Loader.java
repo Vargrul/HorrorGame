@@ -4,9 +4,11 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
 import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -33,7 +35,10 @@ public class Loader {
 	private static boolean showMainMenu;
 	private static boolean showHelpMenu;
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(15,310,10),1,0,10);
+	private static Player player = new Player(new Point(15,310,10),0.5f,0,10);
+	private static long lastFrame;
+	private static int delta = getDelta();
+	private static int currentRoom;
 
 	public void start() {
 		menuNumber = 0;
@@ -42,6 +47,7 @@ public class Loader {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		initGL(800,600);
 		init();
+		getDelta();
 		while (true) {
 			glClear(GL_COLOR_BUFFER_BIT);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -98,24 +104,24 @@ public class Loader {
 		try {
 			// load texture from PNG file
 			texturePlay = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Play.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStatic.png"));
 			texturePlayCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/PlayCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStaticFilled.png"));
 			textureHelp = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Help.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStatic.png"));
 			textureHelpCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/HelpCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStaticFilled.png"));
 			textureExit = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Exit.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStatic.png"));
 			textureExitCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/ExitCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStaticFilled.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void input() {
-
+		
 		if(showHelpMenu || showMainMenu){
 			while (Keyboard.next()) { // looping through the different controls
 				if (Keyboard.getEventKeyState()) { // nested if statements checking
@@ -165,22 +171,22 @@ public class Loader {
 			}
 		}else{
 			controls.takeInput();
+			currentRoom = tutorialLevel.getCurrentRoom(player.getPos());
+			delta = getDelta();
+			
 			if(controls.getKEY_UP()){
-				player.foward();
+				player.foward(delta/10, tutorialLevel.getRoomList().get(currentRoom).getPos().getX() ,tutorialLevel.getRoomList().get(currentRoom).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getDx(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getDy());
 			}
 			if(controls.getKEY_DOWN()){
-				player.backward();
+				player.backward(delta/10, tutorialLevel.getRoomList().get(currentRoom).getPos().getX() ,tutorialLevel.getRoomList().get(currentRoom).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getDx(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getDy());
 			}
 			if(controls.getKEY_LEFT()){
-				player.turnLeft();
+				player.turnLeft(delta/10);
 			}
 			if(controls.getKEY_RIGHT()){
-				player.turnRight();
+				player.turnRight(delta/10);
 			}
-		}
-		
-		
-		
+		}	
 	}
 
 	public static void render() {
@@ -211,14 +217,14 @@ public class Loader {
 			}
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 100);
+			GL11.glVertex2f(10, 150);
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 100);
+			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
 			GL11.glTexCoord2f(1, 1);
 			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					100 + texturePlay.getTextureHeight());
+					150 + texturePlay.getTextureHeight());
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 100 + texturePlay.getTextureHeight());
+			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
 			GL11.glEnd();
 			if (menuNumber != 2) {
 				textureExit.bind(); 
@@ -228,14 +234,14 @@ public class Loader {
 			}
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 150);
+			GL11.glVertex2f(10, 250);
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
+			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 250);
 			GL11.glTexCoord2f(1, 1);
 			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					150 + texturePlay.getTextureHeight());
+					250 + texturePlay.getTextureHeight());
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
+			GL11.glVertex2f(10, 250 + texturePlay.getTextureHeight());
 			GL11.glEnd();
 		}
 		if (showHelpMenu == true && showMainMenu == false) {
@@ -264,6 +270,15 @@ public class Loader {
 		}
 	}
 
-	public static void main(String[] argv) {
+	public static int getDelta() {
+		long time = getTime();
+		int delta = (int) (time - lastFrame);
+		lastFrame = time;
+
+		return delta;
+	}
+
+	public static long getTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 }

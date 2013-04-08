@@ -2,6 +2,7 @@ package mta13438;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Level {
@@ -54,6 +55,17 @@ public class Level {
 	}
 	public void setDy(float dy) {
 		this.dy = dy;
+	}
+	
+	public int getCurrentRoom(Point playerPos) {
+		Integer currentRoom = 0;
+		for (int i = 0; i < getRoomList().size(); i++) {		
+			if(playerPos.getX() >= getRoomList().get(i).getPos().getX() && playerPos.getX() <= (getRoomList().get(i).getPos().getX() + getRoomList().get(i).getDx()) && playerPos.getY() >= getRoomList().get(i).getPos().getY() && playerPos.getY() <= (getRoomList().get(i).getPos().getY() + getRoomList().get(i).getDy())){
+				currentRoom = i;
+				System.out.println("Current Room:  "+i);	
+			}			
+		}
+		return currentRoom;
 	}
 	
 	public void Draw(){

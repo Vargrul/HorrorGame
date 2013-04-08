@@ -104,17 +104,17 @@ public class Loader {
 		try {
 			// load texture from PNG file
 			texturePlay = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Play.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStatic.png"));
 			texturePlayCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/PlayCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStaticFilled.png"));
 			textureHelp = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Help.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStatic.png"));
 			textureHelpCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/HelpCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStaticFilled.png"));
 			textureExit = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Exit.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStatic.png"));
 			textureExitCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/ExitCheck.png"));
+					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStaticFilled.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -186,10 +186,7 @@ public class Loader {
 			if(controls.getKEY_RIGHT()){
 				player.turnRight(delta/10);
 			}
-		}
-		
-		
-		
+		}	
 	}
 
 	public static void render() {
@@ -220,14 +217,14 @@ public class Loader {
 			}
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 100);
+			GL11.glVertex2f(10, 150);
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 100);
+			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
 			GL11.glTexCoord2f(1, 1);
 			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					100 + texturePlay.getTextureHeight());
+					150 + texturePlay.getTextureHeight());
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 100 + texturePlay.getTextureHeight());
+			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
 			GL11.glEnd();
 			if (menuNumber != 2) {
 				textureExit.bind(); 
@@ -237,14 +234,14 @@ public class Loader {
 			}
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 150);
+			GL11.glVertex2f(10, 250);
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
+			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 250);
 			GL11.glTexCoord2f(1, 1);
 			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					150 + texturePlay.getTextureHeight());
+					250 + texturePlay.getTextureHeight());
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
+			GL11.glVertex2f(10, 250 + texturePlay.getTextureHeight());
 			GL11.glEnd();
 		}
 		if (showHelpMenu == true && showMainMenu == false) {

@@ -54,28 +54,50 @@ public class Entity {
 		return "Entity [speed=" + speed + ", orientation=" + orientation + "]";
 	}
 
-	public void turnLeft() {
-		setOrientation(getOrientation() + 0.1f);
-		if (getOrientation() <= 0) {
-			setOrientation((float)(2*Math.PI));
-		}
-	}
-
-	public void turnRight() {
-		setOrientation(getOrientation() - 0.1f);
-		if (getOrientation() >= 2*Math.PI) {
+	public void turnLeft(float delta) {
+		setOrientation(getOrientation() + (0.1f * delta));
+		if (getOrientation() > 2*Math.PI) {
 			setOrientation(0);
 		}
 	}
 
-	public void foward() {
-		setPos(+(float) (getSpeed() * Math.cos(getOrientation())) + getPos().getX(),
-				+(float) (getSpeed() * Math.sin(getOrientation())) + getPos().getY(), getPos().getZ());
+	public void turnRight(float delta) {
+		setOrientation(getOrientation() - (0.1f * delta));
+		if (getOrientation() < 0) {
+			setOrientation((float)(2*Math.PI));
+		}
 	}
 
-	public void backward() {
-		setPos(-(float) (getSpeed() * Math.cos(getOrientation())) + getPos().getX(),
-				-(float) (getSpeed() * Math.sin(getOrientation())) + getPos().getY(), getPos().getZ());
+	public void foward(float delta, float minX, float maxX, float minY, float maxY) {
+		float x,y,z;
+
+		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
+			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
+		}else x = 0.0f + getPos().getX();
+
+		if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
+			y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
+		}else y = 0.0f + getPos().getY();
+
+		z = 0.0f + getPos().getZ();
+
+		setPos(x, y, z);
+	}
+
+	public void backward(float delta, float minX, float maxX, float minY, float maxY) {
+		float x,y,z;
+
+		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
+			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));
+		}else x = 0.0f - getPos().getX();
+
+		if(getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) >= minY && getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) <= maxY){
+			y = getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta));
+		}else y = 0.0f - getPos().getY();
+
+		z = 0.0f - getPos().getZ();
+
+		setPos(x, y, z);
 	}
 
 	public void walkSound() {

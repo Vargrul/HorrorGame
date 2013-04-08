@@ -89,13 +89,13 @@ public class Entity {
 
 		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
 			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));
-		}else x = 0.0f - getPos().getX();
+		}else x = getPos().getX() - 0.0f;
 
 		if(getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) >= minY && getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) <= maxY){
 			y = getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta));
-		}else y = 0.0f - getPos().getY();
+		}else y =getPos().getY() - 0.0f;
 
-		z = 0.0f - getPos().getZ();
+		z = getPos().getZ() - 0.0f;
 
 		setPos(x, y, z);
 	}

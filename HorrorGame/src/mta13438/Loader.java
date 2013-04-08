@@ -35,7 +35,7 @@ public class Loader {
 	private static boolean showMainMenu;
 	private static boolean showHelpMenu;
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(15,310,10),0.5f,0,10);
+	private static Player player = new Player(new Point(15,310,10),0.5f,0.0f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static int currentRoom;

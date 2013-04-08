@@ -16,6 +16,6 @@ public class Trap extends Obs {
 	@Override
 	public String toString() {
 		return "Trap [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
-				+ ", lenght=" + getLenght() + ", sabins=" + getSabins() + "]";
+				+ ", lenght=" + getDy() + ", sabins=" + getSabins() + "]";
 	}
 }

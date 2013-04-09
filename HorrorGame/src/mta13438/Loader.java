@@ -62,10 +62,10 @@ public class Loader {
 			delta = getDelta();
 			
 			if(controls.getKEY_UP()){
-				player.foward(delta/10, tutorialLevel.getRoomList().get(currentRoom).getPos().getX() ,tutorialLevel.getRoomList().get(currentRoom).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getDx(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getDy());
+				player.foward(delta/10, tutorialLevel, currentRoom);
 			}
 			if(controls.getKEY_DOWN()){
-				player.backward(delta/10, tutorialLevel.getRoomList().get(currentRoom).getPos().getX() ,tutorialLevel.getRoomList().get(currentRoom).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getDx(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getDy());
+				player.backward(delta/10, tutorialLevel, currentRoom);
 			}
 			if(controls.getKEY_LEFT()){
 				player.turnLeft(delta/10);

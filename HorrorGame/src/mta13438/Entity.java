@@ -68,8 +68,13 @@ public class Entity {
 		}
 	}
 
-	public void foward(float delta, float minX, float maxX, float minY, float maxY) {
-		float x,y,z;
+	public void foward(float delta, Level level, int currentRoom) {
+		float x,y,z,minX,maxX,minY,maxY;
+		
+		minY = level.getRoomList().get(currentRoom).getPos().getY();
+		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
+		minX = level.getRoomList().get(currentRoom).getPos().getX();
+		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
 
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
 			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
@@ -84,8 +89,13 @@ public class Entity {
 		setPos(x, y, z);
 	}
 
-	public void backward(float delta, float minX, float maxX, float minY, float maxY) {
-		float x,y,z;
+	public void backward(float delta, Level level, int currentRoom) {
+		float x,y,z,minX,maxX,minY,maxY;
+		
+		minY = level.getRoomList().get(currentRoom).getPos().getY();
+		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
+		minX = level.getRoomList().get(currentRoom).getPos().getX();
+		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
 
 		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
 			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));

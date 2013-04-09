@@ -57,6 +57,7 @@ public class Sound {
 		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
 		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 		//AL10.alSource(source.get(0), AL10.AL_VELOCITY, sourceVel     );
+		//Velocity gives problems atm. 
 		
 		//Setup of Listener Values now happens in player.java class
 		

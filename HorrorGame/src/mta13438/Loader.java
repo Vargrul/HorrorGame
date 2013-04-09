@@ -47,12 +47,18 @@ public class Loader {
 	
 	public static void renderTutorialLevel(){
 		input();
+		
+		//Draw the Tutorial Levels rooms
 		DebugInterface.Draw(tutorialLevel);
+		
+		//Draw the obs of every room
 		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
 			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
+		
+		//Draw the player
 		player.draw();
 	}
 

@@ -2,6 +2,9 @@ package mta13438;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
 
 	float dx, dy, dz, sabins;
@@ -9,6 +12,7 @@ public class Room {
 	Point pos;
 	Point entrance;
 	Point exit;
+	List<Obs> obsList = new ArrayList<Obs>();
 	
 	public Room(){
 		this.pos = new Point();
@@ -29,6 +33,18 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 	}
+	
+	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
+		this.pos = pos;
+		this.dx = dx;
+		this.dy = dy;
+		this.dz = dz;
+		this.entrance = entrance;
+		this.exit = exit;
+		this.material = material;
+		this.obsList = obsList;
+	}
+	
 	public Point getPos(){
 		return pos;
 	}
@@ -56,6 +72,9 @@ public class Room {
 	public MATERIALS getMaterial(){
 		return material;
 	}
+	public List<Obs> getObsList() {
+		return obsList;
+	}
 	
 	
 	public void setPos(Point pos){
@@ -82,6 +101,14 @@ public class Room {
 	public void setSabins(float sabins){
 		this.sabins = sabins;
 	}
+	public void setObsList(List<Obs> obsList) {
+		this.obsList.clear();
+		this.obsList = obsList;
+	}
+	public void addObsList(Obs obs) {
+		this.obsList.add(obs);
+	} 
+	
 	public boolean isNearEntrance(){
 		// Check Entrance X and Y with pos X and Y; Ignore Z value
 		

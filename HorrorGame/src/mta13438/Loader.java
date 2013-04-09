@@ -33,9 +33,9 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(new Point(420, 170, 0), 10, 20, 20, new Point(425,189,0), new Point(425, 171, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(new Point(400, 90, 0), 50, 80, 40, new Point(425,169,0), new Point(425, 91, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(new Point(410, 70, 0), 30, 20, 40, new Point(425,89,0), new Point(425, 70, 0), MATERIALS.ROCK));
-		waterPit = new Obs(new Point(160, 270, 0), 20, 50, 0, 0);
-		wall = new Obs(new Point(330, 280, 0), 10, 70, 0, 0);
-		trap = new Obs(new Point(410, 210, 0), 30, 30, 0, 0);
+		tutorialLevel.getRoomList().get(3).addObsList(waterPit = new Obs(new Point(160, 270, 0), 20, 50, 0, 0));
+		tutorialLevel.getRoomList().get(4).addObsList(wall = new Obs(new Point(330, 280, 0), 10, 70, 0, 0));
+		tutorialLevel.getRoomList().get(7).addObsList(trap = new Obs(new Point(410, 210, 0), 30, 30, 0, 0));
 	}
 	
 	public static void playTutorialLevel(){
@@ -48,9 +48,11 @@ public class Loader {
 	public static void renderTutorialLevel(){
 		input();
 		DebugInterface.Draw(tutorialLevel);
-		waterPit.draw();
-		wall.draw();
-		trap.draw();
+		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
+			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
+				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
+			}
+		}
 		player.draw();
 	}
 

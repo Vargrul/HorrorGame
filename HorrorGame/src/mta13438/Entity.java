@@ -2,6 +2,9 @@ package mta13438;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Entity {
 
 	private Point pos;
@@ -76,10 +79,12 @@ public class Entity {
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
 
+		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
 			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
 		}else x = 0.0f + getPos().getX();
 
+		//Checking if the entity is inside the room boundery.
 		if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
 			y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
 		}else y = 0.0f + getPos().getY();
@@ -91,17 +96,26 @@ public class Entity {
 
 	public void backward(float delta, Level level, int currentRoom) {
 		float x,y,z,minX,maxX,minY,maxY;
+		List<Float> obsList = new ArrayList<Float>();
 		
 		minY = level.getRoomList().get(currentRoom).getPos().getY();
 		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
+		
+		for (int i = 0; i < obsList.size(); i++) {
+						
+		}
 
+		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
+			//Makes the entity move in the x direction
 			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));
 		}else x = getPos().getX() - 0.0f;
 
+		//Checking if the entity is inside the room boundery.
 		if(getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) >= minY && getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) <= maxY){
+			//Makes the entity move in the x direction
 			y = getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta));
 		}else y =getPos().getY() - 0.0f;
 

@@ -10,7 +10,6 @@ public class Trap extends Obs {
 	}
 	public void collide(){
 		trapKillSound.play();
-		Player.setHealth(0);
 	}
 	
 	@Override

@@ -9,10 +9,12 @@ public class Player extends Entity {
 	public Player() {
 		super();
 		setHealth(0);
+		//setListener();
 	}
 	public Player(Point pos, float speed, float orientation, int health) {
 		super(pos, speed, orientation);
 		setHealth(health);
+		//setListener();
 	}	
 	
 	public int getHealth() {
@@ -25,10 +27,10 @@ public class Player extends Entity {
 							   // initializes listener values, using the position values of the object.
 					
 			//Uses getters from the entity class
-			AL10.alListener3f(AL10.AL_POSITION,   getPos().getX(), getPos().getY(), getPos().getZ());
+			AL10.alListener3f(AL10.AL_POSITION,   getPos().getX(), getPos().getY(),getPos().getZ());
 			AL10.alListenerf(AL10.AL_VELOCITY,    getSpeed());
 			AL10.alListenerf(AL10.AL_ORIENTATION, getOrientation());
-			//Haven't been tested yet
+			//Doesn't work yet
 	}
 	public void kill(){
 		//Death sequence and reposition

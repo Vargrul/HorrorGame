@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -38,6 +39,11 @@ public class DebugInterface {
    	 glLoadIdentity();
    	 glOrtho(0, WidthUnits, 0, LengthUnits, 1, -1); //Sets number of units from bottom to top and left to right.
    	 glMatrixMode(GL_MODELVIEW);
+   	 try {
+		AL.create(); // Initialize OpenAL
+	} catch (LWJGLException e) {
+		e.printStackTrace();
+	}
     }
     
     public static void Draw(Level level){
@@ -46,6 +52,7 @@ public class DebugInterface {
     
     public static void Terminate(){
    	 Display.destroy();
+   	 AL.destroy();
    	 System.exit(0);
     }
 }

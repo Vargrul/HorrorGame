@@ -67,9 +67,17 @@ public class Controls {
 	public Boolean getKEY_DOWN() {
 		return this.keyBack;
 	}
+	
+	public void setKEY_DOWN(boolean state) {
+		this.keyBack = state;
+	}
 
 	public Boolean getKEY_UP() {
 		return this.keyForward;
+	}
+	
+	public void setKEY_UP(boolean state){
+		this.keyForward = state;
 	}
 
 	public Boolean getKEY_LEFT() {
@@ -87,4 +95,11 @@ public class Controls {
 	public Boolean getKEY_ENTER() {
 		return this.keyEnter;
 	}
+	
+	public void setKEY_ENTER(boolean state) {
+		this.keyEnter = state;
+	}
 }
+
+
+

@@ -53,13 +53,13 @@ public class Menu {
 	}
 
 	public static void up() {
-		if (menuNumber != 0) {
+		if (menuNumber > 0 && menuNumber < 3) {
 			menuNumber--;
 		}
 	}
 
 	public static void down() {
-		if (menuNumber != 2) {
+		if (menuNumber < 2 && menuNumber > -1) {
 			menuNumber++;
 		}
 	}
@@ -71,17 +71,15 @@ public class Menu {
 	}
 
 	public static void help() {
+		menuNumber = 3;
 		showMainMenu = false;
 		showHelpMenu = true;
 	}
-
-	public static void quit() {
-		if (showMainMenu == true) {
-			terminate();
-		} else if (showHelpMenu == true) {
-			showHelpMenu = false;
-			showMainMenu = true;
-		}
+	
+	public static void back() {
+		showMainMenu = true;
+		showHelpMenu = false;
+		menuNumber = 0;
 	}
 	
 	public static void terminate(){
@@ -222,11 +220,14 @@ public class Menu {
 
 	private static void input() {
 		controls.takeInput();
+		
 		if (controls.getKEY_UP()) {
 			up();
+			controls.setKEY_UP(false);
 		}
 		if (controls.getKEY_DOWN()) {
 			down();
+			controls.setKEY_DOWN(false);
 		}
 		if (controls.getKEY_ENTER()) {
 			switch (menuNumber) {
@@ -237,11 +238,15 @@ public class Menu {
 				help();
 				break;
 			case 2:
-				quit();
+				terminate();
+				break;
+			case 3:
+				back();
 				break;
 			default:
 				break;
 			}
+			controls.setKEY_ENTER(false);
 		}
 		if (controls.getKEY_ESCAPE()) {
 			terminate();

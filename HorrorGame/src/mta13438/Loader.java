@@ -48,7 +48,7 @@ public class Loader {
 		input();
 		
 		//Draw the Tutorial Levels rooms
-		DebugInterface.Draw(tutorialLevel);
+		tutorialLevel.Draw();
 		
 		//Draw the obs of every room
 		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {

@@ -12,47 +12,43 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 public class DebugInterface {
-    
-    //Length and Width for the Display
-    public static int DisplayLength;
-    public static int DisplayWidth;
-    public static int WidthUnits;
-    public static int LengthUnits;
-    
-    //Takes in the wished Length and Width for the Display
-    public static void Initialize(int Length, int Width){
-   	 DisplayLength = Length;
-   	 DisplayWidth = Width;
-   	 try {
-   		 Display.setDisplayMode(new DisplayMode(DisplayLength, DisplayWidth)); //DisplayMode
-   		 Display.setTitle("MTA13438, P4"); //Title
-   		 Display.create();
-   	 } catch (LWJGLException e) {
-   		 e.printStackTrace();
-   	 }
-    }
-    
-    public static void InitOpenGL(int width, int length){
-   	 WidthUnits = width;
-   	 LengthUnits = length;
-   	 glMatrixMode(GL_PROJECTION);
-   	 glLoadIdentity();
-   	 glOrtho(0, WidthUnits, 0, LengthUnits, 1, -1); //Sets number of units from bottom to top and left to right.
-   	 glMatrixMode(GL_MODELVIEW);
-   	 try {
-		AL.create(); // Initialize OpenAL
-	} catch (LWJGLException e) {
-		e.printStackTrace();
+
+	//Length and Width for the Display
+	public static int DisplayLength;
+	public static int DisplayWidth;
+	public static int WidthUnits;
+	public static int LengthUnits;
+
+	//Takes in the wished Length and Width for the Display
+	public static void Initialize(int Length, int Width){
+		DisplayLength = Length;
+		DisplayWidth = Width;
+		try {
+			Display.setDisplayMode(new DisplayMode(DisplayLength, DisplayWidth)); //DisplayMode
+			Display.setTitle("MTA13438, P4"); //Title
+			Display.create();
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
 	}
-    }
-    
-    public static void Draw(Level level){
-   	 level.Draw();
-    }
-    
-    public static void Terminate(){
-   	 Display.destroy();
-   	 AL.destroy();
-   	 System.exit(0);
-    }
+
+	public static void InitOpenGL(int width, int length){
+		WidthUnits = width;
+		LengthUnits = length;
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, WidthUnits, 0, LengthUnits, 1, -1); //Sets number of units from bottom to top and left to right.
+		glMatrixMode(GL_MODELVIEW);
+		try {
+			AL.create(); // Initialize OpenAL
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void Terminate(){
+		Display.destroy();
+		AL.destroy();
+		System.exit(0);
+	}
 }

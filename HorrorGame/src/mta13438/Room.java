@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Room {
 
-	float dx, dy, dz, sabins;
+	float dx, dy, dz, sabins, doorSize;
 	MATERIALS material;
 	Point pos;
 	Point entrance;
@@ -22,6 +22,7 @@ public class Room {
 		this.entrance = new Point(0, dy/2, 0);
 		this.exit = new Point(10, dy/2, 0);
 		this.material = MATERIALS.ROCK;//Need to add default material
+		this.doorSize = 1;
 	}
 	
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
@@ -32,6 +33,7 @@ public class Room {
 		this.entrance = entrance;
 		this.exit = exit;
 		this.material = material;
+		this.doorSize= 1;
 	}
 	
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
@@ -43,6 +45,19 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 		this.obsList = obsList;
+		this.doorSize = 1;
+	}
+	
+	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
+		this.pos = pos;
+		this.dx = dx;
+		this.dy = dy;
+		this.dz = dz;
+		this.entrance = entrance;
+		this.exit = exit;
+		this.material = material;
+		this.obsList = obsList;
+		this.doorSize = doorSize;
 	}
 	
 	public Point getPos(){
@@ -74,6 +89,9 @@ public class Room {
 	}
 	public List<Obs> getObsList() {
 		return obsList;
+	}
+	public float getDoorSize() {
+		return doorSize;
 	}
 	
 	
@@ -108,6 +126,9 @@ public class Room {
 	public void addObsList(Obs obs) {
 		this.obsList.add(obs);
 	} 
+	public void setDoorSize(float doorSize) {
+		this.doorSize = doorSize;
+	}
 	
 	public boolean isNearEntrance(){
 		// Check Entrance X and Y with pos X and Y; Ignore Z value

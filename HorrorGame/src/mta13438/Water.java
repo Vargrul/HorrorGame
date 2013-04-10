@@ -9,6 +9,14 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Water extends Obs {
 	//private Sound waterSound = new Sound(WATERSOUND,getPos(),10,10);
+	public Water() {
+		super();
+	}
+	
+	public Water(Point point,float dx,float dy,float dz,float sabins) {
+		super(point, dx,dy,dz,sabins);
+	}
+	
 	public void collide(){
 		//waterSound.play(); only when the player walks.
 	}

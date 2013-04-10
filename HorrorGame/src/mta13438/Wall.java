@@ -9,10 +9,18 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Wall extends Obs {
 	
-	private Sound collisionSound = new Sound(HANDSONWALL,getPos(),10,10);
+	//private Sound collisionSound = new Sound(HANDSONWALL,getPos(),10,10);
+	
+	private Wall() {
+		super();
+	}
+	
+	public Wall(Point point,float dx,float dy,float dz,float sabins) {
+		super(point, dx,dy,dz,sabins);
+	}
 	
 	private void collision(){
-		collisionSound.play();
+		//collisionSound.play();
 	}
 	
 	@Override

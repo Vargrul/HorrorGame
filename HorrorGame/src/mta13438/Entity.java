@@ -130,25 +130,25 @@ public class Entity {
 
 	public void draw() {
 		
-		glBegin(GL_TRIANGLES);
+		/**glBegin(GL_TRIANGLES);
 		glColor3f(0f, 0f, 1.0f);
-		/**
 		glVertex3f(getPos().getX() + 0, getPos().getY() + 2.5f, 0);
         glVertex3f(getPos().getX() + 5, getPos().getY() + 0, 0);
         glVertex3f(getPos().getX() + 0, getPos().getY() - 2.5f, 0);
-        **//*
+        **//**
 		System.out.println(Math.cos(getOrientation()) * 2);
         glVertex3f((float) (getPos().getX() + Math.cos(getOrientation()) * 0), (float) (getPos().getY() + Math.sin(getOrientation()) * 2), 0);
         glVertex3f((float) (getPos().getX() + Math.cos(getOrientation()) * 2), (float) (getPos().getY() + Math.sin(getOrientation()) * 0), 0);
         glVertex3f((float) (getPos().getX() + Math.cos(getOrientation()) * 0), (float) (getPos().getY() + Math.sin(getOrientation()) * -2), 0);
-        glEnd();*/
+        glEnd();**/
 
 		
-		 //If a circle is preferred instead of a point. glColor3f(1.0f, 0f, 0f);
-		 glBegin(GL_LINE_STRIP); float f = 0.0f; for(int i = 0; i<30;i++){
-		 glVertex3f(pos.getX()+(float)Math.cos(f),
-		 pos.getY()+(float)Math.sin(f), 0); f = (float) (f +(2*Math.PI/30)); }
-		 glEnd();
+		 //If a circle is preferred instead of a point. 
+		glColor3f(1.0f, 0f, 0f);
+		glBegin(GL_LINE_STRIP); float f = 0.0f; for(int i = 0; i<30;i++){
+		glVertex3f(pos.getX()+(float)Math.cos(f),
+		pos.getY()+(float)Math.sin(f), 0); f = (float) (f +(2*Math.PI/30)); }
+		glEnd();
 		 
 	}
 }

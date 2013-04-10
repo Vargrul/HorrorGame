@@ -9,14 +9,22 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Trap extends Obs {
 	
-	private Sound trapKillSound = new Sound(TRAPKILLSOUND,getPos(),10,10);
-	private Sound trapSound = new Sound(TRAPSOUND,getPos(),10,10);
+	//private Sound trapKillSound = new Sound(TRAPKILLSOUND,getPos(),10,10);
+	//private Sound trapSound = new Sound(TRAPSOUND,getPos(),10,10);
+	
+	public Trap() {
+		super();
+	}
+	
+	public Trap(Point point,float dx,float dy,float dz,float sabins) {
+		super(point, dx,dy,dz,sabins);
+	}
 	
 	public void update(){
-		trapSound.loop();
+		//trapSound.loop();
 	}
 	public void collide(){
-		trapKillSound.play();
+		//trapKillSound.play();
 	}
 	@Override
 	public void draw(){

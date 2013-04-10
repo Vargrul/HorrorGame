@@ -62,7 +62,6 @@ public class Level {
 		for (int i = 0; i < getRoomList().size(); i++) {		
 			if(playerPos.getX() >= getRoomList().get(i).getPos().getX() && playerPos.getX() <= (getRoomList().get(i).getPos().getX() + getRoomList().get(i).getDx()) && playerPos.getY() >= getRoomList().get(i).getPos().getY() && playerPos.getY() <= (getRoomList().get(i).getPos().getY() + getRoomList().get(i).getDy())){
 				currentRoom = i;
-				System.out.println("Current Room:  "+i);	
 			}			
 		}
 		return currentRoom;

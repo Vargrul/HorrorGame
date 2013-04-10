@@ -1,7 +1,6 @@
 package mta13438;
 
 import org.lwjgl.input.Keyboard; // allows to call different keyboard events.
-import org.lwjgl.input.Mouse;
 
 public class Controls {
 

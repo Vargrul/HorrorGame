@@ -45,34 +45,38 @@ public class Player extends Entity {
 		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
-		
+
 		for (int i = 0; i < level.getRoomList().get(currentRoom).getObsList().size(); i++) {
 			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX());
 			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() + level.getRoomList().get(currentRoom).getObsList().get(i).getDx());
 			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY());
 			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + level.getRoomList().get(currentRoom).getObsList().get(i).getDy());
 		}
-		
-		//Checking if the entity is inside the room boundery.
-		//if(){
-			if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
-				x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
-			}else{
-				x = 0.0f + getPos().getX();
-			}
-		//}
 
 		//Checking if the entity is inside the room boundery.
-		//if(){
-			if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
-				y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
-			}else{
-				y = 0.0f + getPos().getY();
-			}
-		//}
+		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
+			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
+		}else{
+			x = 0.0f + getPos().getX();
+		}
+
+		//Checking if the entity is inside the room boundery.
+		if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
+			y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
+		}else{
+			y = 0.0f + getPos().getY();
+		}
 
 		z = 0.0f + getPos().getZ();
 
+		for (int i = 0; i < obsLocations.size()/4; i++) {
+			if(x < obsLocations.get(i) && x > obsLocations.get(i+1)){
+				if(y < obsLocations.get(i+2) && y > obsLocations.get(i+3)){
+					returnBool = true;
+				}
+			}
+		}
+		
 		setPos(x, y, z);
 		return returnBool;
 	}

@@ -32,10 +32,35 @@ public class Player extends Entity {
 			AL10.alListenerf(AL10.AL_ORIENTATION, getOrientation());
 			//Doesn't work yet
 	}
+	
+	public void foward(float delta, Level level, int currentRoom) {
+		float x,y,z,minX,maxX,minY,maxY;
+		
+		minY = level.getRoomList().get(currentRoom).getPos().getY();
+		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
+		minX = level.getRoomList().get(currentRoom).getPos().getX();
+		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
+
+		//Checking if the entity is inside the room boundery.
+		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
+			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
+		}else x = 0.0f + getPos().getX();
+
+		//Checking if the entity is inside the room boundery.
+		if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
+			y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
+		}else y = 0.0f + getPos().getY();
+
+		z = 0.0f + getPos().getZ();
+
+		setPos(x, y, z);
+	}
+	
 	public void kill(){
 		//Death sequence and reposition
 		//Play death sound
 	}
+	
 	@Override
 	public String toString() {
 		return "Player [health=" + getHealth() + ", speed=" + super.getSpeed() + ", orientation=" + super.getOrientation() + "]";

@@ -71,24 +71,11 @@ public class Entity {
 		}
 	}
 
-	public void foward(float delta, Level level, int currentRoom) {
-		float x,y,z,minX,maxX,minY,maxY;
-		
-		minY = level.getRoomList().get(currentRoom).getPos().getY();
-		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
-		minX = level.getRoomList().get(currentRoom).getPos().getX();
-		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
+	public void foward(float delta) {
+		float x,y,z;
 
-		//Checking if the entity is inside the room boundery.
-		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
-			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
-		}else x = 0.0f + getPos().getX();
-
-		//Checking if the entity is inside the room boundery.
-		if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
-			y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
-		}else y = 0.0f + getPos().getY();
-
+		x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
+		y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
 		z = 0.0f + getPos().getZ();
 
 		setPos(x, y, z);
@@ -97,14 +84,14 @@ public class Entity {
 	public void backward(float delta, Level level, int currentRoom) {
 		float x,y,z,minX,maxX,minY,maxY;
 		List<Float> obsList = new ArrayList<Float>();
-		
+
 		minY = level.getRoomList().get(currentRoom).getPos().getY();
 		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
-		
+
 		for (int i = 0; i < obsList.size(); i++) {
-						
+
 		}
 
 		//Checking if the entity is inside the room boundery.
@@ -129,26 +116,26 @@ public class Entity {
 	}
 
 	public void draw() {
-		
+
 		/**glBegin(GL_TRIANGLES);
 		glColor3f(0f, 0f, 1.0f);
 		glVertex3f(getPos().getX() + 0, getPos().getY() + 2.5f, 0);
         glVertex3f(getPos().getX() + 5, getPos().getY() + 0, 0);
         glVertex3f(getPos().getX() + 0, getPos().getY() - 2.5f, 0);
-        **//**
+		 **//**
 		System.out.println(Math.cos(getOrientation()) * 2);
         glVertex3f((float) (getPos().getX() + Math.cos(getOrientation()) * 0), (float) (getPos().getY() + Math.sin(getOrientation()) * 2), 0);
         glVertex3f((float) (getPos().getX() + Math.cos(getOrientation()) * 2), (float) (getPos().getY() + Math.sin(getOrientation()) * 0), 0);
         glVertex3f((float) (getPos().getX() + Math.cos(getOrientation()) * 0), (float) (getPos().getY() + Math.sin(getOrientation()) * -2), 0);
         glEnd();**/
 
-		
-		 //If a circle is preferred instead of a point. 
+
+		//If a circle is preferred instead of a point. 
 		glColor3f(1.0f, 0f, 0f);
 		glBegin(GL_LINE_STRIP); float f = 0.0f; for(int i = 0; i<30;i++){
-		glVertex3f(pos.getX()+(float)Math.cos(f),
-		pos.getY()+(float)Math.sin(f), 0); f = (float) (f +(2*Math.PI/30)); }
+			glVertex3f(pos.getX()+(float)Math.cos(f),
+					pos.getY()+(float)Math.sin(f), 0); f = (float) (f +(2*Math.PI/30)); }
 		glEnd();
-		 
+
 	}
 }

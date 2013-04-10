@@ -1,70 +1,27 @@
 package mta13438;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-
-import java.io.IOException;
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
-
-import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
-
-
 
 public class Loader {
 
-	private static Texture texturePlay;
-	private static Texture texturePlayCheck;
-	private static Texture textureExit;
-	private static Texture textureExitCheck;
-	private static Texture textureHelp;
-	private static Texture textureHelpCheck;
-
-	private static int menuNumber;
 	private static Obs waterPit, wall, trap;
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
-	private static boolean showMainMenu;
-	private static boolean showHelpMenu;
 	private static Controls controls = new Controls();
 	private static Player player = new Player(new Point(15,310,10),0.5f,0.0f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static int currentRoom;
+	private static boolean renderRoom = false;
 
 	public void start() {
-		menuNumber = 0;
-		showMainMenu = true;
-		showHelpMenu = false;
 		DebugInterface.Initialize(800, 600); // Width and Length of display
-		initGL(800,600);
-		init();
+		Menu mainMenu = new Menu();
 		getDelta();
-		while (true) {
-			glClear(GL_COLOR_BUFFER_BIT);
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-
-			render();
-
-			Display.update();
-			Display.sync(60);
-
-			if (Display.isCloseRequested()) {
-				DebugInterface.Terminate();
-				System.exit(0);
-			}
-		}
 	}
 
-	public static void loadTutorialLevel() {
+	private static void loadTutorialLevel() {
 		tutorialLevel.addRoomList(new Room(new Point(10, 300, 0), 10, 20, 20, new Point(10,305,0), new Point(19, 315, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(new Point(20, 290, 0), 60, 50, 30, new Point(21,315,0), new Point(79, 295, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(new Point(80, 290, 0), 50, 10, 20, new Point(81,295,0), new Point(129, 295, 0), MATERIALS.ROCK));
@@ -76,109 +33,47 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(new Point(420, 170, 0), 10, 20, 20, new Point(425,189,0), new Point(425, 171, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(new Point(400, 90, 0), 50, 80, 40, new Point(425,169,0), new Point(425, 91, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(new Point(410, 70, 0), 30, 20, 40, new Point(425,89,0), new Point(425, 70, 0), MATERIALS.ROCK));
-		waterPit = new Obs(new Point(160, 270, 0), 20, 50, 0, 0);
-		wall = new Obs(new Point(330, 280, 0), 10, 70, 0, 0);
-		trap = new Obs(new Point(410, 210, 0), 30, 30, 0, 0);
+		tutorialLevel.getRoomList().get(3).addObsList(waterPit = new Obs(new Point(160, 270, 0), 20, 50, 0, 0));
+		tutorialLevel.getRoomList().get(4).addObsList(wall = new Obs(new Point(330, 280, 0), 10, 70, 0, 0));
+		tutorialLevel.getRoomList().get(7).addObsList(trap = new Obs(new Point(410, 210, 0), 30, 30, 0, 0));
 	}
-
-	private void initGL(int width, int height) {
-
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-		// enable alpha blending
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-		GL11.glViewport(0, 0, width, height);
-
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, width, height, 0, 1, -1);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+	
+	public static void playTutorialLevel(){
+		Display.destroy();
+		loadTutorialLevel();
+		DebugInterface.Initialize(800, 600); // Width and Length of display
+		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
-
-	public void init() {
-		try {
-			// load texture from PNG file
-			texturePlay = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStatic.png"));
-			texturePlayCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStaticFilled.png"));
-			textureHelp = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStatic.png"));
-			textureHelpCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStaticFilled.png"));
-			textureExit = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStatic.png"));
-			textureExitCheck = TextureLoader.getTexture("PNG",
-					ResourceLoader.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStaticFilled.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
+	
+	public static void renderTutorialLevel(){
+		input();
+		
+		//Draw the Tutorial Levels rooms
+		DebugInterface.Draw(tutorialLevel);
+		
+		//Draw the obs of every room
+		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
+			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
+				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
+			}
 		}
+		
+		//Draw the player
+		player.draw();
 	}
 
 	public static void input() {
 		
-		if(showHelpMenu || showMainMenu){
-			while (Keyboard.next()) { // looping through the different controls
-				if (Keyboard.getEventKeyState()) { // nested if statements checking
-					// to see if buttons are pressed
-					if (Keyboard.getEventKey() == Keyboard.KEY_UP) {
-						if (menuNumber != 0 && showMainMenu == true) {
-							menuNumber -= 1;
-						} 
-						if (menuNumber < 0 | menuNumber > 2 && showMainMenu == true){
-							menuNumber = 0;
-						}
-					}
-					if (Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
-						if (menuNumber != 2  && showMainMenu == true) {
-							menuNumber += 1;
-						}
-						if (menuNumber < 0 | menuNumber > 2 && showMainMenu == true){
-							menuNumber = 0;
-						}
-					}
-					if (Keyboard.getEventKey() == Keyboard.KEY_RETURN) {
-						if(showHelpMenu == true){
-							showHelpMenu = false;
-							showMainMenu = true;
-						}
-						if (menuNumber == 0 ) {
-							showHelpMenu = false;
-							showMainMenu = false;
-							Display.destroy();
-							DebugInterface.Initialize(800, 600); // Width and Length of display
-							DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
-							loadTutorialLevel();
-						}
-						if (menuNumber == 1) {
-							showMainMenu = false;
-							showHelpMenu = true;
-							menuNumber = -1;
-						}
-						if (menuNumber == 2) {
-							System.exit(0);
-						}
-					}
-					if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
-						System.exit(0);
-					}
-				}
-			}
-		}else{
-			controls.takeInput();
+		controls.takeInput();	
+							
 			currentRoom = tutorialLevel.getCurrentRoom(player.getPos());
 			delta = getDelta();
 			
 			if(controls.getKEY_UP()){
-				player.foward(delta/10, tutorialLevel.getRoomList().get(currentRoom).getPos().getX() ,tutorialLevel.getRoomList().get(currentRoom).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getDx(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getDy());
+				player.foward(delta/10, tutorialLevel, currentRoom);
 			}
 			if(controls.getKEY_DOWN()){
-				player.backward(delta/10, tutorialLevel.getRoomList().get(currentRoom).getPos().getX() ,tutorialLevel.getRoomList().get(currentRoom).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getDx(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY(), tutorialLevel.getRoomList().get(currentRoom).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getDy());
+				player.backward(delta/10, tutorialLevel, currentRoom);
 			}
 			if(controls.getKEY_LEFT()){
 				player.turnLeft(delta/10);
@@ -186,95 +81,13 @@ public class Loader {
 			if(controls.getKEY_RIGHT()){
 				player.turnRight(delta/10);
 			}
-		}	
 	}
-
-	public static void render() {
-		if (showMainMenu == true) {
-			input();
-			if (menuNumber != 0) {
-				texturePlay.bind();
-			}
-			if (menuNumber == 0) {
-				texturePlayCheck.bind();
-			}
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 50);
-			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 50);
-			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					50 + texturePlay.getTextureHeight());
-			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 50 + texturePlay.getTextureHeight());
-			GL11.glEnd();
-			if (menuNumber != 1) {
-				textureHelp.bind();
-			}
-			if (menuNumber == 1) {
-				textureHelpCheck.bind();
-			}
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 150);
-			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
-			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					150 + texturePlay.getTextureHeight());
-			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
-			GL11.glEnd();
-			if (menuNumber != 2) {
-				textureExit.bind(); 
-			}
-			if (menuNumber == 2) {
-				textureExitCheck.bind();
-			}
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 250);
-			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 250);
-			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					250 + texturePlay.getTextureHeight());
-			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 250 + texturePlay.getTextureHeight());
-			GL11.glEnd();
-		}
-		if (showHelpMenu == true && showMainMenu == false) {
-			input();
-			textureExitCheck.bind();
-
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 150);
-			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
-			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					150 + texturePlay.getTextureHeight());
-			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
-			GL11.glEnd();
-		}
-		if(showHelpMenu == false && showMainMenu == false){
-			input();
-			DebugInterface.Draw(tutorialLevel);
-			waterPit.draw();
-			wall.draw();
-			trap.draw();
-			player.draw();
-		}
-	}
+	
 
 	public static int getDelta() {
 		long time = getTime();
 		int delta = (int) (time - lastFrame);
 		lastFrame = time;
-
 		return delta;
 	}
 

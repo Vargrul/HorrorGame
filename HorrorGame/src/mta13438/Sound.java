@@ -10,6 +10,7 @@ import static org.lwjgl.openal.AL10.alSourcei;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -21,7 +22,8 @@ import org.lwjgl.util.WaveData;
 
 public class Sound {
 	
-	
+	//Each sound have an IntBuffer to hold the sound and it's effects
+	//and another IntBuffer to hold the position and s
 	IntBuffer buffer = BufferUtils.createIntBuffer(1);
 	IntBuffer source = BufferUtils.createIntBuffer(1);
 	Point pos;
@@ -31,14 +33,17 @@ public class Sound {
 	
 		AL10.alGenBuffers(buffer);
 		
-		this.pos = point;
-		
-		// Keep FloatBuffer for possible use later
-		//FloatBuffer sourcePos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { point.getX(), point.getY(), point.getZ() }).rewind();
-		FloatBuffer sourceVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+		//Set Position 
+		pos = point;
 		
 		//Loads the wave file from this class's package in your classpath
-		WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("res" + File.separatorChar + soundname)));
+		WaveData waveFile = null;
+		try {
+			waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("res" + File.separatorChar + soundname)));
+		} catch (FileNotFoundException e) {
+			System.out.println("File could not be loaded from Classpath");
+			e.printStackTrace();
+		}
 		
 		//Puts Sound data in buffer and disposes afterwards
 		AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
@@ -50,20 +55,16 @@ public class Sound {
 		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    pitch          );
 		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
-		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
-		AL10.alSource (source.get(0), AL10.AL_VELOCITY, sourceVel     );
+		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
+		//AL10.alSource(source.get(0), AL10.AL_VELOCITY, sourceVel     );
+		//Velocity gives problems atm. 
 		
-		//Setup setListenerValues
-		setListenerValues(player.getPos(), point, point); // Need 3 Points as input
+		//Setup of Listener Values now happens in player.java class
+		
 		
 	}// need killALData() and AL.destroy() before program close
 	
-	public void setListenerValues(Point Position, Point Velocity, Float Orientation){
-		AL10.alListener3f(AL10.AL_POSITION,    Position.getX(), Position.getY(), Position.getZ());
-		AL10.alListener3f(AL10.AL_VELOCITY,    Velocity.getX(), Velocity.getY(), Velocity.getZ());
-		AL10.alListenerf(AL10.AL_ORIENTATION, Orientation);
-		//Possibly put into player Class
-	}
+	//Update function for updating position, pitch and gain
 	public void update(Point point, float pitch, float gain){
 		this.pos = point;
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    pitch          );
@@ -84,15 +85,20 @@ public class Sound {
 	}
 	public void loop(){
 		AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
+		AL10.alSourcePlay(source);
 	}
 	public Point getPos(){
 		return this.pos;
 	}
+	
+	//Change the position of a sound object. 
+	//Should be performed each time the object from the sound gets
 	public void setPos(Point point){
 		this.pos = point;
 		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
 	
+	//Removes the source and buffer
 	public void delete(){
 		AL10.alDeleteSources(source);
 		AL10.alDeleteBuffers(buffer);

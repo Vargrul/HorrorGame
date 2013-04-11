@@ -52,7 +52,7 @@ public class Player extends Entity {
 			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY());
 			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + level.getRoomList().get(currentRoom).getObsList().get(i).getDy());
 		}
-
+		 
 		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
 			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
@@ -70,8 +70,8 @@ public class Player extends Entity {
 		z = 0.0f + getPos().getZ();
 
 		for (int i = 0; i < obsLocations.size()/4; i++) {
-			if(x < obsLocations.get(i) && x > obsLocations.get(i+1)){
-				if(y < obsLocations.get(i+2) && y > obsLocations.get(i+3)){
+			if(x >= obsLocations.get(i*4) && x <= obsLocations.get(i*4+1)){
+				if(y >= obsLocations.get(i*4+2) && y <= obsLocations.get(i*4+3)){
 					returnBool = true;
 				}
 			}

@@ -19,10 +19,10 @@ public class Room {
 		this.dx = 10;
 		this.dz = 10;
 		this.dy = 10;
-		this.entrance = new Point(0, dy/2, 0);
-		this.exit = new Point(10, dy/2, 0);
 		this.material = MATERIALS.ROCK;//Need to add default material
-		this.doorSize = 1;
+		this.doorSize = 4;
+		this.entrance = new Point(0, dy/2-doorSize/2, 0);
+		this.exit = new Point(dx, dy/2-doorSize/2, 0);
 		generateDoorObs();
 	}
 
@@ -34,7 +34,7 @@ public class Room {
 		this.entrance = entrance;
 		this.exit = exit;
 		this.material = material;
-		this.doorSize= 1;
+		this.doorSize= 4;
 		generateDoorObs();
 	}
 
@@ -47,7 +47,7 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 		this.obsList = obsList;
-		this.doorSize = 1;
+		this.doorSize = 4;
 		generateDoorObs();
 	}
 
@@ -66,25 +66,24 @@ public class Room {
 
 	private void generateDoorObs(){
 		if (entrance.getX() == pos.getX()) {
-			obsList.add(new Door(entrance,0.01f,doorSize,10f,0));
+			obsList.add(new Door(entrance,0.1f,doorSize,10f,0));
 		}else if (entrance.getX() == pos.getX() + dx) {
-			obsList.add(new Door(new Point(entrance.getX() - 0.01f,entrance.getY(), entrance.getZ()),0.01f,doorSize,10f,0));
+			obsList.add(new Door(new Point(entrance.getX() - 0.1f,entrance.getY(), entrance.getZ()),0.1f,doorSize,10f,0));
 		}else if (entrance.getY() == pos.getY()) {
-			obsList.add(new Door(entrance,doorSize,0.01f,10f,0));
+			obsList.add(new Door(entrance,doorSize,0.1f,10f,0));
 		}else if (entrance.getY() == pos.getY() + dy) {
-			obsList.add(new Door(new Point(entrance.getX(),entrance.getY() - 0.01f, entrance.getZ()),0.01f,doorSize,10f,0));
+			obsList.add(new Door(new Point(entrance.getX(),entrance.getY() - 0.1f, entrance.getZ()),doorSize,0.1f,10f,0));
 		}
 		
 		if (exit.getX() == pos.getX()) {
-			obsList.add(new Door(exit,0.01f,doorSize,10f,0));
+			obsList.add(new Door(exit,0.1f,doorSize,10f,0));
 		}else if (exit.getX() == pos.getX() + dx) {
-			obsList.add(new Door(new Point(exit.getX() - 0.01f,exit.getY(), exit.getZ()),0.01f,doorSize,10f,0));
+			obsList.add(new Door(new Point(exit.getX() - 0.1f,exit.getY(), exit.getZ()),0.1f,doorSize,10f,0));
 		}else if (exit.getY() == pos.getY()) {
-			obsList.add(new Door(exit,doorSize,0.01f,10f,0));
+			obsList.add(new Door(exit,doorSize,0.1f,10f,0));
 		}else if (exit.getY() == pos.getY() + dy) {
-			obsList.add(new Door(new Point(exit.getX(),exit.getY() - 0.01f, exit.getZ()),0.01f,doorSize,10f,0));
+			obsList.add(new Door(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,0));
 		}
-		 System.out.println(obsList);
 	}
 
 	public Point getPos(){
@@ -176,7 +175,6 @@ public class Room {
 		glEnd();
 	}
 
-
 	public String toString(){ // not updated
 		return "ROOM: \n Width = " + dx + ".\n Height = " +
 		dz + ".\n Length = " + dy + ".\n Entrance = " 
@@ -184,6 +182,5 @@ public class Room {
 		sabins + ".\n";
 		// When variable changes have been decided, changes method.
 	} 
-
 
 }

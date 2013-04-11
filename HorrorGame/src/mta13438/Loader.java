@@ -8,7 +8,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(15,310,10),0.5f,0.01f,10);
+	private static Player player = new Player(new Point(140,310,10),0.5f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static int currentRoom;

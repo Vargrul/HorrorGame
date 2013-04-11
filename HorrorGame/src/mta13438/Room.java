@@ -13,7 +13,7 @@ public class Room {
 	Point entrance;
 	Point exit;
 	List<Obs> obsList = new ArrayList<Obs>();
-	
+
 	public Room(){
 		this.pos = new Point();
 		this.dx = 10;
@@ -23,8 +23,9 @@ public class Room {
 		this.exit = new Point(10, dy/2, 0);
 		this.material = MATERIALS.ROCK;//Need to add default material
 		this.doorSize = 1;
+		generateDoorObs();
 	}
-	
+
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
 		this.pos = pos;
 		this.dx = dx;
@@ -34,8 +35,9 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 		this.doorSize= 1;
+		generateDoorObs();
 	}
-	
+
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
 		this.pos = pos;
 		this.dx = dx;
@@ -46,8 +48,9 @@ public class Room {
 		this.material = material;
 		this.obsList = obsList;
 		this.doorSize = 1;
+		generateDoorObs();
 	}
-	
+
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
 		this.pos = pos;
 		this.dx = dx;
@@ -58,8 +61,32 @@ public class Room {
 		this.material = material;
 		this.obsList = obsList;
 		this.doorSize = doorSize;
+		generateDoorObs();
 	}
-	
+
+	private void generateDoorObs(){
+		if (entrance.getX() == pos.getX()) {
+			obsList.add(new Door(entrance,0.01f,doorSize,10f,0));
+		}else if (entrance.getX() == pos.getX() + dx) {
+			obsList.add(new Door(new Point(entrance.getX() - 0.01f,entrance.getY(), entrance.getZ()),0.01f,doorSize,10f,0));
+		}else if (entrance.getY() == pos.getY()) {
+			obsList.add(new Door(entrance,doorSize,0.01f,10f,0));
+		}else if (entrance.getY() == pos.getY() + dy) {
+			obsList.add(new Door(new Point(entrance.getX(),entrance.getY() - 0.01f, entrance.getZ()),0.01f,doorSize,10f,0));
+		}
+		
+		if (exit.getX() == pos.getX()) {
+			obsList.add(new Door(exit,0.01f,doorSize,10f,0));
+		}else if (exit.getX() == pos.getX() + dx) {
+			obsList.add(new Door(new Point(exit.getX() - 0.01f,exit.getY(), exit.getZ()),0.01f,doorSize,10f,0));
+		}else if (exit.getY() == pos.getY()) {
+			obsList.add(new Door(exit,doorSize,0.01f,10f,0));
+		}else if (exit.getY() == pos.getY() + dy) {
+			obsList.add(new Door(new Point(exit.getX(),exit.getY() - 0.01f, exit.getZ()),0.01f,doorSize,10f,0));
+		}
+		 System.out.println(obsList);
+	}
+
 	public Point getPos(){
 		return pos;
 	}
@@ -93,8 +120,8 @@ public class Room {
 	public float getDoorSize() {
 		return doorSize;
 	}
-	
-	
+
+
 	public void setPos(Point pos){
 		this.pos = pos;
 	}
@@ -129,68 +156,34 @@ public class Room {
 	public void setDoorSize(float doorSize) {
 		this.doorSize = doorSize;
 	}
-	
-	public boolean isNearEntrance(){
-		// Check Entrance X and Y with pos X and Y; Ignore Z value
-		
-		return false;
-	}
-	public boolean isNearExit(){
-		// Check Exit X and Y with pos X and Y; Ignore Z value
-		
-		return false;
-	}
-	
+
 	public void draw() {
-	   	 glColor3f(1.0f, 1.0f, 1.0f);
-	   	 glLineWidth(1.5f);
-	   	 glBegin(GL_LINES);
-	   		 //Bottom Line
-	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
-	   		 //Left Line
-	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
-	   		 //Top Line
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
-	   		 //Right Line
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
-	   	 glEnd();
-	   	 
-	   	 if(entrance != null || entrance.getX()!=0 && entrance.getY()!=0 && entrance.getZ()!=0){//Check if there are an entrance point, then draw RED circle
-	   		 glColor3f(1.0f, 0f, 0f);
-	   		 glBegin(GL_LINE_STRIP);
-	   		 float f = 0.0f;
-	   		 for(int i = 0; i<30;i++){
-	   			 glVertex3f(entrance.getX()+(float)Math.cos(f), entrance.getY()+(float)Math.sin(f), 0);
-	   			 f = (float) (f +(2*Math.PI/30));
-	   		 }
-	   		 glEnd();
-	   	 }
-	   	 
-	   	 if(exit != null || exit.getX()!=0 && exit.getY()!=0 && exit.getZ()!=0){ //Check if there are an exit point, then draw ORANGE circle
-	   		 glColor3f(1.0f, 0.6f, 0f);
-	   		 glBegin(GL_LINE_STRIP);
-	   		 float h = 0.0f;
-	   		 for(int i = 0; i<30;i++){
-	   			 glVertex3f(exit.getX()+(float)Math.cos(h), exit.getY()+(float)Math.sin(h), 0);
-	   			 h = (float) (h +(2*Math.PI/30));
-	   		 }
-	   		 glEnd();
-	   	 }
-	   	 
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glLineWidth(0.5f);
+		glBegin(GL_LINES);
+		//Bottom Line
+		glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
+		//Left Line
+		glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+		glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
+		//Top Line
+		glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
+		//Right Line
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
+		glEnd();
 	}
 
-	
+
 	public String toString(){ // not updated
 		return "ROOM: \n Width = " + dx + ".\n Height = " +
-				dz + ".\n Length = " + dy + ".\n Entrance = " 
-				+ entrance + ".\n Exit = " + exit + ".\n Sabins = " +
-				 sabins + ".\n";
+		dz + ".\n Length = " + dy + ".\n Entrance = " 
+		+ entrance + ".\n Exit = " + exit + ".\n Sabins = " +
+		sabins + ".\n";
 		// When variable changes have been decided, changes method.
 	} 
-	
-	
+
+
 }

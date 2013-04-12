@@ -20,7 +20,7 @@ public class Wall extends Obs {
 	}
 	
 	public void collision(){
-		//waterSound.play(); only when the player walks.
+		System.out.println("Collision with wall");
 	}
 	
 	@Override

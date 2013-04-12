@@ -19,8 +19,9 @@ public class Door extends Obs{
 		super(point, dx,dy,dz,sabins);
 	}
 
-	private void collision(Player player, Level level, int currentRoom){
-		player.setPos(level.getRoomList().get(currentRoom+1).exit);
+	public void collision(){
+		System.out.println("Collision with door");
+		//player.setPos(level.getRoomList().get(currentRoom+1).exit);
 	}
 
 	@Override

@@ -17,10 +17,9 @@ public class Water extends Obs {
 		super(point, dx,dy,dz,sabins);
 	}
 	
-	public void collide(){
-		//waterSound.play(); only when the player walks.
+	public void collision(){
+		System.out.println("Collision Detected with water");
 	}
-
 	
 	@Override
 	public String toString() {

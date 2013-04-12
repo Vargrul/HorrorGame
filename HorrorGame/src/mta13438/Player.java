@@ -36,23 +36,14 @@ public class Player extends Entity {
 		//Doesn't work yet
 	}
 
-	public Boolean foward(float delta, Level level, int currentRoom) {
-		Float x,y,z,minX,maxX,minY,maxY;
-		List<Float> obsLocations = new ArrayList<Float>();
-		Boolean returnBool = false;
+	public void foward(float delta, Level level, int currentRoom) {
+		Float x,y,z,minX,maxX,minY,maxY;		
 
 		minY = level.getRoomList().get(currentRoom).getPos().getY();
 		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
 
-		for (int i = 0; i < level.getRoomList().get(currentRoom).getObsList().size(); i++) {
-			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX());
-			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() + level.getRoomList().get(currentRoom).getObsList().get(i).getDx());
-			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY());
-			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + level.getRoomList().get(currentRoom).getObsList().get(i).getDy());
-		}
-		 
 		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
 			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
@@ -69,15 +60,28 @@ public class Player extends Entity {
 
 		z = 0.0f + getPos().getZ();
 
+		setPos(x, y, z);
+	}
+
+	public boolean collisionCheck(Level level, int currentRoom) {
+		Boolean returnBool = false;
+		List<Float> obsLocations = new ArrayList<Float>();
+
+		for (int i = 0; i < level.getRoomList().get(currentRoom).getObsList().size(); i++) {
+			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX());
+			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() + level.getRoomList().get(currentRoom).getObsList().get(i).getDx());
+			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY());
+			obsLocations.add(level.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + level.getRoomList().get(currentRoom).getObsList().get(i).getDy());
+		}
+
 		for (int i = 0; i < obsLocations.size()/4; i++) {
-			if(x >= obsLocations.get(i*4) && x <= obsLocations.get(i*4+1)){
-				if(y >= obsLocations.get(i*4+2) && y <= obsLocations.get(i*4+3)){
+			if(getPos().getX() >= obsLocations.get(i*4) && getPos().getX() <= obsLocations.get(i*4+1)){
+				if(getPos().getY() >= obsLocations.get(i*4+2) && getPos().getY() <= obsLocations.get(i*4+3)){
 					returnBool = true;
 				}
 			}
 		}
-		
-		setPos(x, y, z);
+
 		return returnBool;
 	}
 

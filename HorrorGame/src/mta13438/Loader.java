@@ -13,6 +13,7 @@ public class Loader {
 	private static int delta = getDelta();
 	private static int currentRoom;
 	private static boolean renderRoom = false;
+	private static boolean collision = false;
 
 	public void start() {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
@@ -36,52 +37,67 @@ public class Loader {
 		tutorialLevel.getRoomList().get(4).addObsList(new Wall(new Point(330, 280, 0), 10, 70, 0, 0));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(410, 210, 0), 30, 30, 0, 0));
 	}
-	
+
 	public static void playTutorialLevel(){
 		Display.destroy();
 		loadTutorialLevel();
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
-	
+
 	public static void renderTutorialLevel(){
 		input();
-		
+		collision = player.collisionCheck(tutorialLevel, currentRoom);
+
+		if(collision){
+			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
+				if(player.getPos().getX() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() && 
+						player.getPos().getX() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDx()){
+					if(player.getPos().getY() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() &&
+						player.getPos().getY() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDy()){
+						tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).collision();
+						System.out.println(tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i));
+					}
+				}
+			}
+		}
+
+
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();
-		
+
 		//Draw the obs of every room
 		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
 			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
-		
+
 		//Draw the player
 		player.draw();
 	}
 
 	public static void input() {
-		
+
 		controls.takeInput();	
-							
-			currentRoom = tutorialLevel.getCurrentRoom(player.getPos());
-			delta = getDelta();
-			
-			if(controls.getKEY_UP()){
-				player.foward(delta/10, tutorialLevel, currentRoom);
-			}
-			if(controls.getKEY_DOWN()){
-				player.backward(delta/10, tutorialLevel, currentRoom);
-			}
-			if(controls.getKEY_LEFT()){
-				player.turnLeft(delta/10);
-			}
-			if(controls.getKEY_RIGHT()){
-				player.turnRight(delta/10);
-			}
+
+		currentRoom = tutorialLevel.getCurrentRoom(player.getPos());
+		delta = getDelta();
+
+		if(controls.getKEY_UP()){
+			player.foward(delta/10, tutorialLevel, currentRoom);
+		}
+		if(controls.getKEY_DOWN()){
+			player.backward(delta/10, tutorialLevel, currentRoom);
+		}
+		if(controls.getKEY_LEFT()){
+			player.turnLeft(delta/10);
+		}
+		if(controls.getKEY_RIGHT()){
+			player.turnRight(delta/10);
+		}
 	}
-	
+
 
 	public static int getDelta() {
 		long time = getTime();

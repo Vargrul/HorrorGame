@@ -70,6 +70,46 @@ public class Player extends Entity {
 
 		setPos(x, y, z);
 	}
+	
+	public void backward(float delta, Level level, int currentRoom) {
+		float x,y,z,minX,maxX,minY,maxY;
+		List<Float> obsList = new ArrayList<Float>();
+
+		minY = level.getRoomList().get(currentRoom).getPos().getY();
+		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
+		minX = level.getRoomList().get(currentRoom).getPos().getX();
+		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
+
+		for (int i = 0; i < obsList.size(); i++) {
+
+		}
+
+		//Checking if the entity is inside the room boundery.
+		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
+			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));
+		}else{
+			if(getSpeed() * Math.cos(getOrientation()) * delta < 0){
+				x = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx() - 0.01f;
+			}else{
+				x = level.getRoomList().get(currentRoom).getPos().getX() + 0.01f;
+			}
+		}
+
+		//Checking if the entity is inside the room boundery.
+		if(getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) >= minY && getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) <= maxY){
+			y = getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta));
+		}else{
+			if(getSpeed() * Math.sin(getOrientation()) * delta < 0){
+				y = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy() - 0.01f;
+			}else{
+				y = level.getRoomList().get(currentRoom).getPos().getY() + 0.01f;
+			}
+		}
+
+		z = getPos().getZ() - 0.0f;
+
+		setPos(x, y, z);
+	}
 
 	public boolean collisionCheck(Level level, int currentRoom) {
 		Boolean returnBool = false;

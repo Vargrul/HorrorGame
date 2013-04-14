@@ -48,14 +48,22 @@ public class Player extends Entity {
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
 			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
 		}else{
-			x = 0.0f + getPos().getX();
+			if(getSpeed() * Math.cos(getOrientation()) * delta > 0){
+				x = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx() - 0.01f;
+			}else{
+				x = level.getRoomList().get(currentRoom).getPos().getX() + 0.01f;
+			}
 		}
 
 		//Checking if the entity is inside the room boundery.
 		if(getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) >= minY && getPos().getY() + ((getSpeed() * Math.sin(getOrientation())) * delta) <= maxY){
 			y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
 		}else{
-			y = 0.0f + getPos().getY();
+			if(getSpeed() * Math.sin(getOrientation()) * delta > 0){
+				y = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy() - 0.01f;
+			}else{
+				y = level.getRoomList().get(currentRoom).getPos().getY() + 0.01f;
+			}
 		}
 
 		z = 0.0f + getPos().getZ();

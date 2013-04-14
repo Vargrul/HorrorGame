@@ -62,7 +62,7 @@ public class Obs {
 		this.sabins = sabins;
 	}
 	
-	public void collision(){
+	public void collision(Player player, Level level, int currentRoom){
 	}
 	
 	public void draw() {

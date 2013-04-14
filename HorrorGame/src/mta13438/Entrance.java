@@ -7,21 +7,38 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLineWidth;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
-public class Door extends Obs{
+public class Entrance extends Obs{
 
-	//private Sound collisionSound = new Sound(HANDSONWALL,getPos(),10,10);
+	private boolean locked;
 
-	private Door() {
+	private Entrance() {
 		super();
+		this.locked = false;
 	}
 
-	public Door(Point point,float dx,float dy,float dz,float sabins) {
+	public Entrance(Point point,float dx,float dy,float dz,float sabins) {
 		super(point, dx,dy,dz,sabins);
+		this.locked = false;
 	}
 
-	public void collision(){
+	public Entrance(Point point,float dx,float dy,float dz,float sabins,boolean locked) {
+		super(point, dx,dy,dz,sabins);
+		this.locked = locked;
+	}
+
+	public void collision(Player player, Level level, int currentRoom){
 		System.out.println("Collision with door");
-		//player.setPos(level.getRoomList().get(currentRoom+1).exit);
+		if(!locked){
+			if(getPos().getX() == level.getRoomList().get(currentRoom).getPos().getX()){
+				player.setPos(level.getRoomList().get(currentRoom-1).exit.getX() - 0.11f, player.getPos().getY(), player.getPos().getZ());	
+			}else if(getPos().getX() + getDx() == level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx()){
+				player.setPos(level.getRoomList().get(currentRoom+1).exit.getX() + 0.11f, player.getPos().getY(), player.getPos().getZ());
+			}else if(getPos().getY() == level.getRoomList().get(currentRoom).getPos().getY()){
+				player.setPos(player.getPos().getX(), level.getRoomList().get(currentRoom+1).exit.getY() - 0.11f, player.getPos().getZ());
+			}else{
+				player.setPos(player.getPos().getX(), level.getRoomList().get(currentRoom+1).exit.getY() + 0.11f, player.getPos().getZ());
+			}
+		}
 	}
 
 	@Override
@@ -31,7 +48,7 @@ public class Door extends Obs{
 	}
 	@Override
 	public void draw(){
-		glColor4f(0.54f, 0.27f, 0.07f, 0.5f);
+		glColor4f(0f, 0.80f, 0f, 0f);
 		glLineWidth(1f);
 		glBegin(GL_LINES);
 		//Bottom Line
@@ -48,5 +65,4 @@ public class Door extends Obs{
 		glVertex2i((int)(getPos().getX()+this.getDx()), (int)getPos().getY());
 		glEnd();
 	}
-
 }

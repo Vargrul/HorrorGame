@@ -19,7 +19,7 @@ public class Wall extends Obs {
 		super(point, dx,dy,dz,sabins);
 	}
 	
-	public void collision(){
+	public void collision(Player player, Level level, int currentRoom){
 		System.out.println("Collision with wall");
 	}
 	

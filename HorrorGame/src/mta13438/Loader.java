@@ -14,7 +14,12 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-
+	
+	//testing
+	private static Sound testsound = new Sound(SOUNDS.HEARTBEAT, player.getPos(), true);
+	private static boolean playing = false;
+	
+	
 	public void start() {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -36,6 +41,7 @@ public class Loader {
 		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(160, 270, 0), 20, 50, 0, 0));
 		tutorialLevel.getRoomList().get(4).addObsList(new Wall(new Point(330, 280, 0), 10, 70, 0, 0));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(410, 210, 0), 30, 30, 0, 0));
+		
 	}
 
 	public static void playTutorialLevel(){
@@ -60,8 +66,15 @@ public class Loader {
 				}
 			}
 		}
-
-
+		//Sound testing
+		testsound.update(player.getPos());
+		System.out.println(testsound);
+		
+		if(playing == false){
+			testsound.play();
+			playing = true;
+		}
+		
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();
 

@@ -33,11 +33,6 @@ public class Sound {
 	
 	//Figured out that we needed a constructor;
 	public Sound(SOUNDS soundname, Point point, boolean looping){
-		try {
-			AL.create();
-		} catch (LWJGLException e1) {
-			e1.printStackTrace();
-		}
 		AL10.alGenBuffers(buffer);
 		
 		//Set Position 
@@ -67,7 +62,6 @@ public class Sound {
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 		}
 		
-		AL10.alListener3f(AL10.AL_POSITION,   pos.getX(), pos.getY(),pos.getZ());
 	}// need killALData() and AL.destroy() before program close
 	
 	//Update function for updating position, pitch and gain

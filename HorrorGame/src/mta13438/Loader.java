@@ -67,8 +67,8 @@ public class Loader {
 			}
 		}
 		//Sound testing
-		testsound.update(player.getPos());
-		System.out.println(testsound);
+		testsound.update(tutorialLevel.getRoomList().get(currentRoom).getObsList().get(2).getPos());
+		player.setListener(player.getPos());
 		
 		if(playing == false){
 			testsound.play();

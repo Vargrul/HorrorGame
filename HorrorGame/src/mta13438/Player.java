@@ -1,9 +1,11 @@
 package mta13438;
 
 import java.io.ObjectInputStream;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
 
 public class Player extends Entity {
@@ -28,12 +30,16 @@ public class Player extends Entity {
 		this.health = health;
 	}
 	public void setListener(Point pos){ // Since only one listener will/can exist at a time, this function 
+		
+		float x, y;
+		x = (float) (Math.cos(getOrientation() + getPos().getX()));
+		y = (float) (Math.sin(getOrientation() + getPos().getY()));
 		// initializes listener values, using the position values of the object.
-
+		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  x, y, 0.0f });
+		listenerOri.flip();
 		//Uses getters from the entity class
-		//AL10.alListener3f(AL10.AL_POSITION,   pos.getX(), pos.getY(),pos.getZ());
-		//AL10.alListenerf(AL10.AL_VELOCITY,    getSpeed());
-		//AL10.alListenerf(AL10.AL_ORIENTATION, getOrientation());
+		AL10.alListener3f(AL10.AL_POSITION,   pos.getX(), pos.getY(),pos.getZ());
+		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
 		//Doesn't work yet
 	}
 

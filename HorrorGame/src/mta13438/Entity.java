@@ -81,32 +81,12 @@ public class Entity {
 		setPos(x, y, z);
 	}
 
-	public void backward(float delta, Level level, int currentRoom) {
-		float x,y,z,minX,maxX,minY,maxY;
-		List<Float> obsList = new ArrayList<Float>();
-
-		minY = level.getRoomList().get(currentRoom).getPos().getY();
-		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
-		minX = level.getRoomList().get(currentRoom).getPos().getX();
-		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
-
-		for (int i = 0; i < obsList.size(); i++) {
-
-		}
-
-		//Checking if the entity is inside the room boundery.
-		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
-			//Makes the entity move in the x direction
-			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));
-		}else x = getPos().getX() - 0.0f;
-
-		//Checking if the entity is inside the room boundery.
-		if(getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) >= minY && getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta)) <= maxY){
-			//Makes the entity move in the x direction
-			y = getPos().getY() - (float) ((getSpeed() * Math.sin(getOrientation()) * delta));
-		}else y =getPos().getY() - 0.0f;
-
-		z = getPos().getZ() - 0.0f;
+	public void backward(float delta) {
+		float x,y,z;
+		
+		x = (float) (getPos().getX() - (getSpeed() * Math.cos(getOrientation()) * delta));
+		y = (float) (getPos().getY() - (getSpeed() * Math.sin(getOrientation()) * delta));
+		z = 0.0f + getPos().getZ();
 
 		setPos(x, y, z);
 	}

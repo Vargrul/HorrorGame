@@ -66,23 +66,23 @@ public class Room {
 
 	private void generateDoorObs(){
 		if (entrance.getX() == pos.getX()) {
-			obsList.add(new Door(entrance,0.1f,doorSize,10f,0));
+			obsList.add(new Entrance(entrance,0.1f,doorSize,10f,0));
 		}else if (entrance.getX() == pos.getX() + dx) {
-			obsList.add(new Door(new Point(entrance.getX() - 0.1f,entrance.getY(), entrance.getZ()),0.1f,doorSize,10f,0));
+			obsList.add(new Entrance(new Point(entrance.getX() - 0.1f,entrance.getY(), entrance.getZ()),0.1f,doorSize,10f,0));
 		}else if (entrance.getY() == pos.getY()) {
-			obsList.add(new Door(entrance,doorSize,0.1f,10f,0));
+			obsList.add(new Entrance(entrance,doorSize,0.1f,10f,0));
 		}else if (entrance.getY() == pos.getY() + dy) {
-			obsList.add(new Door(new Point(entrance.getX(),entrance.getY() - 0.1f, entrance.getZ()),doorSize,0.1f,10f,0));
+			obsList.add(new Entrance(new Point(entrance.getX(),entrance.getY() - 0.1f, entrance.getZ()),doorSize,0.1f,10f,0));
 		}
 		
 		if (exit.getX() == pos.getX()) {
-			obsList.add(new Door(exit,0.1f,doorSize,10f,0));
+			obsList.add(new Exit(exit,0.1f,doorSize,10f,0));
 		}else if (exit.getX() == pos.getX() + dx) {
-			obsList.add(new Door(new Point(exit.getX() - 0.1f,exit.getY(), exit.getZ()),0.1f,doorSize,10f,0));
+			obsList.add(new Exit(new Point(exit.getX() - 0.1f,exit.getY(), exit.getZ()),0.1f,doorSize,10f,0));
 		}else if (exit.getY() == pos.getY()) {
-			obsList.add(new Door(exit,doorSize,0.1f,10f,0));
+			obsList.add(new Exit(exit,doorSize,0.1f,10f,0));
 		}else if (exit.getY() == pos.getY() + dy) {
-			obsList.add(new Door(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,0));
+			obsList.add(new Exit(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,0));
 		}
 	}
 

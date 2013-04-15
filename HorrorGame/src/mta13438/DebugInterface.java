@@ -39,11 +39,7 @@ public class DebugInterface {
 		glLoadIdentity();
 		glOrtho(0, WidthUnits, 0, LengthUnits, 1, -1); //Sets number of units from bottom to top and left to right.
 		glMatrixMode(GL_MODELVIEW);
-		try {
-			AL.create(); // Initialize OpenAL
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	public static void Terminate(){

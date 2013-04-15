@@ -23,7 +23,8 @@ public class Trap extends Obs {
 	public void update(){
 		//trapSound.loop();
 	}
-	public void collide(){
+	public void collision(Player player, Level level, int currentRoom){
+		System.out.println("Collision with trap");
 		//trapKillSound.play();
 	}
 	@Override

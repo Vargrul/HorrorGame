@@ -15,6 +15,8 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
@@ -23,84 +25,85 @@ import org.lwjgl.util.WaveData;
 public class Sound {
 	
 	//Each sound have an IntBuffer to hold the sound and it's effects
-	//and another IntBuffer to hold the position and s
+	//and another IntBuffer to hold the position and speed.
 	IntBuffer buffer = BufferUtils.createIntBuffer(1);
 	IntBuffer source = BufferUtils.createIntBuffer(1);
 	Point pos;
+	boolean isPlaying = false;
 	
 	//Figured out that we needed a constructor;
-	public Sound(SOUNDS soundname, Point point, Float gain, Float pitch){
-	
+	public Sound(SOUNDS soundname, Point point, boolean looping){
+		try {
+			AL.create();
+		} catch (LWJGLException e1) {
+			e1.printStackTrace();
+		}
 		AL10.alGenBuffers(buffer);
 		
 		//Set Position 
 		pos = point;
 		
 		//Loads the wave file from this class's package in your classpath
-		WaveData waveFile = null;
 		try {
-			waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("res" + File.separatorChar + soundname)));
+			WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("assets" + File.separatorChar + "Footsteps.wav")));
+			AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
+			waveFile.dispose();
 		} catch (FileNotFoundException e) {
 			System.out.println("File could not be loaded from Classpath");
 			e.printStackTrace();
 		}
 		
-		//Puts Sound data in buffer and disposes afterwards
-		AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
-		waveFile.dispose();
 		
-		//Bind buffer and source
+		
+		//Generate a source
 		AL10.alGenSources(source);
 		
+		//Bind buffer and source
 		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
-		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    pitch          );
-		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
+		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    1.0f          );
+		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     1.0f          );
 		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
-		//AL10.alSource(source.get(0), AL10.AL_VELOCITY, sourceVel     );
-		//Velocity gives problems atm. 
+		if(looping == true){
+			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
+		}
 		
-		//Setup of Listener Values now happens in player.java class
-		
-		
+		AL10.alListener3f(AL10.AL_POSITION,   pos.getX(), pos.getY(),pos.getZ());
 	}// need killALData() and AL.destroy() before program close
 	
 	//Update function for updating position, pitch and gain
-	public void update(Point point, float pitch, float gain){
+	public void update(Point point){
 		this.pos = point;
-		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    pitch          );
-		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
 		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
 	public void reverb(){
 		//Do reverb effect
 	}
 	public void play(){
-		AL10.alSourcePlay(source);
+		if(isPlaying == false){
+			AL10.alSourcePlay(source);
+			isPlaying = true;
+		}
 	}
 	public void stop(){
 		AL10.alSourceStop(source);
+		isPlaying = false;
 	}
 	public void pause(){
 		AL10.alSourcePause(source);
-	}
-	public void loop(){
-		AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
-		AL10.alSourcePlay(source);
+		isPlaying = false;
 	}
 	public Point getPos(){
 		return this.pos;
-	}
-	
-	//Change the position of a sound object. 
-	//Should be performed each time the object from the sound gets
-	public void setPos(Point point){
-		this.pos = point;
-		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
 	
 	//Removes the source and buffer
 	public void delete(){
 		AL10.alDeleteSources(source);
 		AL10.alDeleteBuffers(buffer);
+	}
+	
+	@Override
+	public String toString() {
+		return "Sound at: " + getPos().getX() + "," + getPos().getY();
 	}
 }

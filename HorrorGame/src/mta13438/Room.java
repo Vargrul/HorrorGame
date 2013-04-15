@@ -7,23 +7,25 @@ import java.util.List;
 
 public class Room {
 
-	float dx, dy, dz, sabins;
+	float dx, dy, dz, sabins, doorSize;
 	MATERIALS material;
 	Point pos;
 	Point entrance;
 	Point exit;
 	List<Obs> obsList = new ArrayList<Obs>();
-	
+
 	public Room(){
 		this.pos = new Point();
 		this.dx = 10;
 		this.dz = 10;
 		this.dy = 10;
-		this.entrance = new Point(0, dy/2, 0);
-		this.exit = new Point(10, dy/2, 0);
 		this.material = MATERIALS.ROCK;//Need to add default material
+		this.doorSize = 4;
+		this.entrance = new Point(0, dy/2-doorSize/2, 0);
+		this.exit = new Point(dx, dy/2-doorSize/2, 0);
+		generateDoorObs();
 	}
-	
+
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
 		this.pos = pos;
 		this.dx = dx;
@@ -32,8 +34,10 @@ public class Room {
 		this.entrance = entrance;
 		this.exit = exit;
 		this.material = material;
+		this.doorSize= 4;
+		generateDoorObs();
 	}
-	
+
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
 		this.pos = pos;
 		this.dx = dx;
@@ -43,8 +47,45 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 		this.obsList = obsList;
+		this.doorSize = 4;
+		generateDoorObs();
 	}
-	
+
+	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
+		this.pos = pos;
+		this.dx = dx;
+		this.dy = dy;
+		this.dz = dz;
+		this.entrance = entrance;
+		this.exit = exit;
+		this.material = material;
+		this.obsList = obsList;
+		this.doorSize = doorSize;
+		generateDoorObs();
+	}
+
+	private void generateDoorObs(){
+		if (entrance.getX() == pos.getX()) {
+			obsList.add(new Entrance(entrance,0.1f,doorSize,10f,0));
+		}else if (entrance.getX() == pos.getX() + dx) {
+			obsList.add(new Entrance(new Point(entrance.getX() - 0.1f,entrance.getY(), entrance.getZ()),0.1f,doorSize,10f,0));
+		}else if (entrance.getY() == pos.getY()) {
+			obsList.add(new Entrance(entrance,doorSize,0.1f,10f,0));
+		}else if (entrance.getY() == pos.getY() + dy) {
+			obsList.add(new Entrance(new Point(entrance.getX(),entrance.getY() - 0.1f, entrance.getZ()),doorSize,0.1f,10f,0));
+		}
+		
+		if (exit.getX() == pos.getX()) {
+			obsList.add(new Exit(exit,0.1f,doorSize,10f,0));
+		}else if (exit.getX() == pos.getX() + dx) {
+			obsList.add(new Exit(new Point(exit.getX() - 0.1f,exit.getY(), exit.getZ()),0.1f,doorSize,10f,0));
+		}else if (exit.getY() == pos.getY()) {
+			obsList.add(new Exit(exit,doorSize,0.1f,10f,0));
+		}else if (exit.getY() == pos.getY() + dy) {
+			obsList.add(new Exit(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,0));
+		}
+	}
+
 	public Point getPos(){
 		return pos;
 	}
@@ -75,8 +116,11 @@ public class Room {
 	public List<Obs> getObsList() {
 		return obsList;
 	}
-	
-	
+	public float getDoorSize() {
+		return doorSize;
+	}
+
+
 	public void setPos(Point pos){
 		this.pos = pos;
 	}
@@ -108,68 +152,35 @@ public class Room {
 	public void addObsList(Obs obs) {
 		this.obsList.add(obs);
 	} 
-	
-	public boolean isNearEntrance(){
-		// Check Entrance X and Y with pos X and Y; Ignore Z value
-		
-		return false;
-	}
-	public boolean isNearExit(){
-		// Check Exit X and Y with pos X and Y; Ignore Z value
-		
-		return false;
-	}
-	
-	public void draw() {
-	   	 glColor3f(1.0f, 1.0f, 1.0f);
-	   	 glLineWidth(1.5f);
-	   	 glBegin(GL_LINES);
-	   		 //Bottom Line
-	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
-	   		 //Left Line
-	   		 glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
-	   		 //Top Line
-	   		 glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
-	   		 //Right Line
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
-	   		 glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
-	   	 glEnd();
-	   	 
-	   	 if(entrance != null || entrance.getX()!=0 && entrance.getY()!=0 && entrance.getZ()!=0){//Check if there are an entrance point, then draw RED circle
-	   		 glColor3f(1.0f, 0f, 0f);
-	   		 glBegin(GL_LINE_STRIP);
-	   		 float f = 0.0f;
-	   		 for(int i = 0; i<30;i++){
-	   			 glVertex3f(entrance.getX()+(float)Math.cos(f), entrance.getY()+(float)Math.sin(f), 0);
-	   			 f = (float) (f +(2*Math.PI/30));
-	   		 }
-	   		 glEnd();
-	   	 }
-	   	 
-	   	 if(exit != null || exit.getX()!=0 && exit.getY()!=0 && exit.getZ()!=0){ //Check if there are an exit point, then draw ORANGE circle
-	   		 glColor3f(1.0f, 0.6f, 0f);
-	   		 glBegin(GL_LINE_STRIP);
-	   		 float h = 0.0f;
-	   		 for(int i = 0; i<30;i++){
-	   			 glVertex3f(exit.getX()+(float)Math.cos(h), exit.getY()+(float)Math.sin(h), 0);
-	   			 h = (float) (h +(2*Math.PI/30));
-	   		 }
-	   		 glEnd();
-	   	 }
-	   	 
+	public void setDoorSize(float doorSize) {
+		this.doorSize = doorSize;
 	}
 
-	
+	public void draw() {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glLineWidth(0.5f);
+		glBegin(GL_LINES);
+		//Bottom Line
+		glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
+		//Left Line
+		glVertex2i((int)this.pos.getX(), (int)this.pos.getY());
+		glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
+		//Top Line
+		glVertex2i((int)this.pos.getX(), (int)(this.pos.getY()+this.getDy()));
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
+		//Right Line
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)(this.pos.getY()+this.getDy()));
+		glVertex2i((int)(this.pos.getX()+this.getDx()), (int)this.pos.getY());
+		glEnd();
+	}
+
 	public String toString(){ // not updated
 		return "ROOM: \n Width = " + dx + ".\n Height = " +
-				dz + ".\n Length = " + dy + ".\n Entrance = " 
-				+ entrance + ".\n Exit = " + exit + ".\n Sabins = " +
-				 sabins + ".\n";
+		dz + ".\n Length = " + dy + ".\n Entrance = " 
+		+ entrance + ".\n Exit = " + exit + ".\n Sabins = " +
+		sabins + ".\n";
 		// When variable changes have been decided, changes method.
 	} 
-	
-	
+
 }

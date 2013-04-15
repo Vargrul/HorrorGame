@@ -62,6 +62,9 @@ public class Obs {
 		this.sabins = sabins;
 	}
 	
+	public void collision(Player player, Level level, int currentRoom){
+	}
+	
 	public void draw() {
 	   	 glColor4f(0.2f, 1.0f, 0.2f, 0.5f);
 	   	 glLineWidth(1.5f);

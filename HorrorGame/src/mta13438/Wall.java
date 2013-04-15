@@ -19,8 +19,8 @@ public class Wall extends Obs {
 		super(point, dx,dy,dz,sabins);
 	}
 	
-	private void collision(){
-		//collisionSound.play();
+	public void collision(Player player, Level level, int currentRoom){
+		System.out.println("Collision with wall");
 	}
 	
 	@Override

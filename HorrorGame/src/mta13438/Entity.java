@@ -74,8 +74,8 @@ public class Entity {
 	public void foward(float delta) {
 		float x,y,z;
 
-		x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
-		y = (float) ((getSpeed() * Math.sin(getOrientation()) * delta) + getPos().getY());
+		x = (float) ((getSpeed() * Math.cos(getOrientation()+90) * delta) + getPos().getX());
+		y = (float) ((getSpeed() * Math.sin(getOrientation()+90) * delta) + getPos().getY());
 		z = 0.0f + getPos().getZ();
 
 		setPos(x, y, z);
@@ -115,6 +115,11 @@ public class Entity {
 		glBegin(GL_LINE_STRIP); float f = 0.0f; for(int i = 0; i<30;i++){
 			glVertex3f(pos.getX()+(float)Math.cos(f),
 					pos.getY()+(float)Math.sin(f), 0); f = (float) (f +(2*Math.PI/30)); }
+		glEnd();
+		glColor3f(0f, 1.0f, 0f);
+		glBegin(GL_LINES);
+		 glVertex2f(pos.getX(),pos.getY());
+		 glVertex2f((float) (pos.getX() + Math.cos(getOrientation() + getPos().getX())),(float) (pos.getY() + Math.sin(getOrientation() + getPos().getY())));
 		glEnd();
 
 	}

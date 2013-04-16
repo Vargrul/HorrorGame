@@ -1,5 +1,11 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.GL_LINES;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glLineWidth;
+import static org.lwjgl.opengl.GL11.glVertex2i;
+
 import java.util.ArrayList;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
@@ -67,8 +73,15 @@ public class Loader {
 			}
 		}
 		//Sound testing
-		testsound.update(player.getPos());
-		System.out.println(testsound);
+		testsound.update(new Point(140,310,10));
+		player.setListener(player.getPos());
+		glLineWidth(1.5f);
+		glBegin(GL_LINES);
+		 glVertex2i(140,310);
+		 glVertex2i(140,311);
+		glEnd();
+		glLineWidth(1.0f);
+		
 		
 		if(playing == false){
 			testsound.play();

@@ -73,8 +73,9 @@ public class Level {
 	   	 }
 	}
 	
-	public void updateSpawnPoint() {
-		 
+	public void updateSpawnPoint(Player player, Level level) {
+		Point playerPos = player.getPos();
+		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
 	}
 	
 	public Point getSpawnPoint() {

@@ -10,6 +10,7 @@ public class Level {
 	private float dx;
 	private float dz;
 	private float dy;
+	private Point spawnPoint = new Point();
 
 	public Level() {
 		this.roomList = null;
@@ -70,6 +71,15 @@ public class Level {
 	   	 for(Room room : this.roomList){
 	   		 room.draw();
 	   	 }
+	}
+	
+	public void updateSpawnPoint(Player player, Level level) {
+		Point playerPos = player.getPos();
+		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
+	}
+	
+	public Point getSpawnPoint() {
+		return this.spawnPoint;
 	}
 
 	public String toString() {

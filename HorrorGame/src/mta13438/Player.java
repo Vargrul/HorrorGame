@@ -148,6 +148,10 @@ public class Player extends Entity {
 		//Death sequence and reposition
 		//Play death sound
 	}
+	
+	public void respawn(Level level){
+		setPos(level.getSpawnPoint());
+	}
 
 	@Override
 	public String toString() {

@@ -35,7 +35,7 @@ public class Player extends Entity {
 		x = (float) (Math.cos(getOrientation() + getPos().getX()));
 		y = (float) (Math.sin(getOrientation() + getPos().getY()));
 		// initializes listener values, using the position values of the object.
-		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  x, y, 0.0f });
+		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { pos.getX(), pos.getY(), -1.0f,  x, y, 0.0f });
 		listenerOri.flip();
 		//Uses getters from the entity class
 		AL10.alListener3f(AL10.AL_POSITION,   pos.getX(), pos.getY(),pos.getZ());
@@ -147,6 +147,10 @@ public class Player extends Entity {
 	public void kill(){
 		//Death sequence and reposition
 		//Play death sound
+	}
+	
+	public void respawn(Level level){
+		setPos(level.getSpawnPoint());
 	}
 
 	@Override

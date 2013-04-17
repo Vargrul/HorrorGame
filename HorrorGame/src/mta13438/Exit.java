@@ -38,6 +38,7 @@ public class Exit extends Obs{
 			}else{
 				player.setPos(player.getPos().getX(), level.getRoomList().get(currentRoom+1).entrance.getY() + 0.11f, player.getPos().getZ());
 			}
+			level.updateSpawnPoint(player, level);
 		}
 	}
 

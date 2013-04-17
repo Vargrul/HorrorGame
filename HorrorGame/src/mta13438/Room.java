@@ -14,6 +14,7 @@ public class Room {
 	Point exit;
 	List<Obs> obsList = new ArrayList<Obs>();
 
+	//No args constructor
 	public Room(){
 		this.pos = new Point();
 		this.dx = 10;
@@ -25,7 +26,8 @@ public class Room {
 		this.exit = new Point(dx, dy/2-doorSize/2, 0);
 		generateDoorObs();
 	}
-
+	
+	//Constructor
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
 		this.pos = pos;
 		this.dx = dx;
@@ -37,7 +39,8 @@ public class Room {
 		this.doorSize= 4;
 		generateDoorObs();
 	}
-
+	
+	//Extended Constructor
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
 		this.pos = pos;
 		this.dx = dx;
@@ -51,6 +54,7 @@ public class Room {
 		generateDoorObs();
 	}
 
+	//Extended Constructor
 	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
 		this.pos = pos;
 		this.dx = dx;
@@ -63,7 +67,8 @@ public class Room {
 		this.doorSize = doorSize;
 		generateDoorObs();
 	}
-
+	
+	//Door generator
 	private void generateDoorObs(){
 		if (entrance.getX() == pos.getX()) {
 			obsList.add(new Entrance(entrance,0.1f,doorSize,10f,0));
@@ -85,7 +90,8 @@ public class Room {
 			obsList.add(new Exit(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,0));
 		}
 	}
-
+	
+	//Getters
 	public Point getPos(){
 		return pos;
 	}
@@ -120,7 +126,7 @@ public class Room {
 		return doorSize;
 	}
 
-
+	//Setters
 	public void setPos(Point pos){
 		this.pos = pos;
 	}
@@ -156,6 +162,7 @@ public class Room {
 		this.doorSize = doorSize;
 	}
 
+	//Draw function
 	public void draw() {
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glLineWidth(0.5f);

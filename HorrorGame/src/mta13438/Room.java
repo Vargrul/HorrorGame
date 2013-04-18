@@ -28,8 +28,8 @@ public class Room {
 	}
 	
 	//Constructor
-	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
-		this.pos = pos;
+	public Room(float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
+		this.pos = new Point();
 		this.dx = dx;
 		this.dy = dy;
 		this.dz = dz;
@@ -37,12 +37,12 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 		this.doorSize= 4;
-		generateDoorObs();
+		//generateDoorObs();
 	}
 	
 	//Extended Constructor
-	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
-		this.pos = pos;
+	public Room(float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
+		this.pos = new Point();
 		this.dx = dx;
 		this.dy = dy;
 		this.dz = dz;
@@ -55,8 +55,8 @@ public class Room {
 	}
 
 	//Extended Constructor
-	public Room(Point pos, float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
-		this.pos = pos;
+	public Room(float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
+		this.pos = new Point();
 		this.dx = dx;
 		this.dy = dy;
 		this.dz = dz;
@@ -69,7 +69,7 @@ public class Room {
 	}
 	
 	//Door generator
-	private void generateDoorObs(){
+	public void generateDoorObs(){
 		if (entrance.getX() == pos.getX()) {
 			obsList.add(new Entrance(entrance,0.1f,doorSize,10f,0));
 		}else if (entrance.getX() == pos.getX() + dx) {

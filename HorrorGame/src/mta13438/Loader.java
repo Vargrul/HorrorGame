@@ -33,21 +33,21 @@ public class Loader {
 	}
 
 	private static void loadTutorialLevel() {
-		tutorialLevel.addRoomList(new Room(new Point(10, 300, 0), 10, 20, 20, new Point(10,305,0), new Point(20, 315, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(20, 290, 0), 60, 50, 30, new Point(20,315,0), new Point(80, 295, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(80, 290, 0), 50, 10, 20, new Point(80,295,0), new Point(130, 295, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(130, 250, 0), 150, 90, 60, new Point(130,295,0), new Point(280, 315, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(280, 260, 0), 110, 110, 40, new Point(280,315,0), new Point(390, 315, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(390, 310, 0), 40, 10, 20, new Point(390,315,0), new Point(425, 310, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(420, 260, 0), 10, 50, 20, new Point(425,310,0), new Point(425, 260, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(390, 190, 0), 70, 70, 40, new Point(425,260,0), new Point(425, 190, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(420, 170, 0), 10, 20, 20, new Point(425,190,0), new Point(425, 170, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(400, 90, 0), 50, 80, 40, new Point(425,170,0), new Point(425, 90, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(new Point(410, 70, 0), 30, 20, 40, new Point(425,90,0), new Point(425, 70, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(0,5,0), new Point(10, 15, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(60, 50, 30, new Point(0,25,0), new Point(60, 5, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(50, 10, 20, new Point(0,5,0), new Point(50, 5, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(150, 90, 60, new Point(0,45,0), new Point(150, 65, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(110, 110, 40, new Point(0,55,0), new Point(110, 55, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(40, 10, 20, new Point(0,5,0), new Point(35, 0, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(10, 50, 20, new Point(5,50,0), new Point(5, 0, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(70, 70, 40, new Point(35,70,0), new Point(35,0, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(5,20,0), new Point(5, 0, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(160, 270, 0), 20, 50, 0, 0));
 		tutorialLevel.getRoomList().get(4).addObsList(new Wall(new Point(330, 280, 0), 10, 70, 0, 0));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(410, 210, 0), 30, 30, 0, 0));
-		
+		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 	}
 
 	public static void playTutorialLevel(){

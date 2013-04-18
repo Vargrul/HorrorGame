@@ -38,6 +38,25 @@ public class Level {
 	public void addRoomList(Room room){
 		this.roomList.add(room);
 	}
+	public void autoLevelGenerator(Point startPoint){
+		for (int i = 0; i < getRoomList().size(); i++){
+			if (i == 0){
+				this.roomList.get(i).setPos(new Point(startPoint.getX(),startPoint.getY(),0));
+				this.roomList.get(i).setEntrance(new Point (this.roomList.get(i).getEntrance().getX()+startPoint.getX(),this.roomList.get(i).getEntrance().getY()+startPoint.getY(),0));
+				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+startPoint.getX(),this.roomList.get(i).getExit().getY()+startPoint.getY(),0));
+				this.roomList.get(i).generateDoorObs();
+			} else {
+				float entranceY = this.roomList.get(i).entrance.getY();
+				float entranceX = this.roomList.get(i).entrance.getX();
+				float previousExitY = this.roomList.get(i-1).exit.getY();
+				float previousExitX = this.roomList.get(i-1).exit.getX();
+				this.roomList.get(i).setPos(new Point(previousExitX-entranceX,previousExitY-entranceY,0));
+				this.roomList.get(i).setEntrance(new Point (previousExitX,previousExitY,0));
+				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getExit().getY()+this.roomList.get(i).getPos().getY(),0));
+				this.roomList.get(i).generateDoorObs();
+			}
+		}
+	}
 	public float getDx() {
 		return dx;
 	}

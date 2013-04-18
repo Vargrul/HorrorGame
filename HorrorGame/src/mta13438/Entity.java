@@ -58,14 +58,14 @@ public class Entity {
 	}
 
 	public void turnLeft(float delta) {
-		setOrientation(getOrientation() + (0.1f * delta));
+		setOrientation(getOrientation() + (0.01f * delta));
 		if (getOrientation() > 2*Math.PI) {
 			setOrientation(0);
 		}
 	}
 
 	public void turnRight(float delta) {
-		setOrientation(getOrientation() - (0.1f * delta));
+		setOrientation(getOrientation() - (0.01f * delta));
 		if (getOrientation() < 0) {
 			setOrientation((float)(2*Math.PI));
 		}

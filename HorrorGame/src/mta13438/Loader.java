@@ -74,7 +74,7 @@ public class Loader {
 		}
 		//Sound testing
 		testsound.update(new Point(140,310,10));
-		player.setListener(player.getPos());
+		player.setListener();
 		glLineWidth(1.5f);
 		glBegin(GL_LINES);
 		 glVertex2i(140,310);

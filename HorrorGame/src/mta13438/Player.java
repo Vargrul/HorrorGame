@@ -15,12 +15,12 @@ public class Player extends Entity {
 	public Player() {
 		super();
 		setHealth(0);
-		//setListener();
+		setListener();
 	}
 	public Player(Point pos, float speed, float orientation, int health) {
 		super(pos, speed, orientation);
 		setHealth(health);
-		setListener(pos);
+		setListener();
 	}	
 
 	public int getHealth() {
@@ -29,18 +29,21 @@ public class Player extends Entity {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	public void setListener(Point pos){ // Since only one listener will/can exist at a time, this function 
+	public void setListener(){ 
 		
 		float x, y;
-		x = (float) (Math.cos(getOrientation() + getPos().getX()));
-		y = (float) (Math.sin(getOrientation() + getPos().getY()));
-		// initializes listener values, using the position values of the object.
-		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { pos.getX(), pos.getY(), -1.0f,  x, y, 0.0f });
+		
+		//Calculating the heading vector point from the orientation.
+		x = (float) (Math.cos(getOrientation()));
+		y = (float) (Math.sin(getOrientation()));
+		
+		//The values in this float buffer is in relation to the AL_POSITION.
+		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { x, y, 1, 0, 0, 1});
 		listenerOri.flip();
-		//Uses getters from the entity class
-		AL10.alListener3f(AL10.AL_POSITION,   pos.getX(), pos.getY(),pos.getZ());
+		
+		//Setting the alListener's position and orientation.
+		AL10.alListener3f(AL10.AL_POSITION,   getPos().getX(), getPos().getY(), getPos().getZ());
 		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
-		//Doesn't work yet
 	}
 
 	public void foward(float delta, Level level, int currentRoom) {

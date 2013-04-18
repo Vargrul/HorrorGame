@@ -1,6 +1,5 @@
 package mta13438;
 
-import java.io.ObjectInputStream;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +11,21 @@ public class Player extends Entity {
 
 	private int health;
 
+	//Extends no args constructor of Obs
 	public Player() {
 		super();
 		setHealth(0);
 		setListener();
 	}
+	
+	//Extends constructor of Obs
 	public Player(Point pos, float speed, float orientation, int health) {
 		super(pos, speed, orientation);
 		setHealth(health);
 		setListener();
 	}	
 
+	//Getters and Setters
 	public int getHealth() {
 		return health;
 	}

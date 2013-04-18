@@ -6,12 +6,13 @@ import java.util.List;
 
 public class Level {
 
-	private List<Room> roomList = new ArrayList<Room>();
+	private List<Room> roomList = new ArrayList<Room>(); //The list of the rooms inside the level.
 	private float dx;
 	private float dz;
 	private float dy;
 	private Point spawnPoint = new Point();
 
+	//No args constructor
 	public Level() {
 		this.roomList = null;
 		this.dx = 0;
@@ -20,6 +21,7 @@ public class Level {
 		updateLevelSize();
 	}
 
+	//Constructor
 	public Level(List<Room> roomList, float dx, float dz, float dy) {
 		this.roomList.addAll(roomList);
 		this.dx = dx;
@@ -28,6 +30,7 @@ public class Level {
 		updateLevelSize();
 	}
 
+	//Getters and Setters.
 	public List<Room> getRoomList() {
 		return Collections.unmodifiableList(roomList);
 	}
@@ -37,25 +40,6 @@ public class Level {
 	}
 	public void addRoomList(Room room){
 		this.roomList.add(room);
-	}
-	public void autoLevelGenerator(Point startPoint){
-		for (int i = 0; i < getRoomList().size(); i++){
-			if (i == 0){
-				this.roomList.get(i).setPos(new Point(startPoint.getX(),startPoint.getY(),0));
-				this.roomList.get(i).setEntrance(new Point (this.roomList.get(i).getEntrance().getX()+startPoint.getX(),this.roomList.get(i).getEntrance().getY()+startPoint.getY(),0));
-				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+startPoint.getX(),this.roomList.get(i).getExit().getY()+startPoint.getY(),0));
-				this.roomList.get(i).generateDoorObs();
-			} else {
-				float entranceY = this.roomList.get(i).entrance.getY();
-				float entranceX = this.roomList.get(i).entrance.getX();
-				float previousExitY = this.roomList.get(i-1).exit.getY();
-				float previousExitX = this.roomList.get(i-1).exit.getX();
-				this.roomList.get(i).setPos(new Point(previousExitX-entranceX,previousExitY-entranceY,0));
-				this.roomList.get(i).setEntrance(new Point (previousExitX,previousExitY,0));
-				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getExit().getY()+this.roomList.get(i).getPos().getY(),0));
-				this.roomList.get(i).generateDoorObs();
-			}
-		}
 	}
 	public float getDx() {
 		return dx;
@@ -75,15 +59,39 @@ public class Level {
 	public void setDy(float dy) {
 		this.dy = dy;
 	}
-	
 	public int getCurrentRoom(Point playerPos) {
 		Integer currentRoom = 0;
+		
+		//It looks trough every room and compares their location in the level to the players.
 		for (int i = 0; i < getRoomList().size(); i++) {		
 			if(playerPos.getX() >= getRoomList().get(i).getPos().getX() && playerPos.getX() <= (getRoomList().get(i).getPos().getX() + getRoomList().get(i).getDx()) && playerPos.getY() >= getRoomList().get(i).getPos().getY() && playerPos.getY() <= (getRoomList().get(i).getPos().getY() + getRoomList().get(i).getDy())){
 				currentRoom = i;
 			}			
 		}
+		
+		//The room number is the returned out of the function.
 		return currentRoom;
+	}
+	
+	//Automate the position of the rooms.
+	public void autoLevelGenerator(Point startPoint){
+		for (int i = 0; i < getRoomList().size(); i++){
+			if (i == 0){
+				this.roomList.get(i).setPos(new Point(startPoint.getX(),startPoint.getY(),0));
+				this.roomList.get(i).setEntrance(new Point (this.roomList.get(i).getEntrance().getX()+startPoint.getX(),this.roomList.get(i).getEntrance().getY()+startPoint.getY(),0));
+				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+startPoint.getX(),this.roomList.get(i).getExit().getY()+startPoint.getY(),0));
+				this.roomList.get(i).generateDoorObs();
+			} else {
+				float entranceY = this.roomList.get(i).entrance.getY();
+				float entranceX = this.roomList.get(i).entrance.getX();
+				float previousExitY = this.roomList.get(i-1).exit.getY();
+				float previousExitX = this.roomList.get(i-1).exit.getX();
+				this.roomList.get(i).setPos(new Point(previousExitX-entranceX,previousExitY-entranceY,0));
+				this.roomList.get(i).setEntrance(new Point (previousExitX,previousExitY,0));
+				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getExit().getY()+this.roomList.get(i).getPos().getY(),0));
+				this.roomList.get(i).generateDoorObs();
+			}
+		}
 	}
 	
 	public void Draw(){
@@ -108,6 +116,7 @@ public class Level {
 
 	public void updateLevelSize() {
 		if(roomList.isEmpty() == false){
+			//dxp stands for Delta X Plus and dxm stands for Delta X Minus, these are added in the end to make a total.
 			float dxp = 0;
 			float dzp = 0;
 			float dyp = 0;
@@ -115,6 +124,14 @@ public class Level {
 			float dzm = 0;
 			float dym = 0;
 
+			/*
+			 * This is the logic behind the calculation.
+			 * It takes the rooms and looks at their positions 
+			 * in comparison to the temporary values and sets them to
+			 * the max of the level size. The minus temp values are here 
+			 * if the map makes a U turn and comes back and extends beyond
+			 * the first rooms starting point. 
+			 */
 			for (int i = 0; i < roomList.size(); i++) {
 				if(roomList.get(i).getPos().getX() > 0 && roomList.get(i).getPos().getY() > 0 && roomList.get(i).getPos().getZ() > 0){
 					if(dxp < roomList.get(i).getPos().getX() + roomList.get(i).getDx()){
@@ -139,9 +156,10 @@ public class Level {
 				}
 			}		
 
-			setDx(dxp+Math.abs(dxm));
-			setDz(dzp+Math.abs(dzm));
-			setDy(dyp+Math.abs(dym));
+			//adding all the temp values absolute values to get the level size.
+			setDx(Math.abs(dxp + dxm));
+			setDz(Math.abs(dzp + dzm));
+			setDy(Math.abs(dyp + dym));
 		}
 	}
 }

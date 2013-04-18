@@ -12,7 +12,7 @@ public class Room {
 	Point pos;
 	Point entrance;
 	Point exit;
-	List<Obs> obsList = new ArrayList<Obs>();
+	List<Obs> obsList = new ArrayList<Obs>(); //The list of obstacles inside the room.
 
 	//No args constructor
 	public Room(){

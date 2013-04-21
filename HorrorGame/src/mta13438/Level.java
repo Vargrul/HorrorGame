@@ -99,9 +99,10 @@ public class Level {
 	   		 room.draw();
 	   	 }
 	}
-	
+	// updates spawn point
 	public void updateSpawnPoint(Player player, Level level) {
 		Point playerPos = player.getPos();
+		// sets the spawn point to the entrance of the current room
 		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
 	}
 	

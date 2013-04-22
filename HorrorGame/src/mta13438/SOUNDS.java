@@ -19,7 +19,6 @@ public  enum SOUNDS {
 	FOOTSTEP_STONE_04("assets/soundEffects/footstep_stone01.wav"),
 	DOOR_CLOSE("assets/soundEffects/forløblig dør luk.wav"),
 	DOOR_OPEN("assets/soundEffects/forløblig dør åben.wav"),
-	//DOOR("assets/soundEffects/Forløbelig dør.wav"),
 	RAT_01("assets/soundEffects/forløbelig rotte.wav"),
 	RAT_02("assets/soundEffects/Rat2.wav"),
 	SCARE_01("assets/soundEffects/forløbig scare.wav"),
@@ -36,7 +35,7 @@ public  enum SOUNDS {
 	TRAP_01("assets/soundEffects/trapsound.wav"),
 	TRAP_02("assets/soundEffects/trap2.wav"),
 	TRAP_ROTER("assets/soundEffects/Roter trap1.wav"),
-	//TRAP_KILL("assets/soundEffects/.wav")
+	TRAP_KILL("assets/soundEffects/.wav") //is still missing
 	;
 	
 	//desc for description

@@ -30,14 +30,14 @@ public class Sound {
 		
 		//Loads the wave file from this class's package in your classpath
 		try {
-			WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("assets" + File.separatorChar + "Footsteps.wav")));
+			WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream(soundname.getPath())));
 			AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
 			waveFile.dispose();
 		} catch (FileNotFoundException e) {
 			System.out.println("File could not be loaded from Classpath");
 			e.printStackTrace();
 		}
-		
+		System.out.println(soundname.getPath());
 		
 		
 		//Generate a source

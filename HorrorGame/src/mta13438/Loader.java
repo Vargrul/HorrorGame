@@ -79,7 +79,6 @@ public class Loader {
 			}
 		}
 		//Sound testing
-		testsound.update(player.getPos());
 		player.setListener();
 		glLineWidth(1.5f);
 		glBegin(GL_LINES);

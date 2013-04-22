@@ -6,8 +6,12 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLineWidth;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
 
 public class Loader {
@@ -22,10 +26,9 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
+	private static Sound testSound;
 	
-	//testing
-	private static Sound testsound = new Sound(SOUNDS.HEARTBEAT, player.getPos(), true);
-	private static boolean playing = false;
+	private static boolean play = false;
 	
 	
 	public void start() {
@@ -36,101 +39,72 @@ public class Loader {
 		System.out.println("This is LoFi-Test Program!");
 	}
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
-	private static void loadTutorialLevel() {
-		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(0,5,0), new Point(10, 15, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(60, 50, 30, new Point(0,25,0), new Point(60, 5, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(50, 10, 20, new Point(0,5,0), new Point(50, 5, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(150, 90, 60, new Point(0,45,0), new Point(150, 65, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(110, 110, 40, new Point(0,55,0), new Point(110, 55, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(40, 10, 20, new Point(0,5,0), new Point(35, 0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(10, 50, 20, new Point(5,50,0), new Point(5, 0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(70, 70, 40, new Point(35,70,0), new Point(35,0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(5,20,0), new Point(5, 0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
-		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(160, 270, 0), 20, 50, 0, 0));
-		tutorialLevel.getRoomList().get(4).addObsList(new Wall(new Point(330, 280, 0), 10, 70, 0, 0));
-		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(410, 210, 0), 30, 30, 0, 0));
-		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
+	private static void loadSounds() {
+		
+		testSound = new Sound("test", new Point(), true);
 	}
 	// Initiates the tutorial level
-	public static void playTutorialLevel(){
+	public static void initialize(){
 		Display.destroy();
-		loadTutorialLevel();
-		DebugInterface.Initialize(800, 600); // Width and Length of display
-		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
+		loadSounds();
+		//0,0 is now in the middle of the screen 
+		DebugInterface.Initialize(600, 600); // Width and Length of display
+		DebugInterface.InitOpenGL(600, 600); // Width and Length inside the display (Scaling of perspective here)
 	}
 	// Renders the tutorial level. 
-	public static void renderTutorialLevel(){
+	public static void render(){
+		
+		//Check for keyboard input
 		input();
-		collision = player.collisionCheck(tutorialLevel, currentRoom);
+		
+		//Set Listener values
+		setListener();
+		
+		//Testing
+		if(play == false){
+			testSound.play();
+			play = true;
+		}
+				
+		testSound.draw();
+		
 		
 		
 
-		if(collision){
-			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
-				if(player.getPos().getX() > tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() && 
-						player.getPos().getX() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDx()){
-					if(player.getPos().getY() > tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() &&
-						player.getPos().getY() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDy()){
-						tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).collision(player, tutorialLevel, currentRoom);
-					}
-				}
-			}
-		}
-		//Sound testing
-		player.setListener();
-		glLineWidth(1.5f);
-		glBegin(GL_LINES);
-		 glVertex2i(140,310);
-		 glVertex2i(140,311);
-		glEnd();
-		glLineWidth(1.0f);
 		
 		
-		if(playing == false && player.isWalking() == true){
-			testsound.play();
-			playing = true;
-		}
-		else if(playing == true && player.isWalking() == false){
-			testsound.pause();
-			playing = false;
-		}
-		
-		//Draw the Tutorial Levels rooms
-		tutorialLevel.Draw();
-
-		//Draw the obs of every room
-		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
-			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
-				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
-			}
-		}
-
-		//Draw the player
-		player.draw();
 		updateFPS();
-		player.setWalking(false);
 	}
 
+	private static void setListener() {
+		//FloatBuffers holds values
+		FloatBuffer listenerPos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind(); //Position of the listener.
+		FloatBuffer listenerVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind(); //Velocity of the listener.
+		FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f }).rewind(); //Orientation of the listener.
+		
+		//Setting values
+		AL10.alListener(AL10.AL_POSITION,    listenerPos);
+		AL10.alListener(AL10.AL_VELOCITY,    listenerVel);
+		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
+		
+	}
 	public static void input() {
 
 		controls.takeInput();	
 
-		currentRoom = tutorialLevel.getCurrentRoom(player.getPos());
 		delta = getDelta();
 
 		if(controls.getKEY_UP()){
-			player.foward(delta/10, tutorialLevel, currentRoom);
+			//Up Event
 		}
 		if(controls.getKEY_DOWN()){
-			player.backward(delta/10, tutorialLevel, currentRoom);
+			//Down Event
 		}
 		if(controls.getKEY_LEFT()){
-			player.turnLeft(delta/10);
+			//Left Event
 		}
 		if(controls.getKEY_RIGHT()){
-			player.turnRight(delta/10);
+			//Right Event
 		}
 	}
 

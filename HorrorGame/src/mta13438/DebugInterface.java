@@ -37,7 +37,7 @@ public class DebugInterface {
 		LengthUnits = length;
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, WidthUnits, 0, LengthUnits, 1, -1); //Sets number of units from bottom to top and left to right.
+		glOrtho(WidthUnits/2, WidthUnits/2, LengthUnits/2, LengthUnits/2, 1, -1); //Sets number of units from bottom to top and left to right.
 		glMatrixMode(GL_MODELVIEW);
 		
 	}

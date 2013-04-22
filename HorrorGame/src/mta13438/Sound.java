@@ -25,7 +25,7 @@ public class Sound {
 	boolean isSelected = false;
 	
 	//Figured out that we needed a constructor;
-	public Sound(SOUNDS soundname, Point point, boolean looping){
+	public Sound(String soundname, Point point, boolean looping){
 		AL10.alGenBuffers(buffer);
 		
 		//Set Position 
@@ -58,14 +58,11 @@ public class Sound {
 	}// need killALData() and AL.destroy() before program close
 	
 	public void play(){
-		if(isPlaying == false){
-			AL10.alSourcePlay(source);
-			isPlaying = true;
-		}
+		AL10.alSourcePlay(source);
 	}
 	public void draw(){
 		glColor3f(1.0f, 0.0f, 0.0f);
-		glLineWidth(3);
+		glPointSize(20);
 		glBegin(GL_POINTS);
 		glVertex2i(0,0);
 		glEnd();
@@ -83,6 +80,9 @@ public class Sound {
 	}
 	public boolean checkSelect(){
 		return isSelected;
+	}
+	public boolean playingCheck(){
+		return isPlaying;
 	}
 	//Removes the source and buffer
 	public void delete(){

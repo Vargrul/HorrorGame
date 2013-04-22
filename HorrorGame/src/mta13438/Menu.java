@@ -40,7 +40,7 @@ public class Menu {
 				input();
 				render();
 			} else {
-				Loader.renderTutorialLevel();
+				Loader.render();
 			}
 
 			Display.update();
@@ -67,7 +67,7 @@ public class Menu {
 	public static void play() {
 		showMainMenu = false;
 		showHelpMenu = false;
-		Loader.playTutorialLevel();
+		Loader.initialize();
 	}
 
 	public static void help() {
@@ -214,7 +214,7 @@ public class Menu {
 			GL11.glEnd();
 		}
 		if (showHelpMenu == false && showMainMenu == false) {
-			Loader.renderTutorialLevel();
+			Loader.render();
 		}
 	}
 

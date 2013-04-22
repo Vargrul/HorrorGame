@@ -36,7 +36,7 @@ public class Entrance extends Obs{
 			}else if(getPos().getY() == level.getRoomList().get(currentRoom).getPos().getY()){
 				player.setPos(player.getPos().getX(), level.getRoomList().get(currentRoom+1).exit.getY() - 0.11f, player.getPos().getZ());
 			}else{
-				player.setPos(player.getPos().getX(), level.getRoomList().get(currentRoom+1).exit.getY() + 0.11f, player.getPos().getZ());
+				player.setPos(player.getPos().getX(), level.getRoomList().get(currentRoom-1).exit.getY() + 0.11f, player.getPos().getZ());
 			}
 		}	
 	}

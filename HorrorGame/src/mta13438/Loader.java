@@ -17,6 +17,8 @@ public class Loader {
 	private static Player player = new Player(new Point(140,310,10),0.5f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
+	private static long lastFPS;
+	private static int fps;
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
@@ -30,6 +32,7 @@ public class Loader {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
 		getDelta();
+		lastFPS = getTime();
 	}
 
 	private static void loadTutorialLevel() {
@@ -100,6 +103,7 @@ public class Loader {
 
 		//Draw the player
 		player.draw();
+		updateFPS();
 	}
 
 	public static void input() {
@@ -133,5 +137,14 @@ public class Loader {
 
 	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+	
+	public static void updateFPS() {
+		if (getTime() - lastFPS > 1000) {
+			Display.setTitle("FPS: " + fps);
+			fps = 0;
+			lastFPS = getTime();
+		}
+		fps++;
 	}
 }

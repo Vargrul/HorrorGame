@@ -1,5 +1,7 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.*;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +22,7 @@ public class Sound {
 	IntBuffer source = BufferUtils.createIntBuffer(1);
 	Point pos;
 	boolean isPlaying = false;
+	boolean isSelected = false;
 	
 	//Figured out that we needed a constructor;
 	public Sound(SOUNDS soundname, Point point, boolean looping){
@@ -54,19 +57,18 @@ public class Sound {
 		
 	}// need killALData() and AL.destroy() before program close
 	
-	//Update function for updating position, pitch and gain
-	public void update(Point point){
-		this.pos = point;
-		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
-	}
-	public void reverb(){
-		//Do reverb effect
-	}
 	public void play(){
 		if(isPlaying == false){
 			AL10.alSourcePlay(source);
 			isPlaying = true;
 		}
+	}
+	public void draw(){
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glLineWidth(3);
+		glBegin(GL_POINTS);
+		glVertex2i(0,0);
+		glEnd();
 	}
 	public void stop(){
 		AL10.alSourceStop(source);
@@ -79,7 +81,9 @@ public class Sound {
 	public Point getPos(){
 		return this.pos;
 	}
-	
+	public boolean checkSelect(){
+		return isSelected;
+	}
 	//Removes the source and buffer
 	public void delete(){
 		AL10.alDeleteSources(source);

@@ -114,7 +114,7 @@ public class Entity {
 		glColor3f(0f, 1.0f, 0f);
 		glBegin(GL_LINES);
 		 glVertex2f(pos.getX(),pos.getY());
-		 glVertex2f((float) (pos.getX() + Math.cos(getOrientation() + getPos().getX())),(float) (pos.getY() + Math.sin(getOrientation() + getPos().getY())));
+		 glVertex2f((float) (pos.getX() + 3*Math.cos(getOrientation() + getPos().getX())),(float) (pos.getY() + 3*Math.sin(getOrientation() + getPos().getY())));
 		glEnd();
 
 	}

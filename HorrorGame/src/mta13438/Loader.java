@@ -60,6 +60,8 @@ public class Loader {
 	public static void renderTutorialLevel(){
 		input();
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
+		
+		
 
 		if(collision){
 			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
@@ -73,7 +75,7 @@ public class Loader {
 			}
 		}
 		//Sound testing
-		testsound.update(new Point(140,310,10));
+		testsound.update(player.getPos());
 		player.setListener();
 		glLineWidth(1.5f);
 		glBegin(GL_LINES);
@@ -83,9 +85,13 @@ public class Loader {
 		glLineWidth(1.0f);
 		
 		
-		if(playing == false){
+		if(playing == false && player.isWalking() == true){
 			testsound.play();
 			playing = true;
+		}
+		else if(playing == true && player.isWalking() == false){
+			testsound.pause();
+			playing = false;
 		}
 		
 		//Draw the Tutorial Levels rooms
@@ -100,6 +106,7 @@ public class Loader {
 
 		//Draw the player
 		player.draw();
+		player.setWalking(false);
 	}
 
 	public static void input() {

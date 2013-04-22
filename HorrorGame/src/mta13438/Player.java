@@ -10,6 +10,7 @@ import org.lwjgl.openal.AL10;
 public class Player extends Entity {
 
 	private int health;
+	private boolean walking = false;
 
 	//Extends no args constructor of Obs
 	public Player() {
@@ -31,6 +32,12 @@ public class Player extends Entity {
 	}
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	public boolean isWalking(){
+		return walking;
+	}
+	public void setWalking(boolean w){
+		this.walking = w;
 	}
 	public void setListener(){ 
 		
@@ -56,7 +63,8 @@ public class Player extends Entity {
 		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
-
+		
+		walking = true;
 		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
 			x = (float) ((getSpeed() * Math.cos(getOrientation()) * delta) + getPos().getX());
@@ -82,6 +90,11 @@ public class Player extends Entity {
 		}
 
 		z = 0.0f + getPos().getZ();
+		
+		//Checking if the new X,Y,Z is equal to the old X,Y,Z. If so then object haven't be walking.
+		if(getPos().equals(new Point(x,y,z)) == true){
+			walking = false;
+		}
 
 		setPos(x, y, z);
 	}
@@ -98,7 +111,7 @@ public class Player extends Entity {
 		for (int i = 0; i < obsList.size(); i++) {
 
 		}
-
+		walking = true;
 		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) >= minX && getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta)) <= maxX){
 			x = getPos().getX() - (float) ((getSpeed() * Math.cos(getOrientation()) * delta));
@@ -124,7 +137,12 @@ public class Player extends Entity {
 		}
 
 		z = getPos().getZ() - 0.0f;
-
+		
+		//Checking if the new X,Y,Z is equal to the old X,Y,Z. If so then object haven't be walking.
+		if(getPos().equals(new Point(x,y,z)) == true){
+			walking = false;
+		}
+		
 		setPos(x, y, z);
 	}
 

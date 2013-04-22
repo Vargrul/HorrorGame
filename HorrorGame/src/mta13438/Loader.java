@@ -17,6 +17,8 @@ public class Loader {
 	private static Player player = new Player(new Point(140,310,10),0.5f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
+	private static long lastFPS;
+	private static int fps;
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
@@ -30,8 +32,9 @@ public class Loader {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
 		getDelta();
+		lastFPS = getTime();
 	}
-
+	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadTutorialLevel() {
 		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(0,5,0), new Point(10, 15, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(60, 50, 30, new Point(0,25,0), new Point(60, 5, 0), MATERIALS.ROCK));
@@ -49,17 +52,19 @@ public class Loader {
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(410, 210, 0), 30, 30, 0, 0));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 	}
-
+	// Initiates the tutorial level
 	public static void playTutorialLevel(){
 		Display.destroy();
 		loadTutorialLevel();
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
-
+	// Renders the tutorial level. 
 	public static void renderTutorialLevel(){
 		input();
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
+		
+		
 
 		if(collision){
 			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
@@ -73,7 +78,7 @@ public class Loader {
 			}
 		}
 		//Sound testing
-		testsound.update(new Point(140,310,10));
+		testsound.update(player.getPos());
 		player.setListener();
 		glLineWidth(1.5f);
 		glBegin(GL_LINES);
@@ -83,9 +88,13 @@ public class Loader {
 		glLineWidth(1.0f);
 		
 		
-		if(playing == false){
+		if(playing == false && player.isWalking() == true){
 			testsound.play();
 			playing = true;
+		}
+		else if(playing == true && player.isWalking() == false){
+			testsound.pause();
+			playing = false;
 		}
 		
 		//Draw the Tutorial Levels rooms
@@ -100,6 +109,8 @@ public class Loader {
 
 		//Draw the player
 		player.draw();
+		updateFPS();
+		player.setWalking(false);
 	}
 
 	public static void input() {
@@ -133,5 +144,14 @@ public class Loader {
 
 	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+	
+	public static void updateFPS() {
+		if (getTime() - lastFPS > 1000) {
+			Display.setTitle("FPS: " + fps);
+			fps = 0;
+			lastFPS = getTime();
+		}
+		fps++;
 	}
 }

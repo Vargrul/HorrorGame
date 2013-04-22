@@ -180,9 +180,13 @@ public class Player extends Entity {
 	public void proxHeartbeat (Level level, int currentRoom){
 		float maxDis = 20; //the limit from within which the heartbeat starts rising
 		float multFac = 1.2f; //multiplication factor dependant on the numbers
-		float difX, difY, difxy, playerPosx, playerPosy, bpm, bpmDis;
+		float playerPosx, playerPosy, bpm, bpmDis;
 		float[] distances = new float[2];
+		float[] buffer = new float[2];
 
+		buffer[0] = 0;
+		buffer[1] = 0;
+		
 		playerPosx = getPos().getX();
 		playerPosy = getPos().getY();
 
@@ -191,23 +195,43 @@ public class Player extends Entity {
 		}
 
 		for(int k = 0; k < level.getRoomList().get(currentRoom).getObsList().size(); k++){
-			float objPosx, objPosy;
+			float objPosx, objPosy, objPosdx, objPosdy, difX, difY, difxy;
 
 			objPosx = level.getRoomList().get(currentRoom).getObsList().get(k).getPos().getX();
 			objPosy = level.getRoomList().get(currentRoom).getObsList().get(k).getPos().getY();
+			objPosdx = level.getRoomList().get(currentRoom).getObsList().get(k).getDx();
+			objPosdy = level.getRoomList().get(currentRoom).getObsList().get(k).getDy();
 
-
-			if(objPosx > playerPosx)
-				difX = Math.abs(objPosx - playerPosx);
-			else
-				difX = Math.abs(playerPosx - objPosx);
-
-			if(objPosy > playerPosy)
-				difY = Math.abs(objPosy - playerPosy);
-			else
-				difY = Math.abs(playerPosy - objPosy);
-
-			difxy = (float) Math.sqrt(difX*difX+difY*difY);
+			if(playerPosx > objPosdx && playerPosy > objPosdy){ //distance if within extreme upper-right corner boundaries
+				difX = Math.abs(playerPosx-objPosdx);
+				difY = Math.abs(playerPosy-objPosdy);
+				difxy = (float) Math.sqrt(difX*difX+difY*difY);
+			}else if(playerPosx > objPosdx && playerPosy > objPosy){ //distance if within extreme lower-right corner boundaries
+				difX = Math.abs(playerPosx-objPosdx);
+				difY = Math.abs(objPosy-playerPosy);
+				difxy = (float) Math.sqrt(difX*difX+difY*difY);
+			}else if(playerPosx < objPosx && playerPosy < objPosy){ //distance if within extreme lower-left corner boundaries
+				difX = Math.abs(objPosx-playerPosx);
+				difY = Math.abs(objPosy-playerPosy);
+				difxy = (float) Math.sqrt(difX*difX+difY*difY);
+			}else if(playerPosx < objPosx && playerPosy > objPosdy){ //distance if within extreme upper-left corner boundaries
+				difX = Math.abs(objPosx-playerPosx);
+				difY = Math.abs(playerPosy-objPosdy);
+				difxy = (float) Math.sqrt(difX*difX+difY*difY);
+			}else if(playerPosx > objPosx && playerPosx < objPosdx){ //distance if over or under the obstacle
+				if(playerPosy > objPosdy){
+					difxy = playerPosy - objPosdy;
+				}else{
+					difxy = objPosy - playerPosy;
+				}
+			}else{ // distance if along either of the sides
+				if(playerPosx > objPosdx){
+					difxy = playerPosx - objPosdx;
+				}else{
+					difxy = objPosx - playerPosx;
+				}
+			}
+		
 
 			if(distances[0] > difxy){
 				distances[1] = distances[0];

@@ -18,7 +18,7 @@ public class Player extends Entity {
 		setHealth(0);
 		setListener();
 	}
-	
+
 	//Extends constructor of Obs
 	public Player(Point pos, float speed, float orientation, int health) {
 		super(pos, speed, orientation);
@@ -40,17 +40,17 @@ public class Player extends Entity {
 		this.walking = w;
 	}
 	public void setListener(){ 
-		
+
 		float x, y;
-		
+
 		//Calculating the heading vector point from the orientation.
 		x = (float) (Math.cos(getOrientation()));
 		y = (float) (Math.sin(getOrientation()));
-		
+
 		//The values in this float buffer is in relation to the AL_POSITION.
 		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { x, y, 1, 0, 0, 1});
 		listenerOri.flip();
-		
+
 		//Setting the alListener's position and orientation.
 		AL10.alListener3f(AL10.AL_POSITION,   getPos().getX(), getPos().getY(), getPos().getZ());
 		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
@@ -63,7 +63,7 @@ public class Player extends Entity {
 		maxY = level.getRoomList().get(currentRoom).getPos().getY() + level.getRoomList().get(currentRoom).getDy();
 		minX = level.getRoomList().get(currentRoom).getPos().getX();
 		maxX = level.getRoomList().get(currentRoom).getPos().getX() + level.getRoomList().get(currentRoom).getDx();
-		
+
 		walking = true;
 		//Checking if the entity is inside the room boundery.
 		if(getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) >= minX && getPos().getX() + ((getSpeed() * Math.cos(getOrientation())) * delta) <= maxX){
@@ -90,7 +90,7 @@ public class Player extends Entity {
 		}
 
 		z = 0.0f + getPos().getZ();
-		
+
 		//Checking if the new X,Y,Z is equal to the old X,Y,Z. If so then object haven't be walking.
 		if(getPos().equals(new Point(x,y,z)) == true){
 			walking = false;
@@ -98,7 +98,7 @@ public class Player extends Entity {
 
 		setPos(x, y, z);
 	}
-	
+
 	public void backward(float delta, Level level, int currentRoom) {
 		float x,y,z,minX,maxX,minY,maxY;
 		List<Float> obsList = new ArrayList<Float>();
@@ -137,12 +137,12 @@ public class Player extends Entity {
 		}
 
 		z = getPos().getZ() - 0.0f;
-		
+
 		//Checking if the new X,Y,Z is equal to the old X,Y,Z. If so then object haven't be walking.
 		if(getPos().equals(new Point(x,y,z)) == true){
 			walking = false;
 		}
-		
+
 		setPos(x, y, z);
 	}
 
@@ -172,10 +172,62 @@ public class Player extends Entity {
 		//Death sequence and reposition
 		//Play death sound
 	}
-	
+
 	public void respawn(Level level){
 		setPos(level.getSpawnPoint());
 	}
+
+	public void proxHeartbeat (Level level, int currentRoom){
+		float maxDis = 20; //the limit from within which the heartbeat starts rising
+		float multFac = 1.2f; //multiplication factor dependant on the numbers
+		float difX, difY, difxy, playerPosx, playerPosy, bpm, bpmDis;
+		float[] distances = new float[2];
+
+		playerPosx = getPos().getX();
+		playerPosy = getPos().getY();
+
+		for (int i = 0; i < distances.length; i++) {
+			distances[i] = 0;
+		}
+
+		for(int k = 0; k < level.getRoomList().get(currentRoom).getObsList().size(); k++){
+			float objPosx, objPosy;
+
+			objPosx = level.getRoomList().get(currentRoom).getObsList().get(k).getPos().getX();
+			objPosy = level.getRoomList().get(currentRoom).getObsList().get(k).getPos().getY();
+
+
+			if(objPosx > playerPosx)
+				difX = Math.abs(objPosx - playerPosx);
+			else
+				difX = Math.abs(playerPosx - objPosx);
+
+			if(objPosy > playerPosy)
+				difY = Math.abs(objPosy - playerPosy);
+			else
+				difY = Math.abs(playerPosy - objPosy);
+
+			difxy = (float) Math.sqrt(difX*difX+difY*difY);
+
+			if(distances[0] > difxy){
+				distances[1] = distances[0];
+				distances[0] = difxy;
+			}else{
+				distances[1] = difxy;
+
+			}
+		}
+
+		if(distances[0] < maxDis){
+			bpmDis = maxDis - distances[0];
+			bpm = 60 + bpmDis*multFac;
+		}else{
+			bpm = 60;
+		}
+		//should play the heartbeat file a number of times per second equals to bpm/60 or a number of times per minute equal to bpm.
+
+	}
+
 
 	@Override
 	public String toString() {

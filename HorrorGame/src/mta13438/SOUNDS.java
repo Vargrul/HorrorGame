@@ -2,6 +2,7 @@ package mta13438;
 
 public  enum SOUNDS {
 	//Add sounds and path 
+	MENU_MUSIC("assets/Music/MenuBackground_1.wav"), //will not play ?
 	CELL_DOOR("assets/soundEffects/Cell door open forløbig.wav"),
 	CHAIN_01("assets/soundEffects/chain01.wav"),
 	CHAIN_02("assets/soundEffects/chain02.wav"),

@@ -4,7 +4,10 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
 import java.io.IOException;
+import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
@@ -24,6 +27,7 @@ public class Menu {
 	private static boolean showMainMenu;
 	private static boolean showHelpMenu;
 	private static Controls controls = new Controls();
+	private Sound menuMusic = new Sound(SOUNDS.MENU_MUSIC, new Point(0,0,0), true);
 
 	public Menu() {
 		menuNumber = 0;
@@ -31,6 +35,16 @@ public class Menu {
 		showHelpMenu = false;
 		initGL(800, 600);
 		init();
+		
+		//The values in this float buffer is in relation to the AL_POSITION.
+		FloatBuffer listenerOri = BufferUtils.createFloatBuffer(6).put(new float[] { 0, 0, 1, 0, 0, 1});
+		listenerOri.flip();
+		//Setting the alListener's position and orientation.
+		AL10.alListener3f(AL10.AL_POSITION,   0, 0, 0);
+		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
+		System.out.println(SOUNDS.MENU_MUSIC.getPath());
+		menuMusic.play();
+		
 
 		while (true) {
 			glClear(GL_COLOR_BUFFER_BIT); 

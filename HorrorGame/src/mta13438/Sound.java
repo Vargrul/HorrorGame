@@ -37,7 +37,6 @@ public class Sound {
 			System.out.println("File could not be loaded from Classpath");
 			e.printStackTrace();
 		}
-		System.out.println(soundname.getPath());
 		
 		
 		//Generate a source

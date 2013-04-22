@@ -33,6 +33,7 @@ public class Loader {
 		Menu mainMenu = new Menu();
 		getDelta();
 		lastFPS = getTime();
+		System.out.println("This is LoFi-Test Program.");
 	}
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadTutorialLevel() {

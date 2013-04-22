@@ -2,11 +2,42 @@ package mta13438;
 
 public  enum SOUNDS {
 	//Add sounds and path 
-	HEARTBEAT("assets/heartbeat.wav"), 
-	FOOTSTEPS("assets/footsteps.wav"),
-	BREATHING("assets/breathing.wav"),
-	TRAPSOUND("assets/trapsound.wav"),
-	TRAPKILLSOUND("assets/trapkillsound.wav");
+	CELL_DOOR("assets/soundEffects/Cell door open forløbig.wav"),
+	CHAIN_01("assets/soundEffects/chain01.wav"),
+	CHAIN_02("assets/soundEffects/chain02.wav"),
+	CHAIN_03("assets/soundEffects/chain03.wav"),
+	CHAIN_04("assets/soundEffects/chain04.wav"),
+	CHAIN_05("assets/soundEffects/chain05.wav"),
+	CHAIN_06("assets/soundEffects/chain06.wav"),
+	CHAIN_07("assets/soundEffects/chain07.wav"),
+	CHAIN_08("assets/soundEffects/chain08.wav"),
+	CHAIN_09("assets/soundEffects/chain09.wav"),
+	CHAIN_10("assets/soundEffects/chain10.wav"),
+	FOOTSTEP_STONE_01("assets/soundEffects/footstep_stone01.wav"),
+	FOOTSTEP_STONE_02("assets/soundEffects/footstep_stone01.wav"),
+	FOOTSTEP_STONE_03("assets/soundEffects/footstep_stone01.wav"),
+	FOOTSTEP_STONE_04("assets/soundEffects/footstep_stone01.wav"),
+	DOOR_CLOSE("assets/soundEffects/forløblig dør luk.wav"),
+	DOOR_OPEN("assets/soundEffects/forløblig dør åben.wav"),
+	//DOOR("assets/soundEffects/Forløbelig dør.wav"),
+	RAT_01("assets/soundEffects/forløbelig rotte.wav"),
+	RAT_02("assets/soundEffects/Rat2.wav"),
+	SCARE_01("assets/soundEffects/forløbig scare.wav"),
+	HANDS_ON_WALL_01("assets/soundEffects/handsonwall01.wav"),
+	HANDS_ON_WALL_02("assets/soundEffects/handsonwall02.wav"),
+	HANDS_ON_WALL_03("assets/soundEffects/handsonwall03.wav"),
+	KEYCHAIN_01("assets/soundEffects/keychain01.wav"),
+	MAN_EATEN_BY_WALRUS("assets/soundEffects/ManEatenByWalrus.wav"),
+	MONSTER_CELL_01("assets/soundEffects/monster cell 2.wav"),
+	MONSTER_CELL_02("assets/soundEffects/monster cell.wav"),
+	WATER_DROP_01("assets/soundEffects/waterdrop01.wav"),
+	WATER_DROP_02("assets/soundEffects/waterdrop02.wav"),
+	HEARTBEAT("assets/soundEffects/Heart.wav"), 
+	TRAP_01("assets/soundEffects/trapsound.wav"),
+	TRAP_02("assets/soundEffects/trap2.wav"),
+	TRAP_ROTER("assets/soundEffects/Roter trap1.wav"),
+	//TRAP_KILL("assets/soundEffects/.wav")
+	;
 	
 	//desc for description
 	private final String desc;

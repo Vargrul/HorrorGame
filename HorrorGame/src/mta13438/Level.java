@@ -80,6 +80,9 @@ public class Level {
 				this.roomList.get(i).setPos(new Point(startPoint.getX(),startPoint.getY(),0));
 				this.roomList.get(i).setEntrance(new Point (this.roomList.get(i).getEntrance().getX()+startPoint.getX(),this.roomList.get(i).getEntrance().getY()+startPoint.getY(),0));
 				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+startPoint.getX(),this.roomList.get(i).getExit().getY()+startPoint.getY(),0));
+				for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
+					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+startPoint.getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+startPoint.getY(),0));
+				}
 				this.roomList.get(i).generateDoorObs();
 			} else {
 				float entranceY = this.roomList.get(i).entrance.getY();
@@ -89,6 +92,9 @@ public class Level {
 				this.roomList.get(i).setPos(new Point(previousExitX-entranceX,previousExitY-entranceY,0));
 				this.roomList.get(i).setEntrance(new Point (previousExitX,previousExitY,0));
 				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getExit().getY()+this.roomList.get(i).getPos().getY(),0));
+				for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
+					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+this.roomList.get(i).getPos().getY(),0));
+				}
 				this.roomList.get(i).generateDoorObs();
 			}
 		}

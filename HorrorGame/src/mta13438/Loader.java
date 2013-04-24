@@ -55,7 +55,7 @@ public class Loader {
 		
 		//Initializing the sounds
 		testSound = new Sound("Footsteps", new Point(0,0,0), true);
-		sound1 = new Sound("Footsteps", new Point(), false);
+		sound1 = new Sound("Footsteps", new Point(1,1,0), false);
 		sound2 = new Sound("Footsteps", new Point(), false);
 		sound3 = new Sound("Footsteps", new Point(), false);
 		sound4 = new Sound("Footsteps", new Point(), false);
@@ -115,7 +115,7 @@ public class Loader {
 			testSound.play();
 			play = true;
 		}
-				
+		sound1.draw();	
 		testSound.draw();
 		updateFPS();
 	}

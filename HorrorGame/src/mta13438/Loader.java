@@ -60,22 +60,22 @@ public class Loader {
 		//Sets the position of the sounds in a circle around the center.
 		float f = 0.0f;
 		for (int i = 0; i < 359; i++){
-			soundsPos.add(new Point(50 + (float)Math.cos(f)*20,50 + (float)Math.sin(f)*20,0));
+			soundsPos.add(new Point(50 + (float)Math.cos(f)*1000000000,50 + (float)Math.sin(f)*10000000,0));
 			f = (float) (f+(2*Math.PI/359));
 			System.out.println(f);
 		}
 		//Initializing the sounds
 		testSound = new Sound("Footsteps", new Point(0,0,0), true);
-		sound1 = new Sound("Footsteps", soundsPos.get(0), false);
-		sound2 = new Sound("Footsteps", soundsPos.get(90), false);
-		sound3 = new Sound("Footsteps", soundsPos.get(180), false);
-		sound4 = new Sound("Footsteps", soundsPos.get(270), false);
-		sound5 = new Sound("Footsteps", soundsPos.get(300), false);
-		sound6 = new Sound("Footsteps", soundsPos.get(200), false);
-		sound7 = new Sound("Footsteps", soundsPos.get(70), false);
-		sound8 = new Sound("Footsteps", soundsPos.get(20), false);
-		sound9 = new Sound("Footsteps", soundsPos.get(210), false);
-		sound10 = new Sound("Footsteps",soundsPos.get(120), false);
+		sound1 = new Sound("keychain01", soundsPos.get(90), false);
+		sound2 = new Sound("keychain01", soundsPos.get(90), false);
+		sound3 = new Sound("keychain01", soundsPos.get(90), false);
+		sound4 = new Sound("keychain01", soundsPos.get(90), false);
+		sound5 = new Sound("keychain01", soundsPos.get(90), false);
+		sound6 = new Sound("keychain01", soundsPos.get(270), false);
+		sound7 = new Sound("keychain01", soundsPos.get(270), false);
+		sound8 = new Sound("keychain01", soundsPos.get(270), false);
+		sound9 = new Sound("keychain01", soundsPos.get(270), false);
+		sound10 = new Sound("keychain01",soundsPos.get(270), false);
 		
 		//Putting all sounds into the arrayList
 		sounds.add(sound1);
@@ -176,7 +176,7 @@ public class Loader {
 		FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f }).rewind(); //Orientation of the listener.
 		
 		//Setting values
-		AL10.alListener(AL10.AL_POSITION,    listenerPos);
+		AL10.alListener3f(AL10.AL_POSITION,    50,50,0);
 		AL10.alListener(AL10.AL_VELOCITY,    listenerVel);
 		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
 		

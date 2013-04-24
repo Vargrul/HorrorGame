@@ -33,7 +33,7 @@ public class Sound {
 		
 		//Loads the wave file from this class's package in your classpath
 		try {
-			WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("assets" + File.separatorChar + "Footsteps.wav")));
+			WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream("assets" + File.separatorChar + soundname +".wav")));
 			AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
 			waveFile.dispose();
 		} catch (FileNotFoundException e) {
@@ -59,12 +59,18 @@ public class Sound {
 	
 	public void play(){
 		AL10.alSourcePlay(source);
+		isPlaying = true;
 	}
 	public void draw(){
-		glColor3f(1.0f, 0.0f, 0.0f);
+		if(isSelected==true){
+			glColor3f(0.0f, 1.0f, 0.0f);
+		}
+		else {
+			glColor3f(1.0f, 0.0f, 0.0f);
+		}
 		glPointSize(20);
 		glBegin(GL_POINTS);
-		glVertex2i(0,0);
+		glVertex2f(pos.getX(),pos.getY());
 		glEnd();
 	}
 	public void stop(){

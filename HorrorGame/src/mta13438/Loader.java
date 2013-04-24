@@ -1,10 +1,6 @@
 package mta13438;
 
-import static org.lwjgl.opengl.GL11.GL_LINES;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLineWidth;
-import static org.lwjgl.opengl.GL11.glVertex2i;
+import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -26,7 +22,21 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
+	
+	//ArrayList for sounds
+	private static ArrayList<Sound> sounds = new ArrayList<Sound>();
+	//Sounds
 	private static Sound testSound;
+	private static Sound sound1;
+	private static Sound sound2;
+	private static Sound sound3;
+	private static Sound sound4;
+	private static Sound sound5;
+	private static Sound sound6;
+	private static Sound sound7;
+	private static Sound sound8;
+	private static Sound sound9;
+	private static Sound sound10;
 	
 	private static boolean play = false;
 	
@@ -41,7 +51,34 @@ public class Loader {
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadSounds() {
 		
-		testSound = new Sound("test", new Point(), true);
+		//Initializing the sounds
+		testSound = new Sound("Footsteps", new Point(), true);
+		sound1 = new Sound("Footsteps", new Point(), false);
+		sound2 = new Sound("Footsteps", new Point(), false);
+		sound3 = new Sound("Footsteps", new Point(), false);
+		sound4 = new Sound("Footsteps", new Point(), false);
+		sound5 = new Sound("Footsteps", new Point(), false);
+		sound6 = new Sound("Footsteps", new Point(), false);
+		sound7 = new Sound("Footsteps", new Point(), false);
+		sound8 = new Sound("Footsteps", new Point(), false);
+		sound9 = new Sound("Footsteps", new Point(), false);
+		sound10 = new Sound("Footsteps", new Point(), false);
+		
+		//Putting all sounds into the arrayList
+		sounds.add(sound1);
+		sounds.add(sound2);
+		sounds.add(sound3);
+		sounds.add(sound4);
+		sounds.add(sound5);
+		sounds.add(sound6);
+		sounds.add(sound7);
+		sounds.add(sound8);
+		sounds.add(sound9);
+		sounds.add(sound10);
+		
+		//Set Listener values
+		setListener();
+		
 	}
 	// Initiates the tutorial level
 	public static void initialize(){
@@ -57,22 +94,26 @@ public class Loader {
 		//Check for keyboard input
 		input();
 		
-		//Set Listener values
-		setListener();
+		//Draw listener
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glPointSize(25);
+		glBegin(GL_POINTS);
+			glVertex2f(0,0);
+		glEnd();
+				
+		//Draw Nose/Direction of listener
+		glPointSize(25);
+		glBegin(GL_POINTS);
+			glVertex2f(0,1);
+		glEnd();
 		
 		//Testing
-		if(play == false){
+		if(testSound.playingCheck()==false){
 			testSound.play();
 			play = true;
 		}
 				
 		testSound.draw();
-		
-		
-		
-
-		
-		
 		updateFPS();
 	}
 

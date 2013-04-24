@@ -26,6 +26,7 @@ public class Loader {
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
 	private static int soundNumber = 0;
+	private static boolean shortSound = true;
 	
 	//ArrayList for sounds
 	private static ArrayList<Sound> sounds = new ArrayList<Sound>();
@@ -159,22 +160,25 @@ public class Loader {
 			sounds.get(i).isSelected = false;
 		}
 		int randomIndex = generator.nextInt( 10 );
-		//System.out.println(randomIndex);
 		if(soundNumber == 0){
 			if(testSound.playingCheck()==false){
 				testSound.play();
 				play = true;
 				soundNumber++;
+				System.out.println("Test Sound");
 			}
-		}else{
+		}else if(soundNumber <= 10){
 			if(sounds.get(randomIndex).hasBeenPlayed == false){
 				sounds.get(randomIndex).isSelected = true;
 				sounds.get(randomIndex).hasBeenPlayed = true;
-				soundNumber++;
 				System.out.println(soundNumber + ": sound" +(randomIndex+1));
+				soundNumber++;
+				
 			} else {
 				nextSound();
 			}
+		} else {
+			System.out.println("End of test");
 		}
 	}
 
@@ -198,6 +202,15 @@ public class Loader {
 
 		if(controls.getKEY_UP()){
 			//Up Event
+			if(soundNumber == 0 && shortSound == true){
+				System.out.println("Long sound selected");
+				shortSound = false;
+				controls.setKEY_UP(false);
+			} else if (soundNumber == 0 && shortSound == false){
+				System.out.println("Short sound selected");
+				shortSound = true;
+				controls.setKEY_UP(false);
+			}
 		}
 		if(controls.getKEY_DOWN()){
 			//Down Event

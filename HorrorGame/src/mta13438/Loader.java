@@ -65,7 +65,7 @@ public class Loader {
 			//System.out.println(f);
 		}
 		//Initializing the sounds
-		testSound = new Sound("Footsteps", new Point(0,0,0), true);
+		testSound = new Sound("Footsteps", new Point(50,60,0), false);
 		sound1 = new Sound("Footsteps", soundsPos.get(0), false);
 		sound2 = new Sound("Footsteps", soundsPos.get(90), false);
 		sound3 = new Sound("Footsteps", soundsPos.get(180), false);
@@ -154,19 +154,27 @@ public class Loader {
 		updateFPS();
 	}
 	
-	private static void playLoFiTest(){
+	private static void nextSound(){
 		for(int i = 0; i < sounds.size(); i++){
 			sounds.get(i).isSelected = false;
 		}
 		int randomIndex = generator.nextInt( 10 );
 		//System.out.println(randomIndex);
-		if(sounds.get(randomIndex).hasBeenPlayed == false){
-			sounds.get(randomIndex).isSelected = true;
-			sounds.get(randomIndex).hasBeenPlayed = true;
-			soundNumber++;
-			System.out.println(soundNumber + ": " +randomIndex);
-		} else {
-			playLoFiTest();
+		if(soundNumber == 0){
+			if(testSound.playingCheck()==false){
+				testSound.play();
+				play = true;
+				soundNumber++;
+			}
+		}else{
+			if(sounds.get(randomIndex).hasBeenPlayed == false){
+				sounds.get(randomIndex).isSelected = true;
+				sounds.get(randomIndex).hasBeenPlayed = true;
+				soundNumber++;
+				System.out.println(soundNumber + ": sound" +(randomIndex+1));
+			} else {
+				nextSound();
+			}
 		}
 	}
 
@@ -201,7 +209,7 @@ public class Loader {
 			//Right Event
 		}
 		if(controls.getKEY_ENTER()){
-			playLoFiTest();
+			nextSound();
 			controls.setKEY_ENTER(false);
 		}
 	}

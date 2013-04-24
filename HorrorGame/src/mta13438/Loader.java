@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -24,9 +25,12 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
+	private static int soundNumber = 0;
 	
 	//ArrayList for sounds
 	private static ArrayList<Sound> sounds = new ArrayList<Sound>();
+	
+	private static ArrayList<Point> soundsPos = new ArrayList<Point>();
 	//Sounds
 	private static Sound testSound;
 	private static Sound sound1;
@@ -41,6 +45,7 @@ public class Loader {
 	private static Sound sound10;
 	
 	private static boolean play = false;
+	static Random generator = new Random();
 	
 	
 	public void start() {
@@ -52,19 +57,25 @@ public class Loader {
 	}
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadSounds() {
-		
+		//Sets the position of the sounds in a circle around the center.
+		float f = 0.0f;
+		for (int i = 0; i < 359; i++){
+			soundsPos.add(new Point(50 + (float)Math.cos(f)*20,50 + (float)Math.sin(f)*20,0));
+			f = (float) (f+(2*Math.PI/359));
+			System.out.println(f);
+		}
 		//Initializing the sounds
 		testSound = new Sound("Footsteps", new Point(0,0,0), true);
-		sound1 = new Sound("Footsteps", new Point(1,1,0), false);
-		sound2 = new Sound("Footsteps", new Point(), false);
-		sound3 = new Sound("Footsteps", new Point(), false);
-		sound4 = new Sound("Footsteps", new Point(), false);
-		sound5 = new Sound("Footsteps", new Point(), false);
-		sound6 = new Sound("Footsteps", new Point(), false);
-		sound7 = new Sound("Footsteps", new Point(), false);
-		sound8 = new Sound("Footsteps", new Point(), false);
-		sound9 = new Sound("Footsteps", new Point(), false);
-		sound10 = new Sound("Footsteps", new Point(), false);
+		sound1 = new Sound("Footsteps", soundsPos.get(0), false);
+		sound2 = new Sound("Footsteps", soundsPos.get(90), false);
+		sound3 = new Sound("Footsteps", soundsPos.get(180), false);
+		sound4 = new Sound("Footsteps", soundsPos.get(270), false);
+		sound5 = new Sound("Footsteps", soundsPos.get(300), false);
+		sound6 = new Sound("Footsteps", soundsPos.get(200), false);
+		sound7 = new Sound("Footsteps", soundsPos.get(70), false);
+		sound8 = new Sound("Footsteps", soundsPos.get(20), false);
+		sound9 = new Sound("Footsteps", soundsPos.get(210), false);
+		sound10 = new Sound("Footsteps",soundsPos.get(120), false);
 		
 		//Putting all sounds into the arrayList
 		sounds.add(sound1);
@@ -78,16 +89,33 @@ public class Loader {
 		sounds.add(sound9);
 		sounds.add(sound10);
 		
+		//Sets the position of the sounds in a circle around the center.
+		/*float f = 0.0f;
+		for (int i = 0; i < 359; i++){
+			soundsPos.add(new Point(50 + (float)Math.cos(f)*20,50 + (float)Math.sin(f)*20,0));
+			f = (float) (f+(2*Math.PI/359));
+			System.out.println(f);
+		}
+		sounds.get(0).setPos(soundsPos.get(0));
+		sounds.get(1).setPos(soundsPos.get(90));
+		sounds.get(2).setPos(soundsPos.get(180));
+		sounds.get(3).setPos(soundsPos.get(270));
+		sounds.get(4).setPos(soundsPos.get(10));
+		sounds.get(5).setPos(soundsPos.get(30));
+		sounds.get(6).setPos(soundsPos.get(60));
+		sounds.get(7).setPos(soundsPos.get(200));
+		sounds.get(8).setPos(soundsPos.get(220));
+		sounds.get(9).setPos(soundsPos.get(300));*/
+		
 		//Set Listener values
 		setListener();
-		
 	}
 	// Initiates the tutorial level
 	public static void initialize(){
 		Display.destroy();
 		loadSounds();
 		//0,0 is now in the middle of the screen 
-		initDisplay(800, 600);
+		initDisplay(800, 800);
 		// Width and Length inside the display (Scaling of perspective here)
 		initOpenGL(100,100);
 	}
@@ -101,7 +129,7 @@ public class Loader {
 		glColor3f(0.0f, 0.0f, 1.0f);
 		glPointSize(25);
 		glBegin(GL_POINTS);
-			glVertex2f(0,0);
+			glVertex2f(50,50);
 		glEnd();
 				
 		//Draw Nose/Direction of listener
@@ -111,13 +139,34 @@ public class Loader {
 		glEnd();
 		
 		//Testing
-		if(testSound.playingCheck()==false){
+		/*if(testSound.playingCheck()==false){
 			testSound.play();
 			play = true;
+		}*/
+		for (int i = 0; i < 10; i++){
+		sounds.get(i).draw();
+		if(sounds.get(i).isSelected == true && sounds.get(i).playingCheck() == false){
+			sounds.get(i).play();
+			play = true;
 		}
-		sound1.draw();	
-		testSound.draw();
+		}
+		//testSound.draw();
 		updateFPS();
+	}
+	
+	private static void playLoFiTest(){
+		for(int i = 0; i < sounds.size(); i++){
+			sounds.get(i).isSelected = false;
+		}
+		int randomIndex = generator.nextInt( 10 );
+		//System.out.println(randomIndex);
+		if(sounds.get(randomIndex).hasBeenPlayed == false){
+			sounds.get(randomIndex).isSelected = true;
+			sounds.get(randomIndex).hasBeenPlayed = true;
+			System.out.println(randomIndex);
+		} else {
+			playLoFiTest();
+		}
 	}
 
 	private static void setListener() {
@@ -150,6 +199,10 @@ public class Loader {
 		if(controls.getKEY_RIGHT()){
 			//Right Event
 		}
+		if(controls.getKEY_ENTER()){
+			playLoFiTest();
+			controls.setKEY_ENTER(false);
+		}
 	}
 
 
@@ -166,7 +219,7 @@ public class Loader {
 	public static void initOpenGL(int x, int y){
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, 0, x, y, 1, -1); //Sets number of units from bottom to top and left to right.
+		glOrtho(0, x, 0, y, 1, -1); //Sets number of units from bottom to top and left to right.
 		glMatrixMode(GL_MODELVIEW);
 	}
 	public static void initDisplay(int X, int Y){

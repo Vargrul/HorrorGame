@@ -23,6 +23,7 @@ public class Sound {
 	Point pos;
 	boolean isPlaying = false;
 	boolean isSelected = false;
+	boolean hasBeenPlayed = false;
 	
 	//Figured out that we needed a constructor;
 	public Sound(String soundname, Point point, boolean looping){
@@ -84,11 +85,20 @@ public class Sound {
 	public Point getPos(){
 		return this.pos;
 	}
+	public void setPos(Point point){
+		this.pos = point;
+	}
 	public boolean checkSelect(){
 		return isSelected;
 	}
 	public boolean playingCheck(){
 		return isPlaying;
+	}
+	public boolean hasBeenPlayed(){
+		return hasBeenPlayed;
+	}
+	public void setHasBeenPlayed(boolean state){
+		hasBeenPlayed = state;
 	}
 	//Removes the source and buffer
 	public void delete(){

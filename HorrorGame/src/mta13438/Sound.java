@@ -50,6 +50,7 @@ public class Sound {
 		if(looping == true){
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 		}
+		System.out.println(buffer);
 		
 	}// need killALData() and AL.destroy() before program close
 	

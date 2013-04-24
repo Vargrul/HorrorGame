@@ -6,9 +6,11 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 public class Loader {
 
@@ -52,7 +54,7 @@ public class Loader {
 	private static void loadSounds() {
 		
 		//Initializing the sounds
-		testSound = new Sound("Footsteps", new Point(), true);
+		testSound = new Sound("Footsteps", new Point(0,0,0), true);
 		sound1 = new Sound("Footsteps", new Point(), false);
 		sound2 = new Sound("Footsteps", new Point(), false);
 		sound3 = new Sound("Footsteps", new Point(), false);
@@ -85,8 +87,9 @@ public class Loader {
 		Display.destroy();
 		loadSounds();
 		//0,0 is now in the middle of the screen 
-		DebugInterface.Initialize(600, 600); // Width and Length of display
-		DebugInterface.InitOpenGL(600, 600); // Width and Length inside the display (Scaling of perspective here)
+		initDisplay(800, 600);
+		// Width and Length inside the display (Scaling of perspective here)
+		initOpenGL(100,100);
 	}
 	// Renders the tutorial level. 
 	public static void render(){
@@ -102,9 +105,9 @@ public class Loader {
 		glEnd();
 				
 		//Draw Nose/Direction of listener
-		glPointSize(25);
+		glPointSize(10);
 		glBegin(GL_POINTS);
-			glVertex2f(0,1);
+			glVertex2f(0,0.05f);
 		glEnd();
 		
 		//Testing
@@ -159,6 +162,21 @@ public class Loader {
 
 	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+	public static void initOpenGL(int x, int y){
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, 0, x, y, 1, -1); //Sets number of units from bottom to top and left to right.
+		glMatrixMode(GL_MODELVIEW);
+	}
+	public static void initDisplay(int X, int Y){
+		try {
+			Display.setDisplayMode(new DisplayMode(X, Y)); //DisplayMode
+			Display.setTitle("MTA13438, P4"); //Title
+			Display.create();
+		} catch (LWJGLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void updateFPS() {

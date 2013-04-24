@@ -66,7 +66,7 @@ public class Loader {
 			//System.out.println(f);
 		}
 		//Initializing the sounds
-		testSound = new Sound("Footsteps", new Point(50,60,0), false);
+		testSound = new Sound("Walrus1", new Point(50,60,0), false);
 		sound1 = new Sound("Footsteps", soundsPos.get(0), false);
 		sound2 = new Sound("Footsteps", soundsPos.get(90), false);
 		sound3 = new Sound("Footsteps", soundsPos.get(180), false);

@@ -7,7 +7,8 @@ public  enum SOUNDS {
 	BREATHING("assets/breathing.wav"),
 	TRAPSOUND("assets/trapsound.wav"),
 	TRAPKILLSOUND("assets/trapkillsound.wav"),
-	LOFISHORT("assets/1000Hz_1sec.wav");
+	LOFISHORT("assets/1000Hz_1sec.wav"),
+	ALARM("assets/alarm");
 	
 	//desc for description
 	private final String desc;

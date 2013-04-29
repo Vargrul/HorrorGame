@@ -61,7 +61,7 @@ public class Loader {
 		//Sets the position of the sounds in a circle around the center.
 		float f = 0.0f;
 		for (int i = 0; i < 359; i++){
-			soundsPos.add(new Point(50 + (float)Math.cos(f)*10,50 + (float)Math.sin(f)*10,0));
+			soundsPos.add(new Point(50 + (float)Math.cos(f)*10000,50 + (float)Math.sin(f)*10000,0));
 			f = (float) (f+(2*Math.PI/359));
 			//System.out.println(f);
 		}
@@ -186,7 +186,7 @@ public class Loader {
 		//FloatBuffers holds values
 		FloatBuffer listenerPos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind(); //Position of the listener.
 		FloatBuffer listenerVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind(); //Velocity of the listener.
-		FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, 1.0f,  0.0f, 0.0f, 1.0f }).rewind(); //Orientation of the listener.
+		FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f }).rewind(); //Orientation of the listener.
 		
 		//Setting values
 		AL10.alListener3f(AL10.AL_POSITION,    50,50,0);

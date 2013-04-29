@@ -24,7 +24,7 @@ public class Loader {
 	private static boolean collision = false;
 	
 	//testing
-	private static Sound testsound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
+	private static Sound testsound = new Sound(SOUNDS.KEYCHAIN_01, player.getPos(), true);
 	private static boolean playing = false;
 	
 	
@@ -78,7 +78,7 @@ public class Loader {
 			}
 		}
 		//Sound testing
-		testsound.update(player.getPos());
+		//testsound.update(player.getPos());
 		player.setListener();
 		glLineWidth(1.5f);
 		glBegin(GL_LINES);
@@ -87,7 +87,7 @@ public class Loader {
 		glEnd();
 		glLineWidth(1.0f);
 		
-		
+		/*
 		if(playing == false && player.isWalking() == true){
 			testsound.play();
 			playing = true;
@@ -95,7 +95,8 @@ public class Loader {
 		else if(playing == true && player.isWalking() == false){
 			testsound.pause();
 			playing = false;
-		}
+		}*/
+		testsound.play();
 		
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();

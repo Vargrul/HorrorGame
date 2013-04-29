@@ -61,22 +61,22 @@ public class Loader {
 		//Sets the position of the sounds in a circle around the center.
 		float f = 0.0f;
 		for (int i = 0; i < 359; i++){
-			soundsPos.add(new Point(50 + (float)Math.cos(f)*10000,50 + (float)Math.sin(f)*10000,0));
+			soundsPos.add(new Point(50 + (float)Math.cos(f)*10,50 + (float)Math.sin(f)*10,0));
 			f = (float) (f+(2*Math.PI/359));
 			//System.out.println(f);
 		}
 		//Initializing the sounds
-		testSound = new Sound("Walrus1", new Point(50,60,0), false, 1.0f);
-		sound1 = new Sound("1000Hz_1sec", soundsPos.get(0), false, 1.0f);
-		sound2 = new Sound("alarm", soundsPos.get(90), false, 1.0f);
-		sound3 = new Sound("Footsteps", soundsPos.get(180), false, 1.0f);
-		sound4 = new Sound("Footsteps", soundsPos.get(270), false, 0.5f);
-		sound5 = new Sound("Footsteps", soundsPos.get(15), false, 1.0f);
-		sound6 = new Sound("Footsteps", soundsPos.get(45), false, 1.0f);
-		sound7 = new Sound("Footsteps", soundsPos.get(115), false, 1.0f);
-		sound8 = new Sound("Footsteps", soundsPos.get(200), false, 0.5f);
-		sound9 = new Sound("Footsteps", soundsPos.get(240), false, 0.5f);
-		sound10 = new Sound("Footsteps",soundsPos.get(300), false, 0.5f);
+		testSound = new Sound("1000Hz_3sec", new Point(50,60,0), false, 1.0f);
+		sound1 = new Sound("1000Hz_3sec", soundsPos.get(0), false, 1.0f);
+		sound2 = new Sound("1000Hz_3sec", soundsPos.get(90), false, 1.0f);
+		sound3 = new Sound("1000Hz_3sec", soundsPos.get(180), false, 1.0f);
+		sound4 = new Sound("1000Hz_3sec", soundsPos.get(270), false, 0.5f);
+		sound5 = new Sound("1000Hz_3sec", soundsPos.get(15), false, 1.0f);
+		sound6 = new Sound("1000Hz_3sec", soundsPos.get(45), false, 1.0f);
+		sound7 = new Sound("1000Hz_3sec", soundsPos.get(115), false, 1.0f);
+		sound8 = new Sound("1000Hz_3sec", soundsPos.get(200), false, 0.5f);
+		sound9 = new Sound("1000Hz_3sec", soundsPos.get(240), false, 0.5f);
+		sound10 = new Sound("1000Hz_3sec",soundsPos.get(300), false, 0.5f);
 		
 		//Putting all sounds into the arrayList
 		sounds.add(sound1);

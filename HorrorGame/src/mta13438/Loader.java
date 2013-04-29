@@ -66,17 +66,17 @@ public class Loader {
 			//System.out.println(f);
 		}
 		//Initializing the sounds
-		testSound = new Sound("Walrus1", new Point(50,60,0), false);
-		sound1 = new Sound("Footsteps", soundsPos.get(0), false);
-		sound2 = new Sound("Footsteps", soundsPos.get(90), false);
-		sound3 = new Sound("Footsteps", soundsPos.get(180), false);
-		sound4 = new Sound("Footsteps", soundsPos.get(270), false);
-		sound5 = new Sound("Footsteps", soundsPos.get(15), false);
-		sound6 = new Sound("Footsteps", soundsPos.get(45), false);
-		sound7 = new Sound("Footsteps", soundsPos.get(115), false);
-		sound8 = new Sound("Footsteps", soundsPos.get(200), false);
-		sound9 = new Sound("Footsteps", soundsPos.get(240), false);
-		sound10 = new Sound("Footsteps",soundsPos.get(300), false);
+		testSound = new Sound("Walrus1", new Point(50,60,0), false, 1.0f);
+		sound1 = new Sound("1000Hz_1sec", soundsPos.get(0), false, 1.0f);
+		sound2 = new Sound("alarm", soundsPos.get(90), false, 1.0f);
+		sound3 = new Sound("Footsteps", soundsPos.get(180), false, 1.0f);
+		sound4 = new Sound("Footsteps", soundsPos.get(270), false, 0.5f);
+		sound5 = new Sound("Footsteps", soundsPos.get(15), false, 1.0f);
+		sound6 = new Sound("Footsteps", soundsPos.get(45), false, 1.0f);
+		sound7 = new Sound("Footsteps", soundsPos.get(115), false, 1.0f);
+		sound8 = new Sound("Footsteps", soundsPos.get(200), false, 0.5f);
+		sound9 = new Sound("Footsteps", soundsPos.get(240), false, 0.5f);
+		sound10 = new Sound("Footsteps",soundsPos.get(300), false, 0.5f);
 		
 		//Putting all sounds into the arrayList
 		sounds.add(sound1);
@@ -186,7 +186,7 @@ public class Loader {
 		//FloatBuffers holds values
 		FloatBuffer listenerPos = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind(); //Position of the listener.
 		FloatBuffer listenerVel = (FloatBuffer)BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind(); //Velocity of the listener.
-		FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f }).rewind(); //Orientation of the listener.
+		FloatBuffer listenerOri = (FloatBuffer)BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, 1.0f,  0.0f, 0.0f, 1.0f }).rewind(); //Orientation of the listener.
 		
 		//Setting values
 		AL10.alListener3f(AL10.AL_POSITION,    50,50,0);

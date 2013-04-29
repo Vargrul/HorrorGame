@@ -26,7 +26,7 @@ public class Sound {
 	boolean hasBeenPlayed = false;
 	
 	//Figured out that we needed a constructor;
-	public Sound(String soundname, Point point, boolean looping){
+	public Sound(String soundname, Point point, boolean looping, float gain){
 		AL10.alGenBuffers(buffer);
 		
 		//Set Position 
@@ -50,7 +50,7 @@ public class Sound {
 		//Bind buffer and source
 		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    1.0f          );
-		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     1.0f          );
+		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain         );
 		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 		if(looping == true){
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );

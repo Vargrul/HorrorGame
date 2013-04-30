@@ -14,6 +14,7 @@ public class Room {
 	Point exit;
 	List<Obs> obsList = new ArrayList<Obs>(); //The list of obstacles inside the room.
 	float[] sabins = new float[6];
+	float[] rt60 = new float[6];
 
 	//No args constructor
 	public Room(){
@@ -127,6 +128,9 @@ public class Room {
 	public float getDoorSize() {
 		return doorSize;
 	}
+	public float[] getRt60() {
+		return this.rt60;
+	}
 
 	//Setters
 	public void setPos(Point pos){
@@ -163,6 +167,9 @@ public class Room {
 	public void setDoorSize(float doorSize) {
 		this.doorSize = doorSize;
 	}
+	public void setRt60(float[] rt60) {
+		this.rt60 = rt60;
+	}
 
 	public void updateSabins() {
 		float[] x = new float[6];
@@ -181,8 +188,23 @@ public class Room {
 		}
 
 		setSabins(x);
-		System.out.println(x);
+		updateRt60();
+	}
+	public void updateRt60() {
+		float[] x = new float[6];
+		float c = 340.29f;
+		float area;
 
+		area = getDx() * getDy() * getDz();
+		for (int i = 0; i < getObsList().size(); i++) {
+			area -= getObsList().get(i).getDx() * getObsList().get(i).getDy() * getObsList().get(i).getDz();
+		}
+
+		for (int i = 0; i < rt60.length; i++) {
+			x[i] = (float)(((4 * Math.log(Math.pow(10, 6))) / (c))*(area / getSabins()[i]));
+		}
+
+		setRt60(x);
 	}
 	//Draw function
 	public void draw() {

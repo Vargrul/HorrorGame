@@ -12,8 +12,8 @@ public class Monster extends Obs {
 		super();
 	}
 	
-	public Monster(Point point,float dx,float dy,float dz,float sabins) {
-		super(point, dx,dy,dz,sabins);
+	public Monster(Point point,float dx,float dy,float dz,MATERIALS material) {
+		super(point, dx,dy,dz,material);
 	}
 	
 	public void update(){
@@ -46,7 +46,7 @@ public class Monster extends Obs {
 	@Override
 	public String toString() {
 		return "Monster [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
-				+ ", lenght=" + getDy() + ", sabins=" + getSabins() + "]";
+				+ ", lenght=" + getDy() + ", material=" + getMaterial() + "]";
 	}
 
 }

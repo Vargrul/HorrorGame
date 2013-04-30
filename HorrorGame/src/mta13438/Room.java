@@ -7,12 +7,13 @@ import java.util.List;
 
 public class Room {
 
-	float dx, dy, dz, sabins, doorSize;
+	float dx, dy, dz, doorSize;
 	MATERIALS material;
 	Point pos;
 	Point entrance;
 	Point exit;
 	List<Obs> obsList = new ArrayList<Obs>(); //The list of obstacles inside the room.
+	float[] sabins = new float[6];
 
 	//No args constructor
 	public Room(){
@@ -25,8 +26,8 @@ public class Room {
 		this.entrance = new Point(0, dy/2-doorSize/2, 0);
 		this.exit = new Point(dx, dy/2-doorSize/2, 0);
 		generateDoorObs();
+		updateSabins();
 	}
-	
 	//Constructor
 	public Room(float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material){
 		this.pos = new Point();
@@ -37,9 +38,9 @@ public class Room {
 		this.exit = exit;
 		this.material = material;
 		this.doorSize= 4;
-		//generateDoorObs();
+		generateDoorObs();
+		updateSabins();
 	}
-	
 	//Extended Constructor
 	public Room(float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList){
 		this.pos = new Point();
@@ -52,8 +53,8 @@ public class Room {
 		this.obsList = obsList;
 		this.doorSize = 4;
 		generateDoorObs();
+		updateSabins();
 	}
-
 	//Extended Constructor
 	public Room(float dx, float dy, float dz, Point entrance, Point exit, MATERIALS material, List<Obs> obsList, float doorSize){
 		this.pos = new Point();
@@ -66,31 +67,32 @@ public class Room {
 		this.obsList = obsList;
 		this.doorSize = doorSize;
 		generateDoorObs();
+		updateSabins();
 	}
-	
+
 	//Door generator
 	public void generateDoorObs(){
 		if (entrance.getX() == pos.getX()) {
-			obsList.add(new Entrance(entrance,0.1f,doorSize,10f,0));
+			obsList.add(new Entrance(entrance,0.1f,doorSize,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}else if (entrance.getX() == pos.getX() + dx) {
-			obsList.add(new Entrance(new Point(entrance.getX() - 0.1f,entrance.getY(), entrance.getZ()),0.1f,doorSize,10f,0));
+			obsList.add(new Entrance(new Point(entrance.getX() - 0.1f,entrance.getY(), entrance.getZ()),0.1f,doorSize,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}else if (entrance.getY() == pos.getY()) {
-			obsList.add(new Entrance(entrance,doorSize,0.1f,10f,0));
+			obsList.add(new Entrance(entrance,doorSize,0.1f,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}else if (entrance.getY() == pos.getY() + dy) {
-			obsList.add(new Entrance(new Point(entrance.getX(),entrance.getY() - 0.1f, entrance.getZ()),doorSize,0.1f,10f,0));
+			obsList.add(new Entrance(new Point(entrance.getX(),entrance.getY() - 0.1f, entrance.getZ()),doorSize,0.1f,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}
-		
+
 		if (exit.getX() == pos.getX()) {
-			obsList.add(new Exit(exit,0.1f,doorSize,10f,0));
+			obsList.add(new Exit(exit,0.1f,doorSize,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}else if (exit.getX() == pos.getX() + dx) {
-			obsList.add(new Exit(new Point(exit.getX() - 0.1f,exit.getY(), exit.getZ()),0.1f,doorSize,10f,0));
+			obsList.add(new Exit(new Point(exit.getX() - 0.1f,exit.getY(), exit.getZ()),0.1f,doorSize,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}else if (exit.getY() == pos.getY()) {
-			obsList.add(new Exit(exit,doorSize,0.1f,10f,0));
+			obsList.add(new Exit(exit,doorSize,0.1f,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}else if (exit.getY() == pos.getY() + dy) {
-			obsList.add(new Exit(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,0));
+			obsList.add(new Exit(new Point(exit.getX(),exit.getY() - 0.1f, exit.getZ()),doorSize,0.1f,10f,MATERIALS.DOOR___SOLID_WOOD_PANELS));
 		}
 	}
-	
+
 	//Getters
 	public Point getPos(){
 		return pos;
@@ -110,7 +112,7 @@ public class Room {
 	public Point getExit(){
 		return exit;
 	}
-	public float getSabins(){
+	public float[] getSabins(){
 		return sabins;
 	}
 	public float getRoomSize(){
@@ -148,7 +150,7 @@ public class Room {
 	public void setExit(Point exit){
 		this.exit = exit;
 	}
-	public void setSabins(float sabins){
+	public void setSabins(float[] sabins){
 		this.sabins = sabins;
 	}
 	public void setObsList(List<Obs> obsList) {
@@ -162,6 +164,26 @@ public class Room {
 		this.doorSize = doorSize;
 	}
 
+	public void updateSabins() {
+		float[] x = new float[6];
+
+		for (int i = 0; i < x.length; i++) {
+			x[i] = ((dx * dy) * 2 + (dx * dz) * 2 + (dy * dz) * 2) * material.getAc()[i];
+		}
+
+		for (int i = 0; i < obsList.size(); i++) {
+			for (int j = 0; j < x.length; j++) {
+				x[j] -= (obsList.get(i).getDx() * obsList.get(i).getDy()) * material.getAc()[j];
+				x[j] += (obsList.get(i).getDx() * obsList.get(i).getDy()) * obsList.get(i).getMaterial().getAc()[j];
+				x[j] += ((obsList.get(i).getDx() * obsList.get(i).getDz()) * 2) * obsList.get(i).getMaterial().getAc()[j];
+				x[j] += ((obsList.get(i).getDy() * obsList.get(i).getDz()) * 2) * obsList.get(i).getMaterial().getAc()[j];
+			}
+		}
+
+		setSabins(x);
+		System.out.println(x);
+
+	}
 	//Draw function
 	public void draw() {
 		glColor3f(1.0f, 1.0f, 1.0f);

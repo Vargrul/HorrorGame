@@ -28,23 +28,18 @@ public enum MATERIALS {
 	public float getAc_125Hz() {
 		return ac_125Hz;
 	}
-
 	public float getAc_250Hz() {
 		return ac_250Hz;
 	}
-
 	public float getAc_500Hz() {
 		return ac_500Hz;
 	}
-
 	public float getAc_1kHz() {
 		return ac_1kHz;
 	}
-
 	public float getAc_2kHz() {
 		return ac_2kHz;
 	}
-
 	public float getAc_4kHz() {
 		return ac_4kHz;
 	}	

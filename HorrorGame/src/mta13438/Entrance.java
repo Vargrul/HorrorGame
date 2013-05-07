@@ -16,13 +16,13 @@ public class Entrance extends Obs{
 		this.locked = false;
 	}
 
-	public Entrance(Point point,float dx,float dy,float dz,float sabins) {
-		super(point, dx,dy,dz,sabins);
+	public Entrance(Point point,float dx,float dy,float dz,MATERIALS material) {
+		super(point, dx,dy,dz,material);
 		this.locked = false;
 	}
 
-	public Entrance(Point point,float dx,float dy,float dz,float sabins,boolean locked) {
-		super(point, dx,dy,dz,sabins);
+	public Entrance(Point point,float dx,float dy,float dz,MATERIALS material,boolean locked) {
+		super(point, dx,dy,dz,material);
 		this.locked = locked;
 	}
 
@@ -44,7 +44,7 @@ public class Entrance extends Obs{
 	@Override
 	public String toString() {
 		return "Door [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
-				+ ", lenght=" + getDy() + ", sabins=" + getSabins() + "]";
+				+ ", lenght=" + getDy() + ", material=" + getMaterial() + "]";
 	}
 	@Override
 	public void draw(){

@@ -13,8 +13,8 @@ public class Water extends Obs {
 		super();
 	}
 	
-	public Water(Point point,float dx,float dy,float dz,float sabins) {
-		super(point, dx,dy,dz,sabins);
+	public Water(Point point,float dx,float dy,float dz,MATERIALS material) {
+		super(point, dx,dy,dz,material);
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){
@@ -24,7 +24,7 @@ public class Water extends Obs {
 	@Override
 	public String toString() {
 		return "Water [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
-				+ ", lenght=" + getDy() + ", sabins=" + getSabins() + "]";
+				+ ", lenght=" + getDy() + ", material=" + getMaterial() + "]";
 	}
 	@Override
 	public void draw(){

@@ -16,8 +16,8 @@ public class Trap extends Obs {
 		super();
 	}
 	
-	public Trap(Point point,float dx,float dy,float dz,float sabins) {
-		super(point, dx,dy,dz,sabins);
+	public Trap(Point point,float dx,float dy,float dz,MATERIALS material) {
+		super(point, dx,dy,dz,material);
 	}
 	
 	public void update(){
@@ -50,6 +50,6 @@ public class Trap extends Obs {
 	@Override
 	public String toString() {
 		return "Trap [pos=" + getPos() + ", dx=" + getDx() + ", dz=" + getDz()
-				+ ", lenght=" + getDy() + ", sabins=" + getSabins() + "]";
+				+ ", lenght=" + getDy() + ", material=" + getMaterial() + "]";
 	}
 }

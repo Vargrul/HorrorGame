@@ -4,22 +4,23 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Obs {
 	private Point pos;
-	private float dx,dz,dy,sabins;
+	private float dx,dz,dy;
+	private MATERIALS material;
 	
 	public Obs(){
 		setPos(new Point());
 		setDx(0);
 		setDz(0);
 		setDy(0);
-		setSabins(0);
+		setMaterial(MATERIALS.ROCK);
 	}
 	
-	public Obs(Point point,float dx,float dy,float dz,float sabins){
+	public Obs(Point point,float dx,float dy,float dz,MATERIALS material){
 		setPos(point);
 		setDx(dx);
 		setDz(dz);
 		setDy(dy);
-		setSabins(sabins);
+		setMaterial(material);
 	}
 
 	public Point getPos() {
@@ -54,12 +55,12 @@ public class Obs {
 		this.dy = dy;
 	}
 
-	public float getSabins() {
-		return sabins;
+	public MATERIALS getMaterial() {
+		return material;
 	}
 
-	public void setSabins(float sabins) {
-		this.sabins = sabins;
+	public void setMaterial(MATERIALS material) {
+		this.material = material;
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){
@@ -87,7 +88,7 @@ public class Obs {
 	@Override
 	public String toString() {
 		return "Obs [pos=" + pos + ", dx=" + dx + ", dz=" + dz
-				+ ", lenght=" + dy + ", sabins=" + sabins + "]";
+				+ ", lenght=" + dy + ", material=" + material + "]";
 	}
 	
 	/*public boolean equals(Object obj){

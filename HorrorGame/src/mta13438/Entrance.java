@@ -13,11 +13,13 @@ public class Entrance extends Obs{
 
 	private Entrance() {
 		super();
+		setEmitSound(false);
 		this.locked = false;
 	}
 
 	public Entrance(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
+		setEmitSound(false);
 		this.locked = false;
 	}
 

@@ -97,6 +97,9 @@ public class Level {
 				}
 				this.roomList.get(i).generateDoorObs();
 			}
+			for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
+				this.roomList.get(i).getObsList().get(j).getLoopSound().update(this.roomList.get(i).getObsList().get(j).getCenter());
+			}
 		}
 	}
 	

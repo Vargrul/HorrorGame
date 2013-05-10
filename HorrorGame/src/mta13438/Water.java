@@ -11,10 +11,12 @@ public class Water extends Obs {
 	//private Sound waterSound = new Sound(WATERSOUND,getPos(),10,10);
 	public Water() {
 		super();
+		setEmitSound(false);
 	}
 	
 	public Water(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
+		setEmitSound(false);
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){

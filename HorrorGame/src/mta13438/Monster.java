@@ -8,12 +8,14 @@ import static org.lwjgl.opengl.GL11.glLineWidth;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Monster extends Obs {
+	
 	public Monster() {
 		super();
 	}
 	
 	public Monster(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
+		setLoopSound(new Sound(SOUNDS.CHAIN_01, new Point(0,0,0), true));
 	}
 	
 	public void update(){

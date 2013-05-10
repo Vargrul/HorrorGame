@@ -24,7 +24,7 @@ public class Loader {
 	private static boolean collision = false;
 	
 	//testing
-	private static Sound testsound = new Sound(SOUNDS.KEYCHAIN_01, player.getPos(), true);
+	private static Sound testsound = new Sound(SOUNDS.CHAIN_01, player.getPos(), true);
 	private static boolean playing = false;
 	
 	
@@ -48,7 +48,7 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
-		tutorialLevel.getRoomList().get(4).addObsList(new Wall(new Point(40, 20, 0), 10, 70, 20, MATERIALS.ROCK));
+		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(40, 45, 0), 20, 20, 0, MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 	}
@@ -63,8 +63,6 @@ public class Loader {
 	public static void renderTutorialLevel(){
 		input();
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
-		
-		
 
 		if(collision){
 			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
@@ -75,6 +73,19 @@ public class Loader {
 						tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).collision(player, tutorialLevel, currentRoom);
 					}
 				}
+			}
+		}
+		// Plays all the sounds from objects in the current room.
+		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++){
+			if(tutorialLevel.getRoomList().get(i) != tutorialLevel.getRoomList().get(currentRoom)){
+				for(int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++){
+					tutorialLevel.getRoomList().get(i).getObsList().get(j).getLoopSound().stop();
+				}
+			} 
+		}
+		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
+			if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true){
+				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().play();
 			}
 		}
 		//Sound testing
@@ -96,7 +107,7 @@ public class Loader {
 			testsound.pause();
 			playing = false;
 		}*/
-		testsound.play();
+		//testsound.play();
 		
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();

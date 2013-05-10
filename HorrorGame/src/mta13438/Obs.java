@@ -6,6 +6,9 @@ public class Obs {
 	private Point pos;
 	private float dx,dz,dy;
 	private MATERIALS material;
+	private Sound loopSound;
+	private Boolean emitSound = true;
+	
 	
 	public Obs(){
 		setPos(new Point());
@@ -13,6 +16,7 @@ public class Obs {
 		setDz(0);
 		setDy(0);
 		setMaterial(MATERIALS.ROCK);
+		setLoopSound(new Sound(SOUNDS.CELL_DOOR, new Point(0,0,0), true));
 	}
 	
 	public Obs(Point point,float dx,float dy,float dz,MATERIALS material){
@@ -21,6 +25,12 @@ public class Obs {
 		setDz(dz);
 		setDy(dy);
 		setMaterial(material);
+		setLoopSound(new Sound(SOUNDS.CHAIN_01, point, true));
+	}
+	
+	public Point getCenter(){
+		Point center = new Point(getPos().getX()+(getDx()/2),getPos().getY()+(getDy()/2),0);
+		return center;
 	}
 
 	public Point getPos() {
@@ -63,6 +73,22 @@ public class Obs {
 		this.material = material;
 	}
 	
+	public Sound getLoopSound() {
+		return loopSound;
+	}
+
+	public void setLoopSound(Sound loopSound) {
+		this.loopSound = loopSound;
+	}
+
+	public Boolean getEmitSound() {
+		return emitSound;
+	}
+
+	public void setEmitSound(Boolean emitSound) {
+		this.emitSound = emitSound;
+	}
+
 	public void collision(Player player, Level level, int currentRoom){
 	}
 	

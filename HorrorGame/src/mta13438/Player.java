@@ -11,6 +11,7 @@ public class Player extends Entity {
 
 	private int health;
 	private boolean walking = false;
+	private boolean inWater = false;
 
 	//Extends no args constructor of Obs
 	public Player() {
@@ -256,6 +257,14 @@ public class Player extends Entity {
 	@Override
 	public String toString() {
 		return "Player [health=" + getHealth() + ", speed=" + super.getSpeed() + ", orientation=" + super.getOrientation() + "]";
+	}
+
+	public boolean isInWater() {
+		return inWater;
+	}
+
+	public void setInWater(boolean inWater) {
+		this.inWater = inWater;
 	}
 
 }

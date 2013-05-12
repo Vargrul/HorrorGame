@@ -122,7 +122,7 @@ public class Loader {
 		//Draw the player
 		player.draw();
 		updateFPS();
-		player.setWalking(false);
+		walkCheck(player);
 	}
 
 	public static void input() {
@@ -165,5 +165,23 @@ public class Loader {
 			lastFPS = getTime();
 		}
 		fps++;
+	}
+	public static void walkCheck(Player player){
+		if(player.isWalking() == true){
+			if(player.isInWater()==true){
+				//stop normal walk
+				//start water walk
+				System.out.println("Walking in water");
+			}
+			else{
+				//stop water walk
+				//Play normal walk
+				System.out.println("Walking on floor");
+			}
+			
+		}
+		//Setting the Walking and inWater bools to true to check
+		player.setWalking(false);
+		player.setInWater(false);
 	}
 }

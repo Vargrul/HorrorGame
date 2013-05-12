@@ -171,12 +171,10 @@ public class Loader {
 			if(player.isInWater()==true){
 				//stop normal walk
 				//start water walk
-				System.out.println("Walking in water");
 			}
 			else{
 				//stop water walk
 				//Play normal walk
-				System.out.println("Walking on floor");
 			}
 			
 		}

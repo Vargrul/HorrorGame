@@ -10,6 +10,7 @@ import org.lwjgl.openal.AL10;
 public class Player extends Entity {
 
 	private int health;
+	private int deaths = 0;
 	private boolean walking = false;
 	private boolean inWater = false;
 
@@ -169,9 +170,10 @@ public class Player extends Entity {
 		return returnBool;
 	}
 
-	public void kill(){
-		//Death sequence and reposition
+	public void kill(Level level){
+		respawn(level);
 		//Play death sound
+		deaths++;
 	}
 
 	public void respawn(Level level){
@@ -265,6 +267,14 @@ public class Player extends Entity {
 
 	public void setInWater(boolean inWater) {
 		this.inWater = inWater;
+	}
+
+	public int getDeaths() {
+		return deaths;
+	}
+
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
 	}
 
 }

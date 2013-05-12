@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL11.glLineWidth;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Event extends Obs {
+	private boolean active = true;
 	
 	public Event(){
 		super();
@@ -23,27 +24,40 @@ public class Event extends Obs {
 	
 	@Override
 	public void draw(){
-		glColor4f(0.9f, 0.1f, 0.3f, 0.2f);
-	   	 glLineWidth(1.2f);
-	   	 glBegin(GL_LINES);
-	   		 //Bottom Line
-	   		 glVertex2i((int)getPos().getX(), (int)getPos().getY());
-	   		 glVertex2i((int)(getPos().getX()+this.getDx()), (int)getPos().getY());
-	   		 //Left Line
-	   		 glVertex2i((int)getPos().getX(), (int)getPos().getY());
-	   		 glVertex2i((int)getPos().getX(), (int)(getPos().getY()+this.getDy()));
-	   		 //Top Line
-	   		 glVertex2i((int)getPos().getX(), (int)(getPos().getY()+this.getDy()));
-	   		 glVertex2i((int)(getPos().getX()+this.getDx()), (int)(getPos().getY()+this.getDy()));
-	   		 //Right Line
-	   		 glVertex2i((int)(getPos().getX()+this.getDx()), (int)(getPos().getY()+this.getDy()));
-	   		 glVertex2i((int)(getPos().getX()+this.getDx()), (int)getPos().getY());
-	   	 glEnd();
+		if(active==true){
+			glColor4f(0.9f, 0.1f, 0.3f, 0.2f);
+			glLineWidth(1.2f);
+			glBegin(GL_LINES);
+	   		 	//Bottom Line
+	   		 	glVertex2i((int)getPos().getX(), (int)getPos().getY());
+	   		 	glVertex2i((int)(getPos().getX()+this.getDx()), (int)getPos().getY());
+	   		 	//Left Line
+	   		 	glVertex2i((int)getPos().getX(), (int)getPos().getY());
+	   		 	glVertex2i((int)getPos().getX(), (int)(getPos().getY()+this.getDy()));
+	   		 	//Top Line
+	   		 	glVertex2i((int)getPos().getX(), (int)(getPos().getY()+this.getDy()));
+	   		 	glVertex2i((int)(getPos().getX()+this.getDx()), (int)(getPos().getY()+this.getDy()));
+	   		 	//Right Line
+	   		 	glVertex2i((int)(getPos().getX()+this.getDx()), (int)(getPos().getY()+this.getDy()));
+	   		 	glVertex2i((int)(getPos().getX()+this.getDx()), (int)getPos().getY());
+	   		 glEnd();
+		}
+		
 	}
 	
 	public void event(){
 		System.out.println("Specific event happens");
+		active = false;
 		//Making a sub class for each event needed for the game
+		//Event object should be move to new Point();
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

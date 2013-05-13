@@ -45,6 +45,15 @@ public class Loader {
 		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(40, 45, 0), 20, 20, 0, MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
+		System.out.println("Loaded level.");
+		
+		
+		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
+			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
+				tutorialLevel.getRoomList().get(i).getObsList().get(j).getLoopSound().reverb_Decay_Time(tutorialLevel.getRoomList().get(i).getRt60());
+			}
+		}
+		System.out.println("Calculated reverb properties.");
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){

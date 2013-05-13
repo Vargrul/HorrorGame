@@ -14,12 +14,12 @@ public class Trap extends Obs {
 	
 	public Trap() {
 		super();
-		setLoopSound(new Sound(SOUNDS.TRAP_ROTER, new Point(0,0,0), true));
+		setLoopSound(new Sound(SOUNDS.TRAP_ROTER, new Point(0,0,0), true, true));
 	}
 	
 	public Trap(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
-		setLoopSound(new Sound(SOUNDS.TRAP_ROTER, new Point(0,0,0), true));
+		setLoopSound(new Sound(SOUNDS.TRAP_ROTER, new Point(0,0,0), true,true));
 	}
 	
 	public void update(){

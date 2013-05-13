@@ -14,7 +14,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(140,310,10),0.5f,0.01f,10);
+	private static Player player = new Player(new Point(140,310,10),0.2f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static long lastFPS;
@@ -23,8 +23,6 @@ public class Loader {
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
 	
-	//testing
-	//private static Sound testsound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true);
 	private static boolean playing = false;
@@ -90,26 +88,7 @@ public class Loader {
 				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().play();
 			}
 		}
-		//Sound testing
-		//testsound.update(player.getPos());
 		player.setListener();
-		glLineWidth(1.5f);
-		glBegin(GL_LINES);
-		 glVertex2i(140,310);
-		 glVertex2i(140,311);
-		glEnd();
-		glLineWidth(1.0f);
-		
-		/*
-		if(playing == false && player.isWalking() == true){
-			testsound.play();
-			playing = true;
-		}
-		else if(playing == true && player.isWalking() == false){
-			testsound.pause();
-			playing = false;
-		}*/
-		//testsound.play();
 		
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();
@@ -169,11 +148,14 @@ public class Loader {
 		fps++;
 	}
 	public static void walkCheck(Player player){
+		System.out.println(player.isWalking());
 		if(player.isWalking() == true){
 			if(player.isInWater()==true){
 				walkSound.stop();
 				walkWaterSound.update(player.getPos());
-				walkWaterSound.play();
+				if(walkWaterSound.isPlaying == false){
+					walkWaterSound.play();
+				}
 				//stop normal walk
 				//start water walk
 			}
@@ -183,11 +165,11 @@ public class Loader {
 				walkSound.play();
 				//stop water walk
 				//Play normal walk
-			}
-			
+			}	
+		} else {
+			walkWaterSound.stop();
+			walkSound.stop();
 		}
-		walkWaterSound.stop();
-		walkSound.stop();
 		//Setting the Walking and inWater bools to true to check
 		player.setWalking(false);
 		player.setInWater(false);

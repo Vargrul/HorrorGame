@@ -24,7 +24,7 @@ public class Loader {
 	private static boolean collision = false;
 	
 	//testing
-	private static Sound testsound = new Sound(SOUNDS.CHAIN_01, player.getPos(), true);
+	//private static Sound testsound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
 	private static boolean playing = false;
 	
 	

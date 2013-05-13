@@ -27,7 +27,7 @@ public class Menu {
 	private static boolean showMainMenu;
 	private static boolean showHelpMenu;
 	private static Controls controls = new Controls();
-	private static Sound menuMusic = new Sound(SOUNDS.MENU_MUSIC, new Point(0,0,0), true);
+	private static Sound menuMusic = new Sound(SOUNDS.MENU_MUSIC, new Point(0,0,0), true, false);
 
 	public Menu() {
 		menuNumber = 0;

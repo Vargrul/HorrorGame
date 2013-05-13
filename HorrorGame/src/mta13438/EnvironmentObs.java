@@ -18,13 +18,13 @@ public class EnvironmentObs extends Obs {
 		super();
 	}
 	
-	private EnvironmentObs(Point point, SOUNDS sound, boolean loop) {
+	private EnvironmentObs(Point point, SOUNDS sound, boolean loop, boolean reverb) {
 		setPos(point);
 		setDx(0);
 		setDz(0);
 		setDy(0);
 		setMaterial(MATERIALS.ROCK);
-		setLoopSound(new Sound(sound, new Point(point.getX(),point.getY(),point.getZ()), loop));
+		setLoopSound(new Sound(sound, new Point(point.getX(),point.getY(),point.getZ()), loop,reverb));
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){

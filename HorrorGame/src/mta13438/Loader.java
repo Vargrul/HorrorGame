@@ -17,7 +17,7 @@ public class Loader {
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
 	
-	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true, true);
+	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
 	private static boolean playing = false;
 	

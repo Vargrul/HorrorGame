@@ -7,7 +7,7 @@ public class Obs {
 	private float dx,dz,dy;
 	private MATERIALS material;
 	private Sound loopSound;
-	private Boolean emitSound = true;
+	private Boolean emitSound = false;
 	
 	
 	public Obs(){

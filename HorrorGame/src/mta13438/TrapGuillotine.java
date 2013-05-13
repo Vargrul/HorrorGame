@@ -3,6 +3,10 @@ package mta13438;
 public class TrapGuillotine extends Trap{
 	
 	private boolean trapOn;
+	private final int downtime = 5; // x "delta" downtime between the trap being on and off
+	private final int killtime = 2;
+	private int counter;
+	
 
 	public TrapGuillotine(){
 		super();
@@ -10,7 +14,7 @@ public class TrapGuillotine extends Trap{
 	}
 	public TrapGuillotine(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
-		trapOn = true;
+		trapOn = false;
 	}
 	@Override
 	public void collision(Player player, Level level, int currentRoom){
@@ -20,7 +24,24 @@ public class TrapGuillotine extends Trap{
 		}
 	}
 	public void update(int delta){
+		if(trapOn == false){
+			counter += delta;
+			if(counter>=downtime){
+				trapOn = true;
+				counter = 0;
+				//Play trap sound
+			}
+		}
+		else if(trapOn ==false){
+			counter += delta;
+			if(counter >= killtime){
+				trapOn = false;
+				counter = 0;
+			}
+		}
+		
 		//trapSound.loop();
 		System.out.println("delta");
+		
 	}
 }

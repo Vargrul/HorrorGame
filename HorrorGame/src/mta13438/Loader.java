@@ -25,6 +25,8 @@ public class Loader {
 	
 	//testing
 	//private static Sound testsound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
+	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
+	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true);
 	private static boolean playing = false;
 	
 	
@@ -169,15 +171,23 @@ public class Loader {
 	public static void walkCheck(Player player){
 		if(player.isWalking() == true){
 			if(player.isInWater()==true){
+				walkSound.stop();
+				walkWaterSound.update(player.getPos());
+				walkWaterSound.play();
 				//stop normal walk
 				//start water walk
 			}
 			else{
+				walkWaterSound.stop();
+				walkSound.update(player.getPos());
+				walkSound.play();
 				//stop water walk
 				//Play normal walk
 			}
 			
 		}
+		walkWaterSound.stop();
+		walkSound.stop();
 		//Setting the Walking and inWater bools to true to check
 		player.setWalking(false);
 		player.setInWater(false);

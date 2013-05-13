@@ -18,6 +18,7 @@ public  enum SOUNDS {
 	FOOTSTEP_STONE_02("assets/soundEffects/footstep_stone01.wav"),
 	FOOTSTEP_STONE_03("assets/soundEffects/footstep_stone01.wav"),
 	FOOTSTEP_STONE_04("assets/soundEffects/footstep_stone01.wav"),
+	DOOR("assets/soundEffects/door.wav"),
 	DOOR_CLOSE("assets/soundEffects/forløblig dør luk.wav"),
 	DOOR_OPEN("assets/soundEffects/forløblig dør åben.wav"),
 	RAT_01("assets/soundEffects/forløbelig rotte.wav"),

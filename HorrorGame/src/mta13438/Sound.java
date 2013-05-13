@@ -51,7 +51,7 @@ public class Sound {
 		//Bind buffer and source
 		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
 		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    1.0f          );
-		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     1.0f          );
+		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     5.0f          );
 		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 		if(looping == true){
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );

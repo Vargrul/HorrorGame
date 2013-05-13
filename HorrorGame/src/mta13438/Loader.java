@@ -45,8 +45,8 @@ public class Loader {
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATER_DROP_02,true,true));
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATER_DROP_01,true,true));
-		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(30, 20, 0), 20, 20, 0, MATERIALS.ROCK));
-		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK));
+		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(30, 20, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
+		//tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");

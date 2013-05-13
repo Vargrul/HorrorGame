@@ -27,7 +27,7 @@ public class Menu {
 	private static boolean showMainMenu;
 	private static boolean showHelpMenu;
 	private static Controls controls = new Controls();
-	private Sound menuMusic = new Sound(SOUNDS.MENU_MUSIC, new Point(0,0,0), true);
+	private static Sound menuMusic = new Sound(SOUNDS.MENU_MUSIC, new Point(0,0,0), true);
 
 	public Menu() {
 		menuNumber = 0;
@@ -81,6 +81,7 @@ public class Menu {
 	public static void play() {
 		showMainMenu = false;
 		showHelpMenu = false;
+		menuMusic.stop();
 		Loader.playTutorialLevel();
 	}
 

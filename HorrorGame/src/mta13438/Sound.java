@@ -8,6 +8,9 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.AL11;
+import org.lwjgl.openal.EFX10;
+import org.lwjgl.openal.EFXUtil;
 import org.lwjgl.util.WaveData;
 
 // Need to include "AL.create();" when initializing
@@ -38,6 +41,16 @@ public class Sound {
 			e.printStackTrace();
 		}
 		
+
+		// Add reverb effect
+        final int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
+        final int reverbEffect = EFX10.alGenEffects();
+        
+        EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+        EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
+        EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, 5.0f);
+        EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
+		
 		
 		//Generate a source
 		AL10.alGenSources(source);
@@ -50,7 +63,8 @@ public class Sound {
 		if(looping == true){
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 		}
-		
+		AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0,
+                EFX10.AL_FILTER_NULL);
 	}// need killALData() and AL.destroy() before program close
 	
 	//Update function for updating position, pitch and gain
@@ -58,8 +72,16 @@ public class Sound {
 		this.pos = point;
 		AL10.alSource3f (source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
 	}
-	public void reverb(){
-		//Do reverb effect
+	public void reverb(){/*
+		int slots = EFX10.alGenAuxiliaryEffectSlots();
+		int effect = EFX10.alGenEffects();
+		
+		EFX10.alEffecti(effect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+		EFX10.alEffectf(effect, EFX10.AL_REVERB_DECAY_TIME, 3.0f);
+		
+        EFX10.alAuxiliaryEffectSloti(slots, EFX10.AL_EFFECTSLOT_EFFECT, effect);
+*/
+		
 	}
 	public void play(){
 		if(isPlaying == false){

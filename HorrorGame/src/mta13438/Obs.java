@@ -16,7 +16,7 @@ public class Obs {
 		setDz(0);
 		setDy(0);
 		setMaterial(MATERIALS.ROCK);
-		setLoopSound(new Sound(SOUNDS.CELL_DOOR, new Point(0,0,0), true));
+		setLoopSound(new Sound(SOUNDS.DOOR, new Point(0,0,0), true));
 	}
 	
 	public Obs(Point point,float dx,float dy,float dz,MATERIALS material){
@@ -25,7 +25,7 @@ public class Obs {
 		setDz(dz);
 		setDy(dy);
 		setMaterial(material);
-		setLoopSound(new Sound(SOUNDS.CHAIN_01, point, true));
+		setLoopSound(new Sound(SOUNDS.DOOR, point, true));
 	}
 	
 	public Point getCenter(){

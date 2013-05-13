@@ -10,11 +10,11 @@ public class EnvironmentObs extends Obs {
 	
 	//private Sound collisionSound = new Sound(HANDSONWALL,getPos(),10,10);
 	
-	private EnvironmentObs() {
+	public EnvironmentObs() {
 		super();
 	}
 	
-	private EnvironmentObs(Point point, SOUNDS sound, boolean loop, boolean reverb) {
+	public EnvironmentObs(Point point, SOUNDS sound, boolean loop, boolean reverb) {
 		setPos(point);
 		setDx(0);
 		setDz(0);

@@ -30,14 +30,14 @@ public  enum SOUNDS {
 	HANDS_ON_WALL_03("assets/soundEffects/handsonwall03.wav"),
 	KEYCHAIN_01("assets/soundEffects/keychain01.wav"),
 	MAN_EATEN_BY_WALRUS("assets/soundEffects/ManEatenByWalrus.wav"),
-	MONSTER_CELL_01("assets/soundEffects/monster cell 2.wav"),
+	MONSTER_CELL_01("assets/soundEffects/tempcell.wav"),
 	MONSTER_CELL_02("assets/soundEffects/monster cell.wav"),
 	WATER_DROP_01("assets/soundEffects/waterdrop01.wav"),
 	WATER_DROP_02("assets/soundEffects/waterdrop02.wav"),
 	HEARTBEAT("assets/soundEffects/Heart.wav"), 
 	TRAP_01("assets/soundEffects/trapsound.wav"),
 	TRAP_02("assets/soundEffects/trap2.wav"),
-	TRAP_ROTER("assets/soundEffects/Roter trap1.wav"),
+	TRAP_ROTER("assets/soundEffects/trapsound.wav"),
 	TRAP_KILL("assets/soundEffects/.wav") //is still missing
 	;
 	

@@ -1,7 +1,6 @@
 package mta13438;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.IntBuffer;
@@ -10,7 +9,6 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;
 import org.lwjgl.openal.EFX10;
-import org.lwjgl.openal.EFXUtil;
 import org.lwjgl.util.WaveData;
 
 // Need to include "AL.create();" when initializing

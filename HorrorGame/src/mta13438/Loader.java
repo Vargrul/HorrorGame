@@ -2,6 +2,7 @@ package mta13438;
 
 import java.util.ArrayList;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.EFX10;
 import org.lwjgl.opengl.Display;
 
 public class Loader {
@@ -30,7 +31,6 @@ public class Loader {
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
 	private static boolean playing = false;
 	
-	
 	public void start() {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -54,6 +54,7 @@ public class Loader {
 		tutorialLevel.getRoomList().get(2).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
 		tutorialLevel.getRoomList().get(2).addObsList(scareEvent);
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false,true));
+		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(0, 0, 0),SOUNDS.RAT,false,true));
 		tutorialLevel.getRoomList().get(5).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true));
 		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
 		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true));
@@ -64,7 +65,6 @@ public class Loader {
 		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
-		
 		
 		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
 			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
@@ -85,7 +85,7 @@ public class Loader {
 		if(takeInput == true){
 			input();
 		} else if(takeInput == false){
-			if(time < (startTime+22500)){
+			if(time < (startTime+25800)){
 				if(counter == 0){
 					startTime = getTime();
 					counter++;
@@ -95,19 +95,19 @@ public class Loader {
 				guardVoice.play();
 				playerVoice.play();
 				time = getTime();
-			} else if (time < (startTime+26000) && time > (startTime+22500)){
+			} else if (time >= (startTime+25800) && time < (startTime+29600)){
 				guard.backward(0.7f);
 				guard.turnRight(0.2f);
 				guard.draw();
 				guardVoice.update(guard.getPos());
 				time = getTime();
-			} else if (time >= (startTime+22500) && time < (startTime+32500)){
+			} else if (time >= (startTime+29600) && time < (startTime+39500)){
 				time = getTime();
 				player.foward(0.1f);
 				player.draw();
-			} else if (time >= (startTime+32500) && time < (startTime+43500)){
+			} else if (time >= (startTime+39500) && time < (startTime+48000)){
 				time = getTime();
-			} else if (time >= (startTime+43500)){
+			} else if (time >= (startTime+48000)){
 				takeInput = true;
 				System.out.println("HEY");
 			}

@@ -19,8 +19,10 @@ public class Sound {
 	//and another IntBuffer to hold the position and speed.
 	IntBuffer buffer = BufferUtils.createIntBuffer(1);
 	IntBuffer source = BufferUtils.createIntBuffer(1);
-	final int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
-	final int reverbEffect = EFX10.alGenEffects();
+	
+	final static int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
+	final static int reverbEffect = EFX10.alGenEffects();
+	
 	Point pos;
 	boolean isPlaying = false;
 	boolean enableReverb;
@@ -62,7 +64,7 @@ public class Sound {
 			EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
 			EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 			EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
-			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
+			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, 0, 0, EFX10.AL_FILTER_NULL);
 		}
 	}// need killALData() and AL.destroy() before program close
 	
@@ -99,10 +101,8 @@ public class Sound {
 
 		// Add reverb effect
 		if(enableReverb){
-			EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
-			EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
-			EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
-			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
+			
+			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, 0, 0, EFX10.AL_FILTER_NULL);
 		}
 	}// need killALData() and AL.destroy() before program close
 

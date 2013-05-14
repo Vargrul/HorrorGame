@@ -113,7 +113,7 @@ public class Loader {
 		}
 
 		if(tempCurrentRoom != currentRoom){
-			updateReverb(tutorialLevel.getRoomList().get(currentRoom).rt60);
+			//updateReverb(tutorialLevel.getRoomList().get(currentRoom).rt60);
 		}
 
 		collision = player.collisionCheck(tutorialLevel, currentRoom);

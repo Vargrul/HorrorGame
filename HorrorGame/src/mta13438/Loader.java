@@ -18,7 +18,7 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean takeInput = true;
+	private static boolean takeInput = false;
 	private static long startTime;
 	private static long time;
 	private static int counter;

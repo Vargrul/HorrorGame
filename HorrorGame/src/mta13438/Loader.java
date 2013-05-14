@@ -16,7 +16,7 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean takeInput = false;
+	private static boolean takeInput = true;
 	private static Event scareEvent = new Event(new Point(100, 0, 0), 20, 90, 0, MATERIALS.WATER);
 	private static Entity guard = new Entity(new Point(10,30,0),0.2f,(float)Math.PI);
 	

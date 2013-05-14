@@ -18,7 +18,7 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean takeInput = false;
+	private static boolean takeInput = true;
 	private static long startTime;
 	private static long time;
 	private static int counter;
@@ -113,7 +113,7 @@ public class Loader {
 		}
 
 		if(tempCurrentRoom != currentRoom){
-			updateReverb(tutorialLevel.getRoomList().get(currentRoom).rt60);
+			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 		}
 
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
@@ -186,6 +186,11 @@ public class Loader {
 		EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
+		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
+			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
+				tutorialLevel.getRoomList().get(i).getObsList().get(j).getLoopSound().loadReverb(effectSlot);
+			}
+		}
 
 	}
 	public static void updateReverb(float[] rt60) {
@@ -203,9 +208,6 @@ public class Loader {
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
 
-		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
-			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
-		}
 	}
 
 	public static int getDelta() {

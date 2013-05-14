@@ -8,7 +8,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(140,310,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(15,315,10),0.2f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static long lastFPS;
@@ -16,7 +16,9 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
+	private static boolean takeInput = false;
 	private static Event scareEvent = new Event(new Point(100, 0, 0), 20, 90, 0, MATERIALS.WATER);
+	private static Entity guard = new Entity(new Point(10,30,0),0.2f,(float)Math.PI);
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
@@ -73,7 +75,9 @@ public class Loader {
 	}
 	// Renders the tutorial level. 
 	public static void renderTutorialLevel(){
-		input();
+		if(takeInput == true){
+			input();
+		}
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
 
 		if(collision){

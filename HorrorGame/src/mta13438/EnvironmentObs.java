@@ -20,7 +20,7 @@ public class EnvironmentObs extends Obs {
 		setDz(0);
 		setDy(0);
 		setMaterial(MATERIALS.ROCK);
-		setLoopSound(new Sound(sound, new Point(point.getX(),point.getY(),point.getZ()), loop,reverb));
+		setLoopSound(new Sound(sound, new Point(point.getX(),point.getY(),point.getZ()), loop, reverb));
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){

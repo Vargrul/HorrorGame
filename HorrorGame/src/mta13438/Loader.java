@@ -2,6 +2,7 @@ package mta13438;
 
 import java.util.ArrayList;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.EFX10;
 import org.lwjgl.opengl.Display;
 
 public class Loader {
@@ -14,14 +15,17 @@ public class Loader {
 	private static long lastFPS;
 	private static int fps;
 	private static int currentRoom;
+	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	
+
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
 	private static boolean playing = false;
-	
-	
+
+	final static int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
+	final static int reverbEffect = EFX10.alGenEffects();
+
 	public void start() {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -42,24 +46,19 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
-		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false,true));
+		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false, true));
 		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
-		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true));
-		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP2,true,true));
+		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true, true));
+		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP2,true, true));
 		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(30, 20, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		//tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
-		
-		
-		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
-			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
-				tutorialLevel.getRoomList().get(i).getObsList().get(j).getLoopSound().reverb_Decay_Time(tutorialLevel.getRoomList().get(i).getRt60());
-			}
-		}
-		System.out.println("Calculated reverb properties.");
+
+		initializeReverb();
+
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -69,8 +68,13 @@ public class Loader {
 		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
 	// Renders the tutorial level. 
-	public static void renderTutorialLevel(){
+	public static void renderTutorialLevel(){		
 		input();
+
+		if(tempCurrentRoom != currentRoom){
+			updateReverb(tutorialLevel.getRoomList().get(currentRoom).rt60);
+		}
+
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
 
 		if(collision){
@@ -78,7 +82,7 @@ public class Loader {
 				if(player.getPos().getX() > tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() && 
 						player.getPos().getX() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getX() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDx()){
 					if(player.getPos().getY() > tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() &&
-						player.getPos().getY() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDy()){
+							player.getPos().getY() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDy()){
 						tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).collision(player, tutorialLevel, currentRoom);
 					}
 				}
@@ -98,7 +102,7 @@ public class Loader {
 			}
 		}
 		player.setListener();
-		
+
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();
 
@@ -136,6 +140,32 @@ public class Loader {
 		}
 	}
 
+	public static void initializeReverb() {
+		EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+		EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
+		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
+
+
+	}
+	public static void updateReverb(float[] rt60) {
+		float decayTime, HFRatio;
+		float temp = 0;
+
+		for (int i = 0; i < rt60.length; i++) {
+			temp += rt60[i];
+		}
+		decayTime = temp / rt60.length;
+
+		temp = (rt60[0] + rt60[1]) / 2;
+		HFRatio = ((rt60[4] + rt60[5]) / 2) / temp;
+
+		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
+		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
+
+		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
+			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
+		}
+	}
 
 	public static int getDelta() {
 		long time = getTime();
@@ -147,7 +177,7 @@ public class Loader {
 	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
-	
+
 	public static void updateFPS() {
 		if (getTime() - lastFPS > 1000) {
 			Display.setTitle("FPS: " + fps);

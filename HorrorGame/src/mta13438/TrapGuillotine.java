@@ -11,12 +11,12 @@ public class TrapGuillotine extends Trap{
 	public TrapGuillotine(){
 		super();
 		trapOn = true;
-		setLoopSound(new Sound(SOUNDS.TRAP_GUILLOTINE, new Point(0,0,0), true,true));
+		setLoopSound(new Sound(SOUNDS.GUILLOTINE_TRAP, new Point(0,0,0), true,true));
 	}
 	public TrapGuillotine(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
 		trapOn = false;
-		setLoopSound(new Sound(SOUNDS.TRAP_GUILLOTINE, new Point(0,0,0), true,true));
+		setLoopSound(new Sound(SOUNDS.GUILLOTINE_TRAP, new Point(0,0,0), true,true));
 	}
 	@Override
 	public void collision(Player player, Level level, int currentRoom){

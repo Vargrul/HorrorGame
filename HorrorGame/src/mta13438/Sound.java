@@ -65,6 +65,47 @@ public class Sound {
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
 		}
 	}// need killALData() and AL.destroy() before program close
+	
+	public Sound(SOUNDS soundname, Point point, boolean looping, boolean enableReverb, float gain){
+		AL10.alGenBuffers(buffer);
+
+		//Set Position 
+		pos = point;
+		this.enableReverb = enableReverb;
+
+		//Loads the wave file from this class's package in your classpath
+		try {
+			WaveData waveFile = WaveData.create(new BufferedInputStream(new FileInputStream(soundname.getPath())));
+			AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
+			waveFile.dispose();
+		} catch (FileNotFoundException e) {
+			System.out.println("File could not be loaded from Classpath");
+			e.printStackTrace();
+		}
+
+
+
+		//Generate a source
+		AL10.alGenSources(source);
+
+		//Bind buffer and source
+		AL10.alSourcei(source.get(0), AL10.AL_BUFFER,   buffer.get(0) );
+		AL10.alSourcef(source.get(0), AL10.AL_PITCH,    1.0f          );
+		AL10.alSourcef(source.get(0), AL10.AL_GAIN,     gain          );
+		AL10.alSource3f(source.get(0), AL10.AL_POSITION, pos.getX(), pos.getY(), pos.getZ());
+		if(looping == true){
+			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
+		}
+
+		// Add reverb effect
+		if(enableReverb){
+			EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+			EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
+			EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
+			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
+		}
+	}// need killALData() and AL.destroy() before program close
+
 
 	//Update function for updating position, pitch and gain
 	public void update(Point point){

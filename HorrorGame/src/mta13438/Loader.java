@@ -18,8 +18,8 @@ public class Loader {
 	private static boolean collision = false;
 	private static Event scareEvent = new Event(new Point(100, 0, 0), 20, 90, 0, MATERIALS.WATER);
 	
-	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
-	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
+	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
+	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
 	private static boolean playing = false;
 	
 	
@@ -49,10 +49,10 @@ public class Loader {
 		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true));
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP2,true,true));
-		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(30, 20, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
-		//tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
+		tutorialLevel.getRoomList().get(9).addObsList(new Monster(new Point(20, 20, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
+		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER2));
 		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
-		tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
+		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
 		
@@ -96,7 +96,7 @@ public class Loader {
 			} 
 		}
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
-			if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true){
+			if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true && currentRoom < 10 && currentRoom > 0){
 				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().play();
 			}
 		}
@@ -113,7 +113,7 @@ public class Loader {
 		}
 		
 		if(scareEvent.isTrigger() == true && scareEvent.isActive() == true){
-			scareEvent.getScareSound().update(scareEvent.getPos());
+			scareEvent.getScareSound().update(new Point(scareEvent.getPos().getX(),scareEvent.getPos().getY() + scareEvent.getDy(),0));
 			scareEvent.getScareSound().play();
 			scareEvent.setActive(false);
 			

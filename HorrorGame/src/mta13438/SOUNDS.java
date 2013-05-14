@@ -8,6 +8,7 @@ public  enum SOUNDS {
 	FOOTSTEP_WATER("assets/soundEffects/footstep_water.wav"),
 	GUILLOTINE_TRAP("assets/soundEffects/Guillotine_trap.wav"),
 	MONSTER1("assets/soundEffects/monster1.wav"),
+	MONSTER2("assets/soundEffects/monster2.wav"),
 	RAT("assets/soundEffects/Rat.wav"),
 	ROTER_TRAP("assets/soundEffects/Roter_trap.wav"),
 	WATERDROP1("assets/soundEffects/waterdrop1.wav"),

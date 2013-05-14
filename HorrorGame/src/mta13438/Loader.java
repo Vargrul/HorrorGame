@@ -55,7 +55,7 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(2).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
-		//tutorialLevel.getRoomList().get(2).addObsList(scareEvent);
+		tutorialLevel.getRoomList().get(2).addObsList(scareEvent);
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false,true));
 		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(0, 0, 0),SOUNDS.RAT,false,true));
 		tutorialLevel.getRoomList().get(5).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true));
@@ -138,7 +138,7 @@ public class Loader {
 			} 
 		}
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
-			if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true){
+			if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true && currentRoom > 0 && currentRoom < 6){
 				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().play();
 			}
 		}

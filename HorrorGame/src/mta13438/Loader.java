@@ -9,7 +9,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(140,310,10),0.5f,0.01f,10);
+	private static Player player = new Player(new Point(15,315,10),0.2f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static long lastFPS;
@@ -18,9 +18,18 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-
-	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
-	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
+	private static boolean takeInput = true;
+	private static long startTime;
+	private static long time;
+	private static int counter;
+	private static Event scareEvent = new Event(new Point(100, 0, 1), 20, 90, 0, MATERIALS.WATER);
+	private static Entity guard = new Entity(new Point(25,315,1),0.2f,(float)Math.PI);
+	
+	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true);
+	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true);
+	
+	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
+	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
 	private static boolean playing = false;
 
 	final static int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
@@ -36,29 +45,32 @@ public class Loader {
 	private static void loadTutorialLevel() {
 		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(0,5,0), new Point(10, 15, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(60, 50, 30, new Point(0,25,0), new Point(60, 5, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(50, 10, 20, new Point(0,5,0), new Point(50, 5, 0), MATERIALS.ROCK));
+		//tutorialLevel.addRoomList(new Room(50, 10, 20, new Point(0,5,0), new Point(50, 5, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(150, 90, 60, new Point(0,45,0), new Point(150, 65, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(110, 110, 40, new Point(0,55,0), new Point(110, 55, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(40, 10, 20, new Point(0,5,0), new Point(35, 0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(10, 50, 20, new Point(5,50,0), new Point(5, 0, 0), MATERIALS.ROCK));
+		tutorialLevel.addRoomList(new Room(110, 110, 40, new Point(0,55,0), new Point(90, 0, 0), MATERIALS.ROCK));
+		//tutorialLevel.addRoomList(new Room(40, 10, 20, new Point(0,5,0), new Point(35, 0, 0), MATERIALS.ROCK));
+		//tutorialLevel.addRoomList(new Room(10, 50, 20, new Point(5,50,0), new Point(5, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(70, 70, 40, new Point(35,70,0), new Point(35,0, 0), MATERIALS.ROCK));
-		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(5,20,0), new Point(5, 0, 0), MATERIALS.ROCK));
+		//tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(5,20,0), new Point(5, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
-		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
-		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false, true));
+		tutorialLevel.getRoomList().get(2).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
+		//tutorialLevel.getRoomList().get(2).addObsList(scareEvent);
+		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false,true));
+		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(0, 0, 0),SOUNDS.RAT,false,true));
+		tutorialLevel.getRoomList().get(5).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true));
 		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
-		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true, true));
-		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP2,true, true));
-		tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(30, 20, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		//tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
-		tutorialLevel.getRoomList().get(7).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
-		tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
+		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true));
+		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP2,true,true));
+		tutorialLevel.getRoomList().get(5).addObsList(new Monster(new Point(20, 20, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
+		tutorialLevel.getRoomList().get(3).addObsList(new Monster(new Point(40, 25, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER2));
+		tutorialLevel.getRoomList().get(4).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
+		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
 
 		initializeReverb();
-
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -68,8 +80,37 @@ public class Loader {
 		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
 	// Renders the tutorial level. 
-	public static void renderTutorialLevel(){		
-		input();
+	public static void renderTutorialLevel(){	
+		if(takeInput == true){
+			input();
+		} else if(takeInput == false){
+			if(time < (startTime+25800)){
+				if(counter == 0){
+					startTime = getTime();
+					counter++;
+				}
+				guard.draw();
+				guardVoice.update(guard.getPos());
+				guardVoice.play();
+				playerVoice.play();
+				time = getTime();
+			} else if (time >= (startTime+25800) && time < (startTime+29600)){
+				guard.backward(0.7f);
+				guard.turnRight(0.2f);
+				guard.draw();
+				guardVoice.update(guard.getPos());
+				time = getTime();
+			} else if (time >= (startTime+29600) && time < (startTime+39500)){
+				time = getTime();
+				player.foward(0.1f);
+				player.draw();
+			} else if (time >= (startTime+39500) && time < (startTime+48000)){
+				time = getTime();
+			} else if (time >= (startTime+48000)){
+				takeInput = true;
+				System.out.println("HEY");
+			}
+		}
 
 		if(tempCurrentRoom != currentRoom){
 			updateReverb(tutorialLevel.getRoomList().get(currentRoom).rt60);

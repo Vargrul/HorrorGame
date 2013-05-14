@@ -15,7 +15,7 @@ public class Monster extends Obs {
 	
 	public Monster(Point point,float dx,float dy,float dz,MATERIALS material, SOUNDS sound) {
 		super(point, dx,dy,dz,material);
-		setLoopSound(new Sound(sound, new Point(0,0,0), true, true));
+		setLoopSound(new Sound(sound, new Point(0,0,0), true, true, 10f));
 	}
 	
 	public void update(){

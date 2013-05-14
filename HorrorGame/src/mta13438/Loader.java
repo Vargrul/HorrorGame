@@ -21,7 +21,8 @@ public class Loader {
 	private static Event scareEvent = new Event(new Point(100, 0, 0), 20, 90, 0, MATERIALS.WATER);
 	private static Entity guard = new Entity(new Point(25,315,0),0.2f,(float)Math.PI);
 	
-	private static Sound guardVoice;
+	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true);
+	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true);
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
@@ -83,12 +84,13 @@ public class Loader {
 		} else if(takeInput == false){
 			if(time < 100){
 				guard.draw();
-				//guardVoice.update(guard.getPos());
-				//guardVoice.play();
+				guardVoice.update(guard.getPos());
+				guardVoice.play();
+				playerVoice.play();
 				time++;
 			} if(time >= 100){
+				guardVoice.update(guard.getPos());
 				guard.draw();
-				guard.backward(0.2f);
 			}
 		}
 		collision = player.collisionCheck(tutorialLevel, currentRoom);

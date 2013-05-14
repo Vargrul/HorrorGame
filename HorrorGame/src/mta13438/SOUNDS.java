@@ -13,7 +13,9 @@ public  enum SOUNDS {
 	ROTER_TRAP("assets/soundEffects/Roter_trap.wav"),
 	WATERDROP1("assets/soundEffects/waterdrop1.wav"),
 	WATERDROP2("assets/soundEffects/waterdrop2.wav"),
-	SCARE("assets/soundEffects/scare.wav")
+	SCARE("assets/soundEffects/scare.wav"),
+	GUARD("assets/soundEffects/Guard.wav"),
+	PLAYERVOICE("assets/soundEffects/Protagonist.wav")
 	;
 	
 	//desc for description

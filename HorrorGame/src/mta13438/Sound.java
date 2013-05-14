@@ -58,12 +58,12 @@ public class Sound {
 		}
 
 		// Add reverb effect
-		/*if(enableReverb){
+		if(enableReverb){
 			EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
 			EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 			EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
-		}*/
+		}
 	}// need killALData() and AL.destroy() before program close
 	
 	public Sound(SOUNDS soundname, Point point, boolean looping, boolean enableReverb, float gain){
@@ -98,12 +98,12 @@ public class Sound {
 		}
 
 		// Add reverb effect
-		/*if(enableReverb){
+		if(enableReverb){
 			EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
 			EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 			EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
-		}*/
+		}
 	}// need killALData() and AL.destroy() before program close
 
 

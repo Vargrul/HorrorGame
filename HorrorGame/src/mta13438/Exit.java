@@ -25,7 +25,7 @@ public class Exit extends Obs{
 	public Exit(Point point,float dx,float dy,float dz,MATERIALS material,boolean locked) {
 		super(point, dx,dy,dz,material);
 		this.locked = locked;
-		setLoopSound(new Sound(SOUNDS.DOOR, new Point(0,0,0), true, true, 0.2f));
+		setLoopSound(new Sound(SOUNDS.DOOR, new Point(0,0,0), true, true, 0.1f));
 	}
 
 	public void collision(Player player, Level level, int currentRoom){

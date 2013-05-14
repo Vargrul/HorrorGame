@@ -8,7 +8,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(140,310,10),0.5f,0.01f,10);
+	private static Player player = new Player(new Point(140,310,10),0.2f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static long lastFPS;
@@ -16,6 +16,7 @@ public class Loader {
 	private static int currentRoom;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
+	private static Event scareEvent = new Event(new Point(100, 0, 0), 20, 90, 0, MATERIALS.WATER);
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
@@ -42,6 +43,7 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,0), new Point(25, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,0), new Point(15, 20, 0), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(3).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
+		tutorialLevel.getRoomList().get(3).addObsList(scareEvent);
 		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false,true));
 		tutorialLevel.getRoomList().get(6).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true));
 		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
@@ -109,7 +111,14 @@ public class Loader {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
-
+		
+		if(scareEvent.isTrigger() == true && scareEvent.isActive() == true){
+			scareEvent.getScareSound().update(scareEvent.getPos());
+			scareEvent.getScareSound().play();
+			scareEvent.setActive(false);
+			
+		}
+		
 		//Draw the player
 		player.draw();
 		updateFPS();

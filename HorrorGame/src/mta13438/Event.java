@@ -9,6 +9,8 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Event extends Obs {
 	private boolean active = true;
+	private boolean trigger = false;
+	private Sound scareSound = new Sound(SOUNDS.SCARE, new Point(0,0,0), false, true);
 	
 	public Event(){
 		super();
@@ -16,10 +18,12 @@ public class Event extends Obs {
 	
 	public Event(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
+		
 	}
-	
-	public void collide(){
+	@Override
+	public void collision(Player player, Level level, int currentRoom){
 		System.out.println("Collision with Event Object");
+		trigger = true;
 	}
 	
 	@Override
@@ -50,6 +54,18 @@ public class Event extends Obs {
 		active = false;
 		//Making a sub class for each event needed for the game
 		//Event object should be move to new Point();
+	}
+
+	public boolean isTrigger() {
+		return trigger;
+	}
+	
+	public Sound getScareSound(){
+		return this.scareSound;
+	}
+
+	public void setTrigger(boolean trigger) {
+		this.trigger = trigger;
 	}
 
 	public boolean isActive() {

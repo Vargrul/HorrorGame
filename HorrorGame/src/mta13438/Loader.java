@@ -12,7 +12,6 @@ import org.lwjgl.openal.ALC11;
 import org.lwjgl.openal.ALCcontext;
 import org.lwjgl.openal.ALCdevice;
 import org.lwjgl.openal.EFX10;
-import org.lwjgl.openal.EFXUtil;
 import org.lwjgl.opengl.Display;
 
 public class Loader {
@@ -89,7 +88,7 @@ public class Loader {
 		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
-		//initOpenAL();
+		initOpenAL();
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -309,26 +308,7 @@ public class Loader {
 		
 		openALDevice = ALC10.alcOpenDevice(null);
 		System.out.println("Device was set up.");
-		
-		if(openALDevice != null) {
-			openALContext = ALC10.alcCreateContext(openALDevice, null);
-			ALC10.alcMakeContextCurrent(openALContext);
-			
-			System.out.println("Context was set up.");
-		}
-		
-		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false){
-			System.out.println("No Extentions present");
-			return;		
-		}
-		
-		
-		
-		
-		
-		
-		
-/*
+
 		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false){
 			System.out.println("No Extentions present");
 			return;		
@@ -336,7 +316,9 @@ public class Loader {
 		System.out.println("EFX Extension found!"); 
 
 		openALContext = ALC10.alcCreateContext(openALDevice, null);
-		*/
+		
+		System.out.println("openAL init");
+		System.out.println(ALC10.alcGetString(null, ALC10.ALC_DEVICE_SPECIFIER));
 	}
 	public static int getDelta() {
 		long time = getTime();

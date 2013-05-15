@@ -55,7 +55,7 @@ public class Loader {
 	static int iSend = 0; 
 
 	public void start() {
-		//initOpenAL();
+		initOpenAL();
 
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -308,11 +308,11 @@ public class Loader {
 	}
 	public static void initOpenAL() {
 		
-		openALDevice = ALC10.alcOpenDevice(null);
-		System.out.println("Device was set up.");
+		openALDevice = ALC10.alcOpenDevice("OpenAL Soft");
+		if (AL10.alGetError() == AL10.AL_NO_ERROR)System.out.println("Device was set up.");
 
 		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false)return;		
-		System.out.println("EFX Extension found!"); 
+		if (AL10.alGetError() == AL10.AL_NO_ERROR)System.out.println("EFX Extension found!"); 
 
 		openALContext = ALC10.alcCreateContext(openALDevice, null);
 	}

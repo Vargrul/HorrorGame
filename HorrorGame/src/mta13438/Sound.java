@@ -127,12 +127,13 @@ public class Sound {
 
 		if(enableReverb){
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
-			System.out.println("Reverb Loaded");
 		}
 	}
 	
 	public void initReverb() {
+		AL10.alGetError();
 		EFX10.alEffecti(this.reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+		if (AL10.alGetError() != AL10.AL_NO_ERROR)	System.out.println("Reverb Effect not supported");
 		AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 10f);
 		EFX10.alEffectf(this.reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 		EFX10.alAuxiliaryEffectSloti(this.effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, this.reverbEffect);

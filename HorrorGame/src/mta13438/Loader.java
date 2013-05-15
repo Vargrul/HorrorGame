@@ -241,9 +241,10 @@ public class Loader {
 				player.kill(tutorialLevel);
 			}
 		}
+		//tutorialLevel.updateSpawnPoint(player, tutorialLevel);
+		//System.out.println(tutorialLevel.getSpawnPoint().toString());
 		//play monster death sound
 		if(tutorialLevel.isMonsterDeath() == true){
-			System.out.println(currentRoom);
 			if(counter == 0){
 				startTime = getTime();
 				counter++;
@@ -262,7 +263,7 @@ public class Loader {
 				player.setSpeed(0.2f);
 				tutorialLevel.setMonsterDeath(false);
 				tutorialLevel.setGoThroughDoor(true);
-				player.setPos(tutorialLevel.getSpawnPoint());
+				player.kill(tutorialLevel);
 			}
 		}
 		// play close door sound when entering new room

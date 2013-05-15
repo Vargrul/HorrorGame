@@ -172,12 +172,11 @@ public class Player extends Entity {
 
 	public void kill(Level level){
 		respawn(level);
-		//Play death sound
 		deaths++;
 	}
 
 	public void respawn(Level level){
-		setPos(level.getSpawnPoint());
+		setPos(new Point (level.getSpawnPoint().getX() + 1,level.getSpawnPoint().getY() - 1,0));
 	}
 
 	public void proxHeartbeat (Level level, int currentRoom){

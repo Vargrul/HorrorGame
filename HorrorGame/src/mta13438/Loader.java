@@ -55,7 +55,7 @@ public class Loader {
 	static int iSend = 0; 
 
 	public void start() {
-		initOpenAL();
+		//initOpenAL();
 
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -94,7 +94,7 @@ public class Loader {
 		System.out.println(tutorialLevel.getRoomList().get(2).getObsList().get(i).toString());
 		}
 
-		initializeReverb();
+		//initializeReverb();
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -145,11 +145,9 @@ public class Loader {
 
 		if(tempCurrentRoom != currentRoom){
 			tempCurrentRoom = currentRoom;
-			//updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
-				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().update(tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().getPos());					
+				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().updateReverd(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 			}
-
 		}
 
 		collision = player.collisionCheck(tutorialLevel, currentRoom);

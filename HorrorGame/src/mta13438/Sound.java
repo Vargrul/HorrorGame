@@ -24,6 +24,8 @@ public class Sound {
 	Point pos;
 	boolean isPlaying = false;
 	boolean enableReverb;
+	final int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
+	final int reverbEffect = EFX10.alGenEffects();
 
 	//Figured out that we needed a constructor;
 	public Sound(SOUNDS soundname, Point point, boolean looping, boolean enableReverb){
@@ -56,6 +58,8 @@ public class Sound {
 		if(looping == true){
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 		}
+		
+		if(enableReverb)	initReverb();
 	}// need killALData() and AL.destroy() before program close
 
 	public Sound(SOUNDS soundname, Point point, boolean looping, boolean enableReverb, float gain){
@@ -88,6 +92,8 @@ public class Sound {
 		if(looping == true){
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 		}
+		
+		if(enableReverb)	initReverb();
 	}
 
 
@@ -123,6 +129,29 @@ public class Sound {
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
 			System.out.println("Reverb Loaded");
 		}
+	}
+	
+	public void initReverb() {
+		EFX10.alEffecti(this.reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+		//AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
+		EFX10.alEffectf(this.reverbEffect, EFX10.AL_METERS_PER_UNIT, 0.10f);
+		EFX10.alAuxiliaryEffectSloti(this.effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, this.reverbEffect);
+	}
+	
+	public void updateReverd(float[] rt60) {
+		float decayTime, HFRatio;
+		float temp = 0;
+
+		for (int i = 0; i < rt60.length; i++) {
+			temp += rt60[i];
+		}
+		decayTime = temp / rt60.length;
+
+		temp = (rt60[0] + rt60[1]) / 2;
+		HFRatio = ((rt60[4] + rt60[5]) / 2) / temp;
+
+		EFX10.alEffectf(this.reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
+		EFX10.alEffectf(this.reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
 	}
 
 	//Removes the source and buffer

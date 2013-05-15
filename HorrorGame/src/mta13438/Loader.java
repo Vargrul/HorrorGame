@@ -59,6 +59,7 @@ public class Loader {
 		Menu mainMenu = new Menu();
 		getDelta();
 		lastFPS = getTime();
+		//initOpenAL();
 	}
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadTutorialLevel() {
@@ -88,7 +89,6 @@ public class Loader {
 		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
-		initOpenAL();
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -309,16 +309,10 @@ public class Loader {
 		openALDevice = ALC10.alcOpenDevice(null);
 		System.out.println("Device was set up.");
 
-		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false){
-			System.out.println("No Extentions present");
-			return;		
-		}
+		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false)return;		
 		System.out.println("EFX Extension found!"); 
 
 		openALContext = ALC10.alcCreateContext(openALDevice, null);
-		
-		System.out.println("openAL init");
-		System.out.println(ALC10.alcGetString(null, ALC10.ALC_DEVICE_SPECIFIER));
 	}
 	public static int getDelta() {
 		long time = getTime();

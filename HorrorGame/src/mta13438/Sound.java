@@ -1,5 +1,11 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex3f;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,7 +37,6 @@ public class Sound {
 
 		//Set Position 
 		pos = point;
-		this.enableReverb = enableReverb;
 
 		//Loads the wave file from this class's package in your classpath
 		try {
@@ -58,12 +63,11 @@ public class Sound {
 		}
 	}// need killALData() and AL.destroy() before program close
 	
-	public Sound(SOUNDS soundname, Point point, boolean looping, boolean enableReverb, float gain){
+	public Sound(SOUNDS soundname, Point point, boolean looping, float gain){
 		AL10.alGenBuffers(buffer);
 
 		//Set Position 
 		pos = point;
-		this.enableReverb = enableReverb;
 
 		//Loads the wave file from this class's package in your classpath
 		try {
@@ -115,10 +119,6 @@ public class Sound {
 		return this.pos;
 	}
 
-	public void loadReverb(int effectSlot) {
-		
-		if(enableReverb)	AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
-	}
 
 	//Removes the source and buffer
 	public void delete(){

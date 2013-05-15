@@ -1,5 +1,11 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex3f;
+
 public class Point {
 	private float x,y,z;
 	
@@ -15,6 +21,13 @@ public class Point {
 		setX(x);
 		setY(y);
 		setZ(z);
+	}
+	public void draw(){
+		glColor3f(0.2f, 0.6f, 0.4f);
+		glBegin(GL_LINE_STRIP); float f = 0.0f; for(int i = 0; i<30;i++){
+			glVertex3f(getX()+(float)Math.cos(f),
+					getY()+(float)Math.sin(f), 0); f = (float) (f +(2*Math.PI/30)); }
+		glEnd();
 	}
 
 	//getters and setters

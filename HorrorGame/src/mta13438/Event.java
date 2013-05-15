@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL11.glVertex2i;
 public class Event extends Obs {
 	private boolean active = true;
 	private boolean trigger = false;
-	private Sound scareSound = new Sound(SOUNDS.SCARE, new Point(0,0,0), false, false, 100000f);
+	//private Sound scareSound = new Sound(SOUNDS.SCARE, new Point(0,0,0), false, false, 100000f);
 	
 	public Event(){
 		super();
@@ -60,9 +60,9 @@ public class Event extends Obs {
 		return trigger;
 	}
 	
-	public Sound getScareSound(){
-		return this.scareSound;
-	}
+	//public Sound getScareSound(){
+		//return this.scareSound;
+	//}
 
 	public void setTrigger(boolean trigger) {
 		this.trigger = trigger;

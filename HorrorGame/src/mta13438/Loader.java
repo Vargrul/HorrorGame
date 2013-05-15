@@ -260,6 +260,7 @@ public class Loader {
 		player.draw();
 		updateFPS();
 		walkCheck(player);
+		
 	}
 
 	public static void input() {

@@ -55,12 +55,11 @@ public class Loader {
 	static int iSend = 0; 
 
 	public void start() {
-		//initOpenAL();
-
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
 		getDelta();
 		lastFPS = getTime();
+		initOpenAL();
 	}
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadTutorialLevel() {
@@ -90,11 +89,6 @@ public class Loader {
 		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
-		for(int i = 0; i < tutorialLevel.getRoomList().get(2).getObsList().size(); i++){
-		System.out.println(tutorialLevel.getRoomList().get(2).getObsList().get(i).toString());
-		}
-
-		//initializeReverb();
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){

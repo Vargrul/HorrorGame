@@ -307,7 +307,7 @@ public class Loader {
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
-			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
+			//tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
 		}
 	}
 	public static void initOpenAL() {

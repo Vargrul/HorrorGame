@@ -133,8 +133,8 @@ public class Sound {
 	
 	public void initReverb() {
 		EFX10.alEffecti(this.reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
-		//AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
-		EFX10.alEffectf(this.reverbEffect, EFX10.AL_METERS_PER_UNIT, 0.10f);
+		AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
+		//EFX10.alEffectf(this.reverbEffect, EFX10.AL_METERS_PER_UNIT, 0.10f);
 		EFX10.alAuxiliaryEffectSloti(this.effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, this.reverbEffect);
 		loadReverb();
 	}

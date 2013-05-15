@@ -180,6 +180,8 @@ public class Player extends Entity {
 		
 		System.out.println(level.getSpawnPoint().toString());
 		
+		System.out.println(level.getSpawnPoint().toString());
+		
 		setPos(level.getSpawnPoint());
 	}
 

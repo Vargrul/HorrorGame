@@ -139,9 +139,9 @@ public class Loader {
 				player.setSpeed(0.0f);
 			} else if (time >= (startTime+48000) && time < (startTime+56000)){
 				time = getTime();
-				playStartSequence = false;
 			} else if (time >= (startTime+56000)){
 				time = getTime();
+				playStartSequence = false;
 				System.out.println("ss");
 				takeInput = true;
 				player.setSpeed(0.2f);

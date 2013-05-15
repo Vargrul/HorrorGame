@@ -13,6 +13,7 @@ public class Level {
 	private Point spawnPoint = new Point();
 	private boolean goThroughDoor = false;
 	private boolean trapDeath = false;
+	private boolean monsterDeath = false;
 
 	//No args constructor
 	public Level() {

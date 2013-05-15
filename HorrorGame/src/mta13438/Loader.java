@@ -276,15 +276,14 @@ public class Loader {
 				takeInput = false;
 				openDoorSound.update(player.getPos());
 				openDoorSound.play();
-				System.out.println(time - startTime);
+				//System.out.println(time - startTime);
 			} else if(time <= startTime + 5500){
-				System.out.println(time);
+				//System.out.println(time);
 				openDoorSound.stop();
 				takeInput = true;
 				playSounds = true;
 				player.setSpeed(0.0f);
 			} else if(time > startTime + 5500){
-				System.out.println(player.getSpeed());
 				counter = 0;
 				player.setSpeed(0.2f);
 				tutorialLevel.setGoThroughDoor(false);

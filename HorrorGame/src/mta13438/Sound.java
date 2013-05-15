@@ -57,7 +57,7 @@ public class Sound {
 			AL10.alSourcei(source.get(0), AL10.AL_LOOPING,  AL10.AL_TRUE  );
 		}
 	}// need killALData() and AL.destroy() before program close
-	
+
 	public Sound(SOUNDS soundname, Point point, boolean looping, boolean enableReverb, float gain){
 		AL10.alGenBuffers(buffer);
 
@@ -104,8 +104,10 @@ public class Sound {
 		}
 	}
 	public void stop(){
-		AL10.alSourceStop(source);
-		isPlaying = false;
+		if(isPlaying){
+			AL10.alSourceStop(source);
+			isPlaying = false;
+		}
 	}
 	public void pause(){
 		AL10.alSourcePause(source);
@@ -116,7 +118,7 @@ public class Sound {
 	}
 
 	public void loadReverb(int effectSlot) {
-		
+
 		if(enableReverb){
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
 			System.out.println("Reverb Loaded");

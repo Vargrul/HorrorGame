@@ -89,10 +89,6 @@ public class Loader {
 		tutorialLevel.getRoomList().get(4).addObsList(new Trap(new Point(20, 20, 0), 30, 30, 0, MATERIALS.ROCK));
 		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
-		System.out.println("Loaded level.");
-		for(int i = 0; i < tutorialLevel.getRoomList().get(2).getObsList().size(); i++){
-		System.out.println(tutorialLevel.getRoomList().get(2).getObsList().get(i).toString());
-		}
 
 		//initializeReverb();
 	}

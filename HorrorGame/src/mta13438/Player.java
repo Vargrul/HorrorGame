@@ -13,6 +13,7 @@ public class Player extends Entity {
 	private int deaths = 0;
 	private boolean walking = false;
 	private boolean inWater = false;
+	private int steps = 0;
 
 	//Extends no args constructor of Obs
 	public Player() {
@@ -144,6 +145,7 @@ public class Player extends Entity {
 		if(getPos().equals(new Point(x,y,z)) == true){
 			walking = false;
 		}
+		
 
 		setPos(x, y, z);
 	}
@@ -275,6 +277,14 @@ public class Player extends Entity {
 
 	public void setDeaths(int deaths) {
 		this.deaths = deaths;
+	}
+
+	public int getSteps() {
+		return steps;
+	}
+
+	public void setSteps(int steps) {
+		this.steps = steps;
 	}
 
 }

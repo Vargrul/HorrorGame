@@ -18,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(22,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -28,7 +28,7 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean playStartSequence = false;
+	private static boolean playStartSequence = true;
 	private static boolean takeInput = true;
 	private static boolean playSounds = true;
 	private static long startTime;
@@ -37,8 +37,8 @@ public class Loader {
 	private static Event scareEvent = new Event(new Point(100, 0, 1), 20, 90, 0, MATERIALS.WATER);
 	private static Entity guard = new Entity(new Point(25,315,1),0.2f,(float)Math.PI);
 
-	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true);
-	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true);
+	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true, 10.0f);
+	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true, 10.0f);
 	private static Sound openDoorSound = new Sound(SOUNDS.GODOOR,new Point (0,0,0), false, true);
 	private static Sound trapDeathSound = new Sound(SOUNDS.TRAP_DEATH,new Point (0,0,0), false, true, 0.5f);
 	private static Sound test = new Sound(SOUNDS.MENU_MUSIC,new Point (230,320,0), true, true, 10000.0f);
@@ -109,8 +109,9 @@ public class Loader {
 			input();
 		} 
 		if(playStartSequence == true){
-			takeInput = false;
 			if(time < (startTime+25800)){
+				takeInput = false;
+				playSounds = false;
 				if(counter == 0){
 					startTime = getTime();
 					counter++;
@@ -128,14 +129,19 @@ public class Loader {
 				time = getTime();
 			} else if (time >= (startTime+29600) && time < (startTime+39500)){
 				time = getTime();
-				player.foward(0.1f);
-				player.draw();
+				//player.foward(0.1f);
+				//player.draw();
 			} else if (time >= (startTime+39500) && time < (startTime+48000)){
 				time = getTime();
-			} else if (time >= (startTime+48000)){
+				playSounds = true;
 				takeInput = true;
+				player.setSpeed(0.0f);
+			} else if (time >= (startTime+48000) && time < (startTime+56000)){
 				playStartSequence = false;
 				counter = 0;
+			} else if (time >= (startTime+56000)){
+				takeInput = true;
+				player.setSpeed(0.2f);
 			}
 		}
 		if(currentRoom == 6){

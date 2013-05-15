@@ -109,6 +109,7 @@ public class Loader {
 			input();
 		} 
 		if(playStartSequence == true){
+			System.out.println(time - startTime);
 			if(time < (startTime+25800)){
 				takeInput = false;
 				playSounds = false;
@@ -137,11 +138,14 @@ public class Loader {
 				takeInput = true;
 				player.setSpeed(0.0f);
 			} else if (time >= (startTime+48000) && time < (startTime+56000)){
+				time = getTime();
 				playStartSequence = false;
-				counter = 0;
 			} else if (time >= (startTime+56000)){
+				time = getTime();
+				System.out.println("ss");
 				takeInput = true;
 				player.setSpeed(0.2f);
+				counter = 0;
 			}
 		}
 		if(currentRoom == 6){

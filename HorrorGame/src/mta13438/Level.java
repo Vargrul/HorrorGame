@@ -11,6 +11,7 @@ public class Level {
 	private float dz;
 	private float dy;
 	private Point spawnPoint = new Point();
+	private boolean goThroughDoor = false;
 
 	//No args constructor
 	public Level() {
@@ -113,10 +114,19 @@ public class Level {
 		Point playerPos = player.getPos();
 		// sets the spawn point to the entrance of the current room
 		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
+		this.goThroughDoor = true;
 	}
 	
 	public Point getSpawnPoint() {
 		return this.spawnPoint;
+	}
+	
+	public boolean isGoThroughDoor() {
+		return goThroughDoor;
+	}
+
+	public void setGoThroughDoor(boolean goThroughDoor) {
+		this.goThroughDoor = goThroughDoor;
 	}
 
 	public String toString() {

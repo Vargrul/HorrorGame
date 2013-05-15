@@ -15,7 +15,8 @@ public  enum SOUNDS {
 	WATERDROP2("assets/soundEffects/waterdrop2.wav"),
 	SCARE("assets/soundEffects/scare.wav"),
 	GUARD("assets/soundEffects/Guard.wav"),
-	PLAYERVOICE("assets/soundEffects/Protagonist.wav")
+	PLAYERVOICE("assets/soundEffects/Protagonist.wav"),
+	DOOR_CLOSE("assets/soundEffects/door_close.wav")
 	;
 	
 	//desc for description

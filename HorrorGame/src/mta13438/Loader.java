@@ -18,7 +18,9 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
+	private static boolean playStartSequence = false;
 	private static boolean takeInput = true;
+	private static boolean playSounds = true;
 	private static long startTime;
 	private static long time;
 	private static int counter;
@@ -27,6 +29,7 @@ public class Loader {
 	
 	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true);
 	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true);
+	private static Sound openDoorSound = new Sound(SOUNDS.DOOR_CLOSE,new Point (0,0,0), false, true);
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
@@ -83,7 +86,9 @@ public class Loader {
 	public static void renderTutorialLevel(){	
 		if(takeInput == true){
 			input();
-		} else if(takeInput == false){
+		} 
+		if(playStartSequence == true){
+			takeInput = false;
 			if(time < (startTime+25800)){
 				if(counter == 0){
 					startTime = getTime();
@@ -137,9 +142,17 @@ public class Loader {
 				}
 			} 
 		}
-		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
-			if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true && currentRoom > 0 && currentRoom < 6){
-				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().play();
+		if(playSounds == true){
+			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
+				if (tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getEmitSound() == true && currentRoom > 0 && currentRoom < 6){
+					tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().play();
+				}
+			}
+		} else {
+			for (int i = 0; i < tutorialLevel.getRoomList().size(); i++){	
+				for(int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++){
+					tutorialLevel.getRoomList().get(i).getObsList().get(j).getLoopSound().stop();
+				} 
 			}
 		}
 		player.setListener();
@@ -153,6 +166,7 @@ public class Loader {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
+		//Scare event in room 2
 		if(currentRoom == 2){
 			if(scareEvent.isTrigger() == true && scareEvent.isActive() == true){
 				scareEvent.getScareSound().update(new Point(scareEvent.getPos().getX(),scareEvent.getPos().getY() + scareEvent.getDy(),0));
@@ -162,7 +176,25 @@ public class Loader {
 		} else {
 			scareEvent.getScareSound().stop();
 		}
-
+		// play close door sound when entering new room
+		if(tutorialLevel.isGoThroughDoor() == true){
+			if(counter < 2){
+				startTime = getTime();
+				counter++;
+			}
+			playSounds = false;
+			takeInput = false;
+			openDoorSound.update(player.getPos());
+			openDoorSound.play();
+			time = getTime();
+			if(time > startTime + 5000){
+				openDoorSound.stop();
+				tutorialLevel.setGoThroughDoor(false);
+				counter = 0;
+				playSounds = true;
+				takeInput = true;
+			}
+		}
 		//Draw the player
 		player.draw();
 		updateFPS();

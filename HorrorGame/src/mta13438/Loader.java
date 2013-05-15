@@ -1,7 +1,16 @@
 package mta13438;
 
+import java.nio.IntBuffer;
 import java.util.ArrayList;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.AL11;
+import org.lwjgl.openal.ALC10;
+import org.lwjgl.openal.ALC11;
+import org.lwjgl.openal.ALCcontext;
+import org.lwjgl.openal.ALCdevice;
 import org.lwjgl.openal.EFX10;
 import org.lwjgl.opengl.Display;
 
@@ -9,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(15,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -27,19 +36,25 @@ public class Loader {
 	private static int counter;
 	private static Event scareEvent = new Event(new Point(100, 0, 1), 20, 90, 0, MATERIALS.WATER);
 	private static Entity guard = new Entity(new Point(25,315,1),0.2f,(float)Math.PI);
-	
+
 	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true);
 	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true);
 	private static Sound openDoorSound = new Sound(SOUNDS.DOOR_CLOSE,new Point (0,0,0), false, true);
-	
+
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
 	private static boolean playing = false;
 
 	final static int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
 	final static int reverbEffect = EFX10.alGenEffects();
+	static ALCdevice openALDevice = null;
+	static ALCcontext openALContext = null;
+	static IntBuffer attribs = new BufferUtils().createIntBuffer(4);
+	static int iSend = 0; 
 
 	public void start() {
+		initOpenAL();
+
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
 		getDelta();
@@ -120,7 +135,12 @@ public class Loader {
 		}
 
 		if(tempCurrentRoom != currentRoom){
+			tempCurrentRoom = currentRoom;
 			//updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
+			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
+				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().update(tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().getPos());					
+			}
+
 		}
 
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
@@ -233,7 +253,8 @@ public class Loader {
 
 	public static void initializeReverb() {
 		EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
-		EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
+		//AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
+		EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 0.10f);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
 
@@ -252,12 +273,22 @@ public class Loader {
 
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
+		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
 			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
 		}
 	}
+	public static void initOpenAL() {
+		
+		openALDevice = ALC10.alcOpenDevice(null);
+		System.out.println("Device was set up.");
 
+		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false)return;		
+		System.out.println("EFX Extension found!"); 
+
+		openALContext = ALC10.alcCreateContext(openALDevice, null);
+	}
 	public static int getDelta() {
 		long time = getTime();
 		int delta = (int) (time - lastFrame);

@@ -123,7 +123,7 @@ public class Sound {
 		return this.pos;
 	}
 
-	public void loadReverb(int effectSlot) {
+	public void loadReverb() {
 
 		if(enableReverb){
 			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
@@ -134,8 +134,9 @@ public class Sound {
 	public void initReverb() {
 		EFX10.alEffecti(this.reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
 		//AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
-		EFX10.alEffectf(this.reverbEffect, EFX10.AL_METERS_PER_UNIT, 0.10f);
+		EFX10.alEffectf(this.reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 		EFX10.alAuxiliaryEffectSloti(this.effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, this.reverbEffect);
+		loadReverb();
 	}
 	
 	public void updateReverd(float[] rt60) {

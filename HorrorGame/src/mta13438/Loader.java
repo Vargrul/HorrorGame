@@ -32,7 +32,7 @@ public class Loader {
 	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true);
 	private static Sound openDoorSound = new Sound(SOUNDS.GODOOR,new Point (0,0,0), false, true);
 	private static Sound trapDeathSound = new Sound(SOUNDS.TRAP_DEATH,new Point (0,0,0), false, true, 0.5f);
-	//private static Sound test = new Sound(SOUNDS.DOOR,new Point (230,320,0), true, true, 1f);
+	private static Sound test = new Sound(SOUNDS.MENU_MUSIC,new Point (230,320,0), true, true, 10000.0f);
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true, 0.5f);
@@ -123,8 +123,9 @@ public class Loader {
 				counter = 0;
 			}
 		}
-		
-		//test.play();
+		if(currentRoom == 6){
+			test.play();
+		}
 		//System.out.println(test.getPos().getX() - player.getPos().getX() + " and " + (test.getPos().getY() - player.getPos().getY()));
 
 		if(tempCurrentRoom != currentRoom){

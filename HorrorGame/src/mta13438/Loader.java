@@ -59,7 +59,7 @@ public class Loader {
 		Menu mainMenu = new Menu();
 		getDelta();
 		lastFPS = getTime();
-		initOpenAL();
+		//initOpenAL();
 	}
 	// Loads the tutoral level. Rooms and obstacles are added to the level.
 	private static void loadTutorialLevel() {

@@ -113,7 +113,7 @@ public class Loader {
 		}
 
 		if(tempCurrentRoom != currentRoom){
-			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
+			//updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 		}
 
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
@@ -152,6 +152,15 @@ public class Loader {
 			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
+		}
+		if(currentRoom == 2){
+			if(scareEvent.isTrigger() == true && scareEvent.isActive() == true){
+				scareEvent.getScareSound().update(new Point(scareEvent.getPos().getX(),scareEvent.getPos().getY() + scareEvent.getDy(),0));
+				scareEvent.getScareSound().play();
+				scareEvent.setActive(false);
+			}
+		} else {
+			scareEvent.getScareSound().stop();
 		}
 
 		//Draw the player

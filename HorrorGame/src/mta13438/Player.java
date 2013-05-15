@@ -177,6 +177,7 @@ public class Player extends Entity {
 	}
 
 	public void respawn(Level level){
+		
 		System.out.println(level.getSpawnPoint().toString());
 		
 		setPos(level.getSpawnPoint());

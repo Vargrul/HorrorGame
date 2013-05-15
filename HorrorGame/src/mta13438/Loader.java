@@ -1,6 +1,8 @@
 package mta13438;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.openal.EFX10;
@@ -26,9 +28,11 @@ public class Loader {
 	private static int[] xArray;
 	private static int[] yArray;
 	private static ArrayList testSounds = new ArrayList<Sound>(); 
+	private static ArrayList visualPoints = new ArrayList<Trap>();
 	private static int randomNum;
 	private static int soundNr;
 	private static int soundPlayed = 0;
+	private static List<Point> pathPoints = new ArrayList<Point>();
 	private static boolean testDone = false;
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, 0.5f);
@@ -42,6 +46,14 @@ public class Loader {
 	private static Sound sound5 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(10, 45, 0), true, 10.0f);
 	private static Sound sound6 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(90, 10, 0), true, 10.0f);
 	private static Sound currentSound;
+	
+	//For visual representation
+	private static Trap trap1 = new Trap(new Point(10, 90, 0),5,5);
+	private static Trap trap2 = new Trap(new Point(50, 60, 0),5,5);
+	private static Trap trap3 = new Trap(new Point(50, 90, 0),5,5);
+	private static Trap trap4 = new Trap(new Point(90, 90, 0),5,5);
+	private static Trap trap5 = new Trap(new Point(10, 45, 0),5,5);
+	private static Trap trap6 = new Trap(new Point(90, 10, 0),5,5);
 
 
 	public void start() {
@@ -55,12 +67,13 @@ public class Loader {
 		//Room
 		tutorialLevel.addRoomList(new Room(100, 100, 20, new Point(0,15,0), new Point(110,5,0), MATERIALS.ROCK));
 		//Visual position for Sounds
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(10, 90, 0),SOUNDS.WATERDROP1,true,false));
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(50, 60, 0),SOUNDS.WATERDROP1,true,false));
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(50, 90, 0),SOUNDS.WATERDROP1,true,false));
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(90, 90, 0),SOUNDS.WATERDROP1,true,false));
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(10, 45, 0),SOUNDS.WATERDROP1,true,false));
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(90, 10, 0),SOUNDS.WATERDROP1,true,false));
+		
+		tutorialLevel.getRoomList().get(0).addObsList(trap1);
+		tutorialLevel.getRoomList().get(0).addObsList(trap2);
+		tutorialLevel.getRoomList().get(0).addObsList(trap3);
+		tutorialLevel.getRoomList().get(0).addObsList(trap4);
+		tutorialLevel.getRoomList().get(0).addObsList(trap5);
+		tutorialLevel.getRoomList().get(0).addObsList(trap6);
 		
 		//Locate memory for arrays
 		xArray = new int[6];
@@ -100,7 +113,7 @@ public class Loader {
 		break;
 		}
 		
-		System.out.println("Sound " + soundNr + " Playing");
+		System.out.println("Start. Playing Sound " + soundNr + ".");
 		currentSound = (Sound) testSounds.get(soundNr-1);
 		currentSound.play();
 		soundPlayed++;
@@ -118,7 +131,10 @@ public class Loader {
 	// Renders the tutorial level. 
 	public static void renderTutorialLevel(){	
 		
-		input();
+		if(testDone == false){
+			input();
+		}
+		
 		
 		
 		
@@ -132,6 +148,123 @@ public class Loader {
 					if(player.getPos().getY() > tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() &&
 							player.getPos().getY() < tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getPos().getY() + tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getDy()){
 						tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).collision(player, tutorialLevel, currentRoom);
+						
+						
+						if(soundPlayed<7){
+						switch(i){
+						case(1):
+							if(soundNr == 1){
+								System.out.println("Collision. Playing Sound 2.");
+								soundNr = 2;
+								soundPlayed++;
+								sound1.stop();
+								sound2.play();
+							}
+						break;
+						case(2):
+							if(soundNr == 2){
+								System.out.println("Collision. Playing Sound 3.");
+								soundNr = 3;
+								soundPlayed++;
+								sound2.stop();
+								sound3.play();
+							}
+						break;
+						case(3):
+							if(soundNr == 3){
+								System.out.println("Collision. Playing Sound 4.");
+								soundNr = 4;
+								soundPlayed++;
+								sound3.stop();
+								sound4.play();
+							}
+						break;
+						case(4):
+							if(soundNr == 4){
+								System.out.println("Collision. Playing Sound 5.");
+								soundNr = 5;
+								soundPlayed++;
+								sound4.stop();
+								sound5.play();
+							}
+						break;
+						case(5):
+							if(soundNr == 5){
+								System.out.println("Collision. Playing Sound 6.");
+								soundNr = 6;
+								soundPlayed++;
+								sound5.stop();
+								sound6.play();
+							}
+						break;
+						case(6):
+							if(soundNr == 6){
+								System.out.println("Collision. Playing Sound 1.");
+								soundNr = 1;
+								soundPlayed++;
+								sound6.stop();
+								sound1.play();
+							}
+						break;
+						}
+						if(soundPlayed==7){
+							if(sound1.isPlaying==true){
+								sound1.stop();
+								testDone = true;
+								System.out.println("Test is over");
+								System.out.println("That was 6 sound played");
+								getFinalSteps();
+								getFinalTime();
+							}
+							if(sound2.isPlaying==true){
+								sound2.stop();
+								testDone = true;
+								System.out.println("Test is over");
+								System.out.println("That was 6 sound played");
+								getFinalSteps();
+								getFinalTime();
+							}
+							if(sound3.isPlaying==true){
+								sound3.stop();
+								testDone = true;
+								System.out.println("Test is over");
+								System.out.println("That was 6 sound played");
+								getFinalSteps();
+								getFinalTime();
+							}
+							if(sound4.isPlaying==true){
+								sound4.stop();
+								testDone = true;
+								System.out.println("Test is over");
+								System.out.println("That was 6 sound played");
+								getFinalSteps();
+								getFinalTime();
+							}
+							if(sound5.isPlaying==true){
+								sound5.stop();
+								testDone = true;
+								System.out.println("Test is over");
+								System.out.println("That was 6 sound played");
+								getFinalSteps();
+								getFinalTime();
+							}
+							if(sound6.isPlaying==true){
+								sound6.stop();
+								testDone = true;
+								System.out.println("Test is over");
+								System.out.println("That was 6 sound played");
+								getFinalSteps();
+								getFinalTime();
+							}
+							
+							//for(int j = 0; j<pathPoints.size(); j++){
+							//	pathPoints.get(j).draw();
+							//	System.out.println("Drawing Points");
+							//}
+						}
+						
+						}
+					
 					}
 				}
 			}
@@ -156,6 +289,15 @@ public class Loader {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
+		
+		
+		if(testDone == true){
+			for(int j = 0; j<pathPoints.size(); j++){
+			pathPoints.get(j).draw();
+		}
+		}
+		
+		
 
 		//Draw the player
 		player.draw();
@@ -204,77 +346,11 @@ public class Loader {
 		}
 		if(controls.getKEY_ENTER() && !enterPressed){
 			enterPressed = true;
-			currentSound.stop();
-			
-			if(soundPlayed>5){
-				System.out.println("That was 6 sound played");
-				testDone = true;
-				System.out.println("Sound 1: X=" + xArray[0] +", Y=" + yArray[0]);
-				System.out.println("Sound 2: X=" + xArray[1] +", Y=" + yArray[1]);
-				System.out.println("Sound 3: X=" + xArray[2] +", Y=" + yArray[2]);
-				System.out.println("Sound 4: X=" + xArray[3] +", Y=" + yArray[3]);
-				System.out.println("Sound 5: X=" + xArray[4] +", Y=" + yArray[4]);
-				System.out.println("Sound 6: X=" + xArray[5] +", Y=" + yArray[5]);
-				getFinalSteps();
-				getFinalTime();
+			System.out.println("Test is over");
+			System.out.println("That was 6 sound played");
+			getFinalSteps();
+			getFinalTime();
 				
-			}
-			
-			if(testDone == false){
-			
-			soundNr++;
-			if(soundNr >= 7){
-				soundNr = 1;
-			}
-			
-			
-			switch(soundNr){
-			case(1): 
-			System.out.println("Sound " + soundNr +" Playing");
-			currentSound = (Sound) testSounds.get(soundNr-1);
-			xArray[5] = (int) player.getPos().getX();
-			yArray[5] = (int) player.getPos().getY();
-			break;
-			case(2): 
-			System.out.println("Sound " + soundNr +" Playing");
-			currentSound = (Sound) testSounds.get(soundNr-1);
-			xArray[0] = (int) player.getPos().getX();
-			yArray[0] = (int) player.getPos().getY();
-			break;
-			case(3): 
-			System.out.println("Sound " + soundNr +" Playing");
-			currentSound = (Sound) testSounds.get(soundNr-1);
-			xArray[1] = (int) player.getPos().getX();
-			yArray[1] = (int) player.getPos().getY();
-			break;
-			case(4): 
-			System.out.println("Sound " + soundNr +" Playing");
-			currentSound = (Sound) testSounds.get(soundNr-1);
-			xArray[2] = (int) player.getPos().getX();
-			yArray[2] = (int) player.getPos().getY();
-			break;
-			case(5): 
-			System.out.println("Sound " + soundNr +" Playing");
-			currentSound = (Sound) testSounds.get(soundNr-1);
-			xArray[3] = (int) player.getPos().getX();
-			yArray[3] = (int) player.getPos().getY();
-			break;
-			case(6): 
-			System.out.println("Sound " + soundNr +" Playing");
-			currentSound = (Sound) testSounds.get(soundNr-1);
-			xArray[4] = (int) player.getPos().getX();
-			yArray[4] = (int) player.getPos().getY();
-			break;
-			
-			}
-			
-			currentSound.play();
-			soundPlayed++;
-			
-			if(soundPlayed>6){
-				currentSound.stop();
-			}
-			}
 		}	
 	}
 
@@ -314,6 +390,7 @@ public class Loader {
 				walkWaterSound.stop();
 				walkSound.update(player.getPos());
 				steps++;
+				pathPoints.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
 				walkSound.play();
 				//stop water walk
 				//Play normal walk

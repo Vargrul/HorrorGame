@@ -117,7 +117,10 @@ public class Sound {
 
 	public void loadReverb(int effectSlot) {
 		
-		if(enableReverb)	AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
+		if(enableReverb){
+			AL11.alSource3i(source.get(0), EFX10.AL_AUXILIARY_SEND_FILTER, effectSlot, 0, EFX10.AL_FILTER_NULL);
+			System.out.println("Reverb Loaded");
+		}
 	}
 
 	//Removes the source and buffer

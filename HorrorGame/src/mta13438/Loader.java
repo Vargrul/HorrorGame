@@ -2,6 +2,7 @@ package mta13438;
 
 import java.util.ArrayList;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.EFX10;
 import org.lwjgl.opengl.Display;
 
@@ -9,7 +10,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(15,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static long lastFPS;
@@ -36,6 +37,8 @@ public class Loader {
 	final static int reverbEffect = EFX10.alGenEffects();
 
 	public void start() {
+		
+		
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
 		getDelta();
@@ -113,6 +116,7 @@ public class Loader {
 		}
 
 		if(tempCurrentRoom != currentRoom){
+			tempCurrentRoom = currentRoom;
 			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 		}
 
@@ -183,6 +187,7 @@ public class Loader {
 
 	public static void initializeReverb() {
 		EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
+		AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 10f);
 		EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 10f);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
@@ -207,7 +212,13 @@ public class Loader {
 
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
-
+		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
+		
+		for (int i = 0; i < tutorialLevel.getRoomList().size(); i++) {
+			for (int j = 0; j < tutorialLevel.getRoomList().get(i).getObsList().size(); j++) {
+				tutorialLevel.getRoomList().get(i).getObsList().get(j).getLoopSound().loadReverb(effectSlot);
+			}
+		}
 	}
 
 	public static int getDelta() {

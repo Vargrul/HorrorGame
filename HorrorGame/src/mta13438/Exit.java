@@ -19,7 +19,7 @@ public class Exit extends Obs{
 	public Exit(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
 		this.locked = false;
-		setLoopSound(new Sound(SOUNDS.DOOR, new Point(0,0,0), true, true));
+		setLoopSound(new Sound(SOUNDS.DOOR, new Point(0,0,0), true, true, 1.0f));
 	}
 
 	public Exit(Point point,float dx,float dy,float dz,MATERIALS material,boolean locked) {

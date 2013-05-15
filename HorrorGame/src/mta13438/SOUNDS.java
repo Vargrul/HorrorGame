@@ -3,7 +3,7 @@ package mta13438;
 public  enum SOUNDS {
 	//Add sounds and path 
 	MENU_MUSIC("assets/Music/MenuBackground_1.wav"),
-	DOOR("assets/soundEffects/door.wav"),
+	DOOR("assets/soundEffects/Door_sound.wav"),
 	FOOTSTEP_STONE("assets/soundEffects/footstep_stone.wav"),
 	FOOTSTEP_WATER("assets/soundEffects/footstep_water.wav"),
 	GUILLOTINE_TRAP("assets/soundEffects/Guillotine_trap.wav"),

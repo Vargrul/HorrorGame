@@ -18,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(22,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(220,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -28,7 +28,7 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean playStartSequence = true;
+	private static boolean playStartSequence = false;
 	private static boolean takeInput = true;
 	private static boolean playSounds = true;
 	private static long startTime;
@@ -41,6 +41,7 @@ public class Loader {
 	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true, 10.0f);
 	private static Sound openDoorSound = new Sound(SOUNDS.GODOOR,new Point (0,0,0), false, true);
 	private static Sound trapDeathSound = new Sound(SOUNDS.TRAP_DEATH,new Point (0,0,0), false, true, 0.5f);
+	private static Sound monsterDeathSound = new Sound(SOUNDS.MONSTER_DEATH,new Point (0,0,0), false, true, 0.5f);
 	private static Sound test = new Sound(SOUNDS.MENU_MUSIC,new Point (230,320,0), true, true, 10000.0f);
 
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true, 0.5f);
@@ -217,7 +218,7 @@ public class Loader {
 		} else {
 			scareEvent.getScareSound().stop();
 		}
-		// play death sound
+		// play trap death sound
 		if(tutorialLevel.isTrapDeath() == true){
 			if(counter == 0){
 				startTime = getTime();
@@ -236,6 +237,29 @@ public class Loader {
 				counter = 0;
 				player.setSpeed(0.2f);
 				tutorialLevel.setTrapDeath(false);
+				tutorialLevel.setGoThroughDoor(true);
+				player.kill(tutorialLevel);
+			}
+		}
+		//play monster death sound
+		if(tutorialLevel.isMonsterDeath() == true){
+			if(counter == 0){
+				startTime = getTime();
+				counter++;
+			}
+			time = getTime();
+			if(time < startTime +5000){
+				playSounds = false;
+				takeInput = false;
+				monsterDeathSound.update(player.getPos());
+				monsterDeathSound.play();
+			} else if(time <= startTime + 5500){
+				monsterDeathSound.stop();
+				player.setSpeed(0.0f);
+			} else if(time > startTime + 5500){
+				counter = 0;
+				player.setSpeed(0.2f);
+				tutorialLevel.setMonsterDeath(false);
 				tutorialLevel.setGoThroughDoor(true);
 				player.kill(tutorialLevel);
 			}

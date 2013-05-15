@@ -138,6 +138,14 @@ public class Level {
 		this.trapDeath = trapDeath;
 	}
 
+	public boolean isMonsterDeath() {
+		return monsterDeath;
+	}
+
+	public void setMonsterDeath(boolean monsterDeath) {
+		this.monsterDeath = monsterDeath;
+	}
+
 	public String toString() {
 		return "Level [roomList=" + roomList + ", dx=" + dx + ", dz="
 				+ dz + ", dy=" + dy + "]";

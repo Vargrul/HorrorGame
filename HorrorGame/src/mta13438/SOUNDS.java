@@ -17,6 +17,7 @@ public  enum SOUNDS {
 	GUARD("assets/soundEffects/Guard.wav"),
 	PLAYERVOICE("assets/soundEffects/Protagonist.wav"),
 	TRAP_DEATH("assets/soundEffects/Trap_death.wav"),
+	MONSTER_DEATH("assets/soundEffects/Monster_death.wav"),
 	GODOOR("assets/soundEffects/Godoor.wav")
 	;
 	

@@ -10,6 +10,7 @@ public class Loader {
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
 	private static Player player = new Player(new Point(15,315,10),0.2f,0.01f,10);
+	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
 	private static long lastFPS;
@@ -113,7 +114,8 @@ public class Loader {
 				time = getTime();
 			} else if (time >= (startTime+48000)){
 				takeInput = true;
-				System.out.println("HEY");
+				playStartSequence = false;
+				counter = 0;
 			}
 		}
 
@@ -178,21 +180,28 @@ public class Loader {
 		}
 		// play close door sound when entering new room
 		if(tutorialLevel.isGoThroughDoor() == true){
-			if(counter < 2){
+			if(counter == 0){
 				startTime = getTime();
 				counter++;
 			}
-			playSounds = false;
-			takeInput = false;
-			openDoorSound.update(player.getPos());
-			openDoorSound.play();
 			time = getTime();
-			if(time > startTime + 5000){
+			if(time < startTime +5000){
+				playSounds = false;
+				takeInput = false;
+				openDoorSound.update(player.getPos());
+				openDoorSound.play();
+				System.out.println(time - startTime);
+			} else if(time <= startTime + 5500){
+				System.out.println(time);
 				openDoorSound.stop();
-				tutorialLevel.setGoThroughDoor(false);
-				counter = 0;
-				playSounds = true;
 				takeInput = true;
+				playSounds = true;
+				player.setSpeed(0.0f);
+			} else if(time > startTime + 5500){
+				System.out.println(player.getSpeed());
+				counter = 0;
+				player.setSpeed(0.2f);
+				tutorialLevel.setGoThroughDoor(false);
 			}
 		}
 		//Draw the player

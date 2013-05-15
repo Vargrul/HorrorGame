@@ -14,10 +14,12 @@ public class Event extends Obs {
 	
 	public Event(){
 		super();
+		setEmitSound(false);
 	}
 	
 	public Event(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
+		setEmitSound(false);
 		
 	}
 	@Override

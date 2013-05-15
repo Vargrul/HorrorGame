@@ -19,8 +19,7 @@ public class Trap extends Obs {
 	
 	public Trap(Point point,float dx,float dy,float dz,MATERIALS material) {
 		super(point, dx,dy,dz,material);
-		setLoopSound(new Sound(SOUNDS.ROTER_TRAP, new Point(0,0,0), true, true));
-		setLoopSound(new Sound(SOUNDS.ROTER_TRAP, new Point(0,0,0), true,true, 10f));
+		setLoopSound(new Sound(SOUNDS.ROTER_TRAP, new Point(0,0,0), true,true, 1000000f));
 	}
 	
 	public void update(){
@@ -28,7 +27,7 @@ public class Trap extends Obs {
 	}
 	public void collision(Player player, Level level, int currentRoom){
 		System.out.println("Collision with trap");
-		player.kill(level);
+		level.setTrapDeath(true);
 	}
 	@Override
 	public void draw(){

@@ -12,6 +12,7 @@ public class Level {
 	private float dy;
 	private Point spawnPoint = new Point();
 	private boolean goThroughDoor = false;
+	private boolean trapDeath = false;
 
 	//No args constructor
 	public Level() {
@@ -127,6 +128,14 @@ public class Level {
 
 	public void setGoThroughDoor(boolean goThroughDoor) {
 		this.goThroughDoor = goThroughDoor;
+	}
+
+	public boolean isTrapDeath() {
+		return trapDeath;
+	}
+
+	public void setTrapDeath(boolean trapDeath) {
+		this.trapDeath = trapDeath;
 	}
 
 	public String toString() {

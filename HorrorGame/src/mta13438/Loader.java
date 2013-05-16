@@ -291,11 +291,12 @@ public class Loader {
 		}
 		
 		
-		if(testDone == true){
+		
 			for(int j = 0; j<pathPoints.size(); j++){
 			pathPoints.get(j).draw();
+			
 		}
-		}
+		
 		
 		
 
@@ -322,6 +323,7 @@ public class Loader {
 	
 	private static void getFinalSteps() {
 		System.out.println("Total number of steps: " + steps/30);
+		System.out.println("Total distance: " + pathPoints.size());
 	}
 	
 	

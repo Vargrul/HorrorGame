@@ -176,7 +176,7 @@ public class Player extends Entity {
 	}
 
 	public void respawn(Level level){
-		setPos(new Point (level.getSpawnPoint().getX() + 1,level.getSpawnPoint().getY() - 1,0));
+		setPos(new Point (level.getSpawnPoint().getX() + 1,level.getSpawnPoint().getY() - 1,10));
 	}
 
 	public void proxHeartbeat (Level level, int currentRoom){

@@ -29,7 +29,7 @@ public class Obs {
 	}
 	
 	public Point getCenter(){
-		Point center = new Point(getPos().getX()+(getDx()/2),getPos().getY()+(getDy()/2),0);
+		Point center = new Point(getPos().getX()+(getDx()/2),getPos().getY()+(getDy()/2),getPos().getZ());
 		return center;
 	}
 

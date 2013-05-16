@@ -104,9 +104,9 @@ public class Loader {
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
-		Display.destroy();
+		//Display.destroy();
 		loadTutorialLevel();
-		DebugInterface.Initialize(800, 600); // Width and Length of display
+		//DebugInterface.Initialize(800, 600); // Width and Length of display
 		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
 	// Renders the tutorial level. 

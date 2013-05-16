@@ -18,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(250,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -97,6 +97,12 @@ public class Loader {
 		initializeReverb();
 		guardVoice.loadReverb(effectSlot);
 		walkSound.loadReverb(effectSlot);
+		playerVoice.loadReverb(effectSlot);
+		walkWaterSound.loadReverb(effectSlot);
+		openDoorSound.loadReverb(effectSlot);
+		trapDeathSound.loadReverb(effectSlot);
+		monsterDeathSound.loadReverb(effectSlot);
+		
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){

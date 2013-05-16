@@ -28,14 +28,14 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean playStartSequence = false;
+	private static boolean playStartSequence = true;
 	private static boolean takeInput = true;
 	private static boolean playSounds = true;
 	private static long startTime;
 	private static long time;
 	private static int counter;
 	private static Event scareEvent = new Event(new Point(100, 0, 10), 20, 90, 0, MATERIALS.WATER);
-	private static Entity guard = new Entity(new Point(25,315,1),0.2f,(float)Math.PI);
+	private static Entity guard = new Entity(new Point(25,315,10),0.2f,(float)Math.PI);
 
 	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true, 10.0f);
 	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true, 10.0f);

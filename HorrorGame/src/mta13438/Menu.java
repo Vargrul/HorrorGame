@@ -22,6 +22,7 @@ public class Menu {
 	private static Texture textureExitCheck;
 	private static Texture textureHelp;
 	private static Texture textureHelpCheck;
+	private static Texture textureBG;
 
 	private static int menuNumber;
 	private static boolean showMainMenu;
@@ -127,32 +128,43 @@ public class Menu {
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Play.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/PLAY_ns.png"));
+			System.out.println("1");
 			texturePlayCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/PlayCheck.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/PLAY_s.png"));
+			System.out.println("2");
 			textureHelp = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Help.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/HELP_ns.png"));
+			System.out.println("3");
 			textureHelpCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/HelpCheck.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/HELP_s.png"));
+			System.out.println("4");
 			textureExit = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Exit.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/QUIT_ns.png"));
+			System.out.println("5");
 			textureExitCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/ExitCheck.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/QUIT_s.png"));
+			textureBG = TextureLoader
+					.getTexture(
+							"PNG",
+							ResourceLoader
+									.getResourceAsStream("assets/images/menu/Buttons/BG.png"));
+			System.out.println("6");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -160,22 +172,38 @@ public class Menu {
 	// Renders the menu depending on the menu status.
 	public static void render() {
 		if (showMainMenu == true) {
+			textureBG.bind();
+
+			GL11.glBegin(GL11.GL_QUADS);
+			GL11.glTexCoord2f(0, 0);
+			GL11.glVertex2f(0, 0);
+			GL11.glTexCoord2f(1, 0);
+			GL11.glVertex2f(Display.getWidth() + 224, 0);
+			GL11.glTexCoord2f(1, 1);
+			GL11.glVertex2f(Display.getWidth() + 224,Display.getHeight() + 424);
+			GL11.glTexCoord2f(0, 1);
+			GL11.glVertex2f(0,Display.getHeight() + 424);
+			GL11.glEnd();
 			if (menuNumber != 0) {
 				texturePlay.bind();
 			}
 			if (menuNumber == 0) {
 				texturePlayCheck.bind();
 			}
+			
+			float xDif = texturePlay.getTextureWidth() - texturePlay.getImageWidth();
+			float yDif = texturePlay.getTextureHeight() - texturePlay.getImageHeight();
+			int yPos = 1;
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 50);
+			GL11.glVertex2f((Display.getWidth() / 2) - ((texturePlay.getTextureWidth() - xDif)/2),yPos * (Display.getHeight()/4) - ((texturePlay.getTextureHeight() - yDif) / 2));
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 50);
+			GL11.glVertex2f((Display.getWidth() / 2) + ((texturePlay.getTextureWidth() + xDif)/2),yPos * (Display.getHeight()/4) - ((texturePlay.getTextureHeight() - yDif) / 2));
 			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					50 + texturePlay.getTextureHeight());
+			GL11.glVertex2f((Display.getWidth() / 2) + ((texturePlay.getTextureWidth() + xDif)/2),yPos * (Display.getHeight()/4) + ((texturePlay.getTextureHeight() + yDif) / 2));
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 50 + texturePlay.getTextureHeight());
+			GL11.glVertex2f((Display.getWidth() / 2) - ((texturePlay.getTextureWidth() - xDif)/2),yPos * (Display.getHeight()/4) + ((texturePlay.getTextureHeight() + yDif) / 2));
 			GL11.glEnd();
 			if (menuNumber != 1) {
 				textureHelp.bind();
@@ -183,16 +211,19 @@ public class Menu {
 			if (menuNumber == 1) {
 				textureHelpCheck.bind();
 			}
+			xDif = texturePlay.getTextureWidth() - texturePlay.getImageWidth();
+			yDif = texturePlay.getTextureHeight() - texturePlay.getImageHeight();
+			yPos = 2;
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 150);
+			GL11.glVertex2f((Display.getWidth() / 2) - ((texturePlay.getTextureWidth() - xDif)/2),yPos * (Display.getHeight()/4) - ((texturePlay.getTextureHeight() - yDif) / 2));
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 150);
+			GL11.glVertex2f((Display.getWidth() / 2) + ((texturePlay.getTextureWidth() + xDif)/2),yPos * (Display.getHeight()/4) - ((texturePlay.getTextureHeight() - yDif) / 2));
 			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					150 + texturePlay.getTextureHeight());
+			GL11.glVertex2f((Display.getWidth() / 2) + ((texturePlay.getTextureWidth() + xDif)/2),yPos * (Display.getHeight()/4) + ((texturePlay.getTextureHeight() + yDif) / 2));
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
+			GL11.glVertex2f((Display.getWidth() / 2) - ((texturePlay.getTextureWidth() - xDif)/2),yPos * (Display.getHeight()/4) + ((texturePlay.getTextureHeight() + yDif) / 2));
 			GL11.glEnd();
 			if (menuNumber != 2) {
 				textureExit.bind();
@@ -200,16 +231,19 @@ public class Menu {
 			if (menuNumber == 2) {
 				textureExitCheck.bind();
 			}
+			xDif = texturePlay.getTextureWidth() - texturePlay.getImageWidth();
+			yDif = texturePlay.getTextureHeight() - texturePlay.getImageHeight();
+			yPos = 3;
+			
 			GL11.glBegin(GL11.GL_QUADS);
 			GL11.glTexCoord2f(0, 0);
-			GL11.glVertex2f(10, 250);
+			GL11.glVertex2f((Display.getWidth() / 2) - ((texturePlay.getTextureWidth() - xDif)/2),yPos * (Display.getHeight()/4) - ((texturePlay.getTextureHeight() - yDif) / 2));
 			GL11.glTexCoord2f(1, 0);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(), 250);
+			GL11.glVertex2f((Display.getWidth() / 2) + ((texturePlay.getTextureWidth() + xDif)/2),yPos * (Display.getHeight()/4) - ((texturePlay.getTextureHeight() - yDif) / 2));
 			GL11.glTexCoord2f(1, 1);
-			GL11.glVertex2f(10 + texturePlay.getTextureWidth(),
-					250 + texturePlay.getTextureHeight());
+			GL11.glVertex2f((Display.getWidth() / 2) + ((texturePlay.getTextureWidth() + xDif)/2),yPos * (Display.getHeight()/4) + ((texturePlay.getTextureHeight() + yDif) / 2));
 			GL11.glTexCoord2f(0, 1);
-			GL11.glVertex2f(10, 250 + texturePlay.getTextureHeight());
+			GL11.glVertex2f((Display.getWidth() / 2) - ((texturePlay.getTextureWidth() - xDif)/2),yPos * (Display.getHeight()/4) + ((texturePlay.getTextureHeight() + yDif) / 2));
 			GL11.glEnd();
 		}
 		if (showHelpMenu == true && showMainMenu == false) {

@@ -8,12 +8,14 @@ import static org.lwjgl.opengl.GL11.glLineWidth;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 
 public class Monster extends Obs {
+	
 	public Monster() {
 		super();
 	}
 	
-	public Monster(Point point,float dx,float dy,float dz,MATERIALS material) {
+	public Monster(Point point,float dx,float dy,float dz,MATERIALS material, SOUNDS sound) {
 		super(point, dx,dy,dz,material);
+		setLoopSound(new Sound(sound, new Point(0,0,0), true, false, 5.0f));
 	}
 	
 	public void update(){
@@ -21,7 +23,8 @@ public class Monster extends Obs {
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){
-		System.out.println("Collision with monster");
+		//System.out.println("Collision with monster");
+		level.setMonsterDeath(true);
 	}
 	@Override
 	public void draw(){

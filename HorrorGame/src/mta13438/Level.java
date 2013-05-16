@@ -11,6 +11,9 @@ public class Level {
 	private float dz;
 	private float dy;
 	private Point spawnPoint = new Point();
+	private boolean goThroughDoor = false;
+	private boolean trapDeath = false;
+	private boolean monsterDeath = false;
 
 	//No args constructor
 	public Level() {
@@ -77,25 +80,29 @@ public class Level {
 	public void autoLevelGenerator(Point startPoint){
 		for (int i = 0; i < getRoomList().size(); i++){
 			if (i == 0){
-				this.roomList.get(i).setPos(new Point(startPoint.getX(),startPoint.getY(),0));
-				this.roomList.get(i).setEntrance(new Point (this.roomList.get(i).getEntrance().getX()+startPoint.getX(),this.roomList.get(i).getEntrance().getY()+startPoint.getY(),0));
-				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+startPoint.getX(),this.roomList.get(i).getExit().getY()+startPoint.getY(),0));
+				this.roomList.get(i).setPos(new Point(startPoint.getX(),startPoint.getY(),startPoint.getZ()));
+				this.roomList.get(i).setEntrance(new Point (this.roomList.get(i).getEntrance().getX()+startPoint.getX(),this.roomList.get(i).getEntrance().getY()+startPoint.getY(),this.roomList.get(i).getEntrance().getZ()+startPoint.getZ()));
+				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+startPoint.getX(),this.roomList.get(i).getExit().getY()+startPoint.getY(),this.roomList.get(i).getExit().getZ()+startPoint.getZ()));
 				for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
-					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+startPoint.getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+startPoint.getY(),0));
+					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+startPoint.getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+startPoint.getY(),this.roomList.get(i).getObsList().get(j).getPos().getZ()+startPoint.getZ()));
 				}
 				this.roomList.get(i).generateDoorObs();
 			} else {
 				float entranceY = this.roomList.get(i).entrance.getY();
 				float entranceX = this.roomList.get(i).entrance.getX();
+				float entranceZ = this.roomList.get(i).entrance.getZ();
 				float previousExitY = this.roomList.get(i-1).exit.getY();
 				float previousExitX = this.roomList.get(i-1).exit.getX();
-				this.roomList.get(i).setPos(new Point(previousExitX-entranceX,previousExitY-entranceY,0));
-				this.roomList.get(i).setEntrance(new Point (previousExitX,previousExitY,0));
-				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getExit().getY()+this.roomList.get(i).getPos().getY(),0));
+				float previousExitZ = this.roomList.get(i-1).exit.getZ();
+				this.roomList.get(i).setPos(new Point(previousExitX-entranceX,previousExitY-entranceY,previousExitZ-entranceZ));
+				this.roomList.get(i).setEntrance(new Point (previousExitX,previousExitY,previousExitZ));
+				this.roomList.get(i).setExit(new Point (this.roomList.get(i).getExit().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getExit().getY()+this.roomList.get(i).getPos().getY(),this.roomList.get(i).getExit().getZ()+this.roomList.get(i).getPos().getZ()));
 				for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
-					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+this.roomList.get(i).getPos().getY(),0));
+					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+this.roomList.get(i).getPos().getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+this.roomList.get(i).getPos().getY(),this.roomList.get(i).getObsList().get(j).getPos().getZ()+this.roomList.get(i).getPos().getZ()));
 				}
-				this.roomList.get(i).generateDoorObs();
+			}
+			for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
+				this.roomList.get(i).getObsList().get(j).getLoopSound().update(this.roomList.get(i).getObsList().get(j).getCenter());
 			}
 		}
 	}
@@ -110,10 +117,35 @@ public class Level {
 		Point playerPos = player.getPos();
 		// sets the spawn point to the entrance of the current room
 		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
+		this.goThroughDoor = true;
 	}
 	
 	public Point getSpawnPoint() {
 		return this.spawnPoint;
+	}
+	
+	public boolean isGoThroughDoor() {
+		return goThroughDoor;
+	}
+
+	public void setGoThroughDoor(boolean goThroughDoor) {
+		this.goThroughDoor = goThroughDoor;
+	}
+
+	public boolean isTrapDeath() {
+		return trapDeath;
+	}
+
+	public void setTrapDeath(boolean trapDeath) {
+		this.trapDeath = trapDeath;
+	}
+
+	public boolean isMonsterDeath() {
+		return monsterDeath;
+	}
+
+	public void setMonsterDeath(boolean monsterDeath) {
+		this.monsterDeath = monsterDeath;
 	}
 
 	public String toString() {

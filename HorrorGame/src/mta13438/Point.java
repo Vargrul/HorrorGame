@@ -1,5 +1,7 @@
 package mta13438;
 
+import static org.lwjgl.opengl.GL11.*;
+
 public class Point {
 	private float x,y,z;
 	
@@ -62,5 +64,12 @@ public class Point {
 		if (getY() < point.getY()) return -1;
 		if (getZ() < point.getZ()) return -1;
 		return 0;
+	}
+
+	public void draw() {
+		glColor4f(1.0f, 1.0f, 1.0f, 0.2f);
+		glBegin(GL_POINTS);
+			glVertex2f(getX(), getY());
+		glEnd();
 	}
 }

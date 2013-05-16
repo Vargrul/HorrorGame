@@ -10,7 +10,9 @@ import org.lwjgl.openal.AL10;
 public class Player extends Entity {
 
 	private int health;
+	private int deaths = 0;
 	private boolean walking = false;
+	private boolean inWater = false;
 
 	//Extends no args constructor of Obs
 	public Player() {
@@ -54,6 +56,7 @@ public class Player extends Entity {
 		//Setting the alListener's position and orientation.
 		AL10.alListener3f(AL10.AL_POSITION,   getPos().getX(), getPos().getY(), getPos().getZ());
 		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
+		AL10.alListenerf(AL10.AL_GAIN, 2f);
 	}
 
 	public void foward(float delta, Level level, int currentRoom) {
@@ -168,13 +171,13 @@ public class Player extends Entity {
 		return returnBool;
 	}
 
-	public void kill(){
-		//Death sequence and reposition
-		//Play death sound
+	public void kill(Level level){
+		respawn(level);
+		deaths++;
 	}
 
 	public void respawn(Level level){
-		setPos(level.getSpawnPoint());
+		setPos(new Point (level.getSpawnPoint().getX() + 1,level.getSpawnPoint().getY() - 1,10));
 	}
 
 	public void proxHeartbeat (Level level, int currentRoom){
@@ -256,6 +259,22 @@ public class Player extends Entity {
 	@Override
 	public String toString() {
 		return "Player [health=" + getHealth() + ", speed=" + super.getSpeed() + ", orientation=" + super.getOrientation() + "]";
+	}
+
+	public boolean isInWater() {
+		return inWater;
+	}
+
+	public void setInWater(boolean inWater) {
+		this.inWater = inWater;
+	}
+
+	public int getDeaths() {
+		return deaths;
+	}
+
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
 	}
 
 }

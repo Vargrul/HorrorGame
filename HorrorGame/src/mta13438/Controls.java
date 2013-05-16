@@ -1,5 +1,6 @@
 package mta13438;
 
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard; // allows to call different keyboard events.
 
 public class Controls {
@@ -18,7 +19,6 @@ public class Controls {
 	public void takeInput(){
 
 		while(Keyboard.next()){ //looping through the different controls
-
 			if(Keyboard.getEventKeyState()){ //nested if statements checking to see if buttons are pressed
 
 				if(Keyboard.getEventKey() == Keyboard.KEY_DOWN){
@@ -83,9 +83,15 @@ public class Controls {
 	public Boolean getKEY_LEFT() {
 		return this.keyLeft;
 	}
+	public void setKEY_LEFT(boolean state){
+		this.keyLeft = state;
+	}
 
 	public Boolean getKEY_RIGHT() {
 		return this.keyRight;
+	}
+	public void setKEY_RIGHT(boolean state){
+		this.keyRight = state;
 	}
 
 	public Boolean getKEY_ESCAPE() {
@@ -98,6 +104,9 @@ public class Controls {
 	
 	public void setKEY_ENTER(boolean state) {
 		this.keyEnter = state;
+	}
+	public void clearBuffer(){
+		
 	}
 }
 

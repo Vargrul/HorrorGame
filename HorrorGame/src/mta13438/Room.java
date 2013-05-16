@@ -196,6 +196,7 @@ public class Room {
 		float area;
 
 		area = getDx() * getDy() * getDz();
+		area = area / 10;
 		for (int i = 0; i < getObsList().size(); i++) {
 			area -= getObsList().get(i).getDx() * getObsList().get(i).getDy() * getObsList().get(i).getDz();
 		}

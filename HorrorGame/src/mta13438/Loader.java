@@ -18,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(250,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -28,7 +28,7 @@ public class Loader {
 	private static int tempCurrentRoom = -1;
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
-	private static boolean playStartSequence = true;
+	private static boolean playStartSequence = false;
 	private static boolean takeInput = true;
 	private static boolean playSounds = true;
 	private static long startTime;
@@ -53,10 +53,9 @@ public class Loader {
 	static ALCdevice openALDevice = null;
 	static ALCcontext openALContext = null;
 	static IntBuffer attribs = new BufferUtils().createIntBuffer(4);
-	static int iSend = 0; 
 
 	public void start() {
-		initOpenAL();
+		//initOpenAL();
 
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -96,6 +95,8 @@ public class Loader {
 		}
 
 		initializeReverb();
+		guardVoice.loadReverb(effectSlot);
+		walkSound.loadReverb(effectSlot);
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -156,7 +157,7 @@ public class Loader {
 
 		if(tempCurrentRoom != currentRoom){
 			tempCurrentRoom = currentRoom;
-			//updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
+			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
 				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().update(tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().getPos());					
 			}
@@ -241,8 +242,6 @@ public class Loader {
 				player.kill(tutorialLevel);
 			}
 		}
-		//tutorialLevel.updateSpawnPoint(player, tutorialLevel);
-		//System.out.println(tutorialLevel.getSpawnPoint().toString());
 		//play monster death sound
 		if(tutorialLevel.isMonsterDeath() == true){
 			if(counter == 0){

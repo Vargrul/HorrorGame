@@ -19,7 +19,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(21,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -164,6 +164,12 @@ public class Loader {
 		}
 		if(currentRoom == 6){
 			winMusic.play();
+			if(counter == 0){
+				Display.destroy();
+				DebugInterface.Initialize(800, 600); // Width and Length of display
+				DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
+				counter++;
+			}
 		}
 		//System.out.println(test.getPos().getX() - player.getPos().getX() + " and " + (test.getPos().getY() - player.getPos().getY()));
 		

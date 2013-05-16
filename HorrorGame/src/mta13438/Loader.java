@@ -34,6 +34,8 @@ public class Loader {
 	private static int soundPlayed = 0;
 	private static List<Point> pathPoints = new ArrayList<Point>();
 	private static boolean testDone = false;
+	private static double bestDistance = 0;
+	private static double yourDistance = 0;
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, 0.5f);
@@ -91,6 +93,15 @@ public class Loader {
 		randomNum = 0 + (int)(Math.random()*6);
 		soundNr = randomNum+1;
 		
+		bestDistance += getDistance(sound1.getPos(), sound2.getPos());
+		bestDistance += getDistance(sound2.getPos(), sound3.getPos());
+		bestDistance += getDistance(sound3.getPos(), sound4.getPos());
+		bestDistance += getDistance(sound4.getPos(), sound5.getPos());
+		bestDistance += getDistance(sound5.getPos(), sound6.getPos());
+		bestDistance += getDistance(sound6.getPos(), sound1.getPos());
+		System.out.println("Best possible distance: " + bestDistance);
+		
+		
 		
 		switch(soundNr){
 		case(1): System.out.println("Player start at pos 6");
@@ -120,6 +131,12 @@ public class Loader {
 		
 
 		
+	}
+	private static double getDistance(Point firstS, Point secondS) {
+		double a = Math.abs((firstS.getX()-secondS.getX()));
+		double b = Math.abs((firstS.getY()-secondS.getY()));
+		double distance = Math.sqrt((Math.pow(a, 2)+(Math.pow(b, 2))));
+		return distance;
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
@@ -322,7 +339,12 @@ public class Loader {
 	}
 	
 	private static void getFinalSteps() {
-		System.out.println("Total number of steps: " + steps/30);
+		
+		for(int i = 0;i<pathPoints.size()-1; i++){
+			yourDistance += getDistance(pathPoints.get(i), pathPoints.get(i+1));
+		}
+		
+		System.out.println("Your distance: " + yourDistance);
 		System.out.println("Total distance: " + pathPoints.size());
 	}
 	

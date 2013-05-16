@@ -42,7 +42,7 @@ public class Loader {
 	private static Sound openDoorSound = new Sound(SOUNDS.GODOOR,new Point (0,0,0), false, true);
 	private static Sound trapDeathSound = new Sound(SOUNDS.TRAP_DEATH,new Point (0,0,0), false, true, 0.5f);
 	private static Sound monsterDeathSound = new Sound(SOUNDS.MONSTER_DEATH,new Point (0,0,0), false, true, 0.5f);
-	private static Sound test = new Sound(SOUNDS.MENU_MUSIC,new Point (230,320,0), true, true, 10000.0f);
+	private static Sound winMusic = new Sound(SOUNDS.MENU_MUSIC,new Point (230,320,0), true, true, 10000.0f);
 
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
@@ -157,7 +157,7 @@ public class Loader {
 			}
 		}
 		if(currentRoom == 6){
-			test.play();
+			winMusic.play();
 		}
 		//System.out.println(test.getPos().getX() - player.getPos().getX() + " and " + (test.getPos().getY() - player.getPos().getY()));
 

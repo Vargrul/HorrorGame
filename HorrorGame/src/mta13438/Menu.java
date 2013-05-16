@@ -127,32 +127,32 @@ public class Menu {
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStatic.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/Play.png"));
 			texturePlayCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Play/PlayStaticFilled.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/PlayCheck.png"));
 			textureHelp = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStatic.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/Help.png"));
 			textureHelpCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Help/HelpStaticFilled.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/HelpCheck.png"));
 			textureExit = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStatic.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/Exit.png"));
 			textureExitCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
-									.getResourceAsStream("assets/images/menu/Buttons/Quit/QuitStaticFilled.png"));
+									.getResourceAsStream("assets/images/menu/Buttons/ExitCheck.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

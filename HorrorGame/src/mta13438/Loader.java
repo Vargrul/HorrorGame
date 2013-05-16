@@ -24,7 +24,7 @@ public class Loader {
 	private static boolean collision = false;
 	
 	//testing
-	private static Sound testsound = new Sound(SOUNDS.FOOTSTEP_STONE_01, player.getPos(), true);
+	private static Sound testsound = new Sound(SOUNDS.KEYCHAIN_01, player.getPos(), true);
 	private static boolean playing = false;
 	
 	
@@ -97,9 +97,6 @@ public class Loader {
 			playing = false;
 		}*/
 		testsound.play();
-		
-		//This should be called every update for EVERY sound.
-		testsound.reverb(tutorialLevel.getRoomList().get(currentRoom), player);
 		
 		//Draw the Tutorial Levels rooms
 		tutorialLevel.Draw();

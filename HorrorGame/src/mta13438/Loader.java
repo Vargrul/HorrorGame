@@ -39,12 +39,12 @@ public class Loader {
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, 0.5f);
 	
 	//Sound for Navigation testing
-	private static Sound sound1 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(10, 90, 0), true, 10.0f);
-	private static Sound sound2 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(50, 60, 0), true, 10.0f);
-	private static Sound sound3 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(50, 90, 0), true, 10.0f);
-	private static Sound sound4 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(90, 90, 0), true, 10.0f);
-	private static Sound sound5 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(10, 45, 0), true, 10.0f);
-	private static Sound sound6 = new Sound(SOUNDS.FOOTSTEP_WATER, new Point(90, 10, 0), true, 10.0f);
+	private static Sound sound1 = new Sound(SOUNDS.DOORTEST, new Point(10, 90, 0), true, 10.0f);
+	private static Sound sound2 = new Sound(SOUNDS.DOORTEST, new Point(50, 60, 0), true, 10.0f);
+	private static Sound sound3 = new Sound(SOUNDS.DOORTEST, new Point(50, 90, 0), true, 10.0f);
+	private static Sound sound4 = new Sound(SOUNDS.DOORTEST, new Point(90, 90, 0), true, 10.0f);
+	private static Sound sound5 = new Sound(SOUNDS.DOORTEST, new Point(10, 45, 0), true, 10.0f);
+	private static Sound sound6 = new Sound(SOUNDS.DOORTEST, new Point(90, 10, 0), true, 10.0f);
 	private static Sound currentSound;
 	
 	//For visual representation

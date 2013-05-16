@@ -41,14 +41,6 @@ public class DebugInterface {
 		glMatrixMode(GL_MODELVIEW);
 		
 	}
-	public static void InitOpenAL(){
-		try {
-			AL.create();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.out.println("Failed to initialize OpenAL.");
-		}
-	}
 
 	public static void Terminate(){
 		Display.destroy();

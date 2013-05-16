@@ -4,7 +4,9 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;
 import org.lwjgl.openal.ALC10;
@@ -55,7 +57,7 @@ public class Loader {
 	static int iSend = 0; 
 
 	public void start() {
-		initOpenAL();
+		//initOpenAL();
 
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
@@ -307,14 +309,6 @@ public class Loader {
 		}
 	}
 	public static void initOpenAL() {
-		
-		openALDevice = ALC10.alcOpenDevice("OpenAL Soft");
-		if (AL10.alGetError() == AL10.AL_NO_ERROR)System.out.println("Device was set up.");
-
-		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false)return;		
-		if (AL10.alGetError() == AL10.AL_NO_ERROR)System.out.println("EFX Extension found!"); 
-
-		openALContext = ALC10.alcCreateContext(openALDevice, null);
 	}
 	public static int getDelta() {
 		long time = getTime();

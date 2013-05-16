@@ -347,6 +347,7 @@ public class Loader {
 	public static void initializeReverb() {
 		EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
 		AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
+		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_GAIN, 0.32f);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {

@@ -18,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(250,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -75,13 +75,13 @@ public class Loader {
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,10), new Point(15, 20, 10), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(2).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
 		tutorialLevel.getRoomList().get(2).addObsList(scareEvent);
-		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(20, 5, 0),SOUNDS.RAT,false,true));
-		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(0, 0, 0),SOUNDS.RAT,false,true));
-		tutorialLevel.getRoomList().get(5).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true));
+		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 70, 0),SOUNDS.RAT,false,true, 5.0f));
+		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(0, 0, 0),SOUNDS.RAT,false,true, 5.0f));
+		tutorialLevel.getRoomList().get(5).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true, 5.0f));
 		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
 		//tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
-		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true));
-		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP1,true,true));
+		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true, 0.1f));
+		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP1,true,true, 0.1f));
 		tutorialLevel.getRoomList().get(5).addObsList(new Monster(new Point(20, 20, 10), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		tutorialLevel.getRoomList().get(3).addObsList(new Monster(new Point(40, 25, 10), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER2));
 		tutorialLevel.getRoomList().get(4).addObsList(new Trap(new Point(20, 20, 10), 30, 30, 0, MATERIALS.ROCK));

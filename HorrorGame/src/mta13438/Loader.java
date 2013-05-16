@@ -2,6 +2,7 @@ package mta13438;
 
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
@@ -47,6 +48,8 @@ public class Loader {
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
 	private static boolean playing = false;
+	
+	private static List<Point> pathPoints = new ArrayList<Point>();
 
 	final static int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
 	final static int reverbEffect = EFX10.alGenEffects();
@@ -215,6 +218,12 @@ public class Loader {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
+		
+		//Draw path taken
+		for(int j = 0; j<pathPoints.size(); j++){
+			pathPoints.get(j).draw();
+		}
+		
 		//Scare event in room 2
 		if(currentRoom == 2){
 			if(scareEvent.isTrigger() == true && scareEvent.isActive() == true){
@@ -383,6 +392,7 @@ public class Loader {
 			if(player.isInWater()==true){
 				walkSound.stop();
 				walkWaterSound.update(new Point(player.getPos().getX(),player.getPos().getY(),0));
+				pathPoints.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
 				if(walkWaterSound.isPlaying == false){
 					walkWaterSound.play();
 				}
@@ -392,6 +402,7 @@ public class Loader {
 			else{
 				walkWaterSound.stop();
 				walkSound.update(new Point(player.getPos().getX(),player.getPos().getY(),0));
+				pathPoints.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
 				walkSound.play();
 				//stop water walk
 				//Play normal walk

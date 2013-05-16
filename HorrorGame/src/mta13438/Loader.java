@@ -29,6 +29,7 @@ public class Loader {
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
 	private static boolean playStartSequence = true;
+	private static boolean dI = false;
 	private static boolean takeInput = true;
 	private static boolean playSounds = true;
 	private static long startTime;
@@ -104,9 +105,13 @@ public class Loader {
 	}
 	// Initiates the tutorial level
 	public static void playTutorialLevel(){
-		Display.destroy();
+		if(dI == true){
+			Display.destroy();
+		}
 		loadTutorialLevel();
-		DebugInterface.Initialize(800, 600); // Width and Length of display
+		if(dI == true){
+			DebugInterface.Initialize(800, 600); // Width and Length of display
+		}
 		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
 	}
 	// Renders the tutorial level. 

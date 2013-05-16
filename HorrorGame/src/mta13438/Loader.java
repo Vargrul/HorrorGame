@@ -18,7 +18,7 @@ public class Loader {
 
 	static Level tutorialLevel = new Level(new ArrayList<Room>(), 0, 0, 0);
 	private static Controls controls = new Controls();
-	private static Player player = new Player(new Point(250,315,10),0.2f,0.01f,10);
+	private static Player player = new Player(new Point(25,315,10),0.2f,0.01f,10);
 	private static Point playerPos = new Point(0,0,0);
 	private static long lastFrame;
 	private static int delta = getDelta();
@@ -55,8 +55,6 @@ public class Loader {
 	static IntBuffer attribs = new BufferUtils().createIntBuffer(4);
 
 	public void start() {
-		//initOpenAL();
-
 		DebugInterface.Initialize(800, 600); // Width and Length of display
 		Menu mainMenu = new Menu();
 		getDelta();
@@ -154,14 +152,16 @@ public class Loader {
 			test.play();
 		}
 		//System.out.println(test.getPos().getX() - player.getPos().getX() + " and " + (test.getPos().getY() - player.getPos().getY()));
-
+		
 		if(tempCurrentRoom != currentRoom){
+			System.out.println(tempCurrentRoom +" "+currentRoom);
 			tempCurrentRoom = currentRoom;
-			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
-			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getObsList().size(); i++) {
-				tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().update(tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().getPos());					
+			
+			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getRt60().length ; i++) {
+				System.out.println(tutorialLevel.getRoomList().get(currentRoom).getRt60()[i]);
 			}
-
+			
+			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 		}
 
 		collision = player.collisionCheck(tutorialLevel, currentRoom);
@@ -320,10 +320,12 @@ public class Loader {
 
 	public static void initializeReverb() {
 		EFX10.alEffecti(reverbEffect, EFX10.AL_EFFECT_TYPE, EFX10.AL_EFFECT_REVERB);
-		//AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
-		EFX10.alEffectf(reverbEffect, EFX10.AL_METERS_PER_UNIT, 0.10f);
+		AL10.alListenerf(EFX10.AL_METERS_PER_UNIT, 0.10f);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
 
+		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
+			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
+		}
 
 	}
 	public static void updateReverb(float[] rt60) {
@@ -334,28 +336,23 @@ public class Loader {
 			temp += rt60[i];
 		}
 		decayTime = temp / rt60.length;
-
+		decayTime = decayTime / 100;
+		System.out.println(decayTime);
+		
 		temp = (rt60[0] + rt60[1]) / 2;
 		HFRatio = ((rt60[4] + rt60[5]) / 2) / temp;
+		HFRatio = HFRatio + 1;
+		System.out.println(HFRatio);
 
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
-
+		
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
 			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
 		}
 	}
-	public static void initOpenAL() {
-		
-		openALDevice = ALC10.alcOpenDevice(null);
-		System.out.println("Device was set up.");
 
-		if(ALC10.alcIsExtensionPresent(openALDevice, "ALC_EXT_EFX") == false)return;		
-		System.out.println("EFX Extension found!"); 
-
-		openALContext = ALC10.alcCreateContext(openALDevice, null);
-	}
 	public static int getDelta() {
 		long time = getTime();
 		int delta = (int) (time - lastFrame);

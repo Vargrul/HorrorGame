@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -43,7 +44,6 @@ public class Menu {
 		//Setting the alListener's position and orientation.
 		AL10.alListener3f(AL10.AL_POSITION,   0, 0, 0);
 		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
-		System.out.println(SOUNDS.MENU_MUSIC.getPath());
 		menuMusic.play();
 		
 
@@ -99,6 +99,7 @@ public class Menu {
 	}
 	
 	public static void terminate(){
+		AL.destroy();
 		System.exit(0);
 	}
 	// Initializes GL11 which makes it possible to use textures.
@@ -129,31 +130,26 @@ public class Menu {
 							"PNG",
 							ResourceLoader
 									.getResourceAsStream("assets/images/menu/Buttons/PLAY_ns.png"));
-			System.out.println("1");
 			texturePlayCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
 									.getResourceAsStream("assets/images/menu/Buttons/PLAY_s.png"));
-			System.out.println("2");
 			textureHelp = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
 									.getResourceAsStream("assets/images/menu/Buttons/HELP_ns.png"));
-			System.out.println("3");
 			textureHelpCheck = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
 									.getResourceAsStream("assets/images/menu/Buttons/HELP_s.png"));
-			System.out.println("4");
 			textureExit = TextureLoader
 					.getTexture(
 							"PNG",
 							ResourceLoader
 									.getResourceAsStream("assets/images/menu/Buttons/QUIT_ns.png"));
-			System.out.println("5");
 			textureExitCheck = TextureLoader
 					.getTexture(
 							"PNG",
@@ -164,7 +160,6 @@ public class Menu {
 							"PNG",
 							ResourceLoader
 									.getResourceAsStream("assets/images/menu/Buttons/BG.png"));
-			System.out.println("6");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -261,9 +256,6 @@ public class Menu {
 			GL11.glTexCoord2f(0, 1);
 			GL11.glVertex2f(10, 150 + texturePlay.getTextureHeight());
 			GL11.glEnd();
-		}
-		if (showHelpMenu == false && showMainMenu == false) {
-			Loader.renderTutorialLevel();
 		}
 	}
 

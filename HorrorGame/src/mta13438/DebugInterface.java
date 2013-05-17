@@ -23,6 +23,7 @@ public class DebugInterface {
 	public static void Initialize(int Length, int Width){
 		DisplayLength = Length;
 		DisplayWidth = Width;
+	
 		try {
 			Display.setDisplayMode(new DisplayMode(DisplayLength, DisplayWidth)); //DisplayMode
 			Display.setTitle("MTA13438, P4"); //Title

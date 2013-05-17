@@ -24,7 +24,6 @@ public class Event extends Obs {
 	}
 	@Override
 	public void collision(Player player, Level level, int currentRoom){
-		System.out.println("Collision with Event Object");
 		trigger = true;
 	}
 	
@@ -52,7 +51,6 @@ public class Event extends Obs {
 	}
 	
 	public void event(){
-		System.out.println("Specific event happens");
 		active = false;
 		//Making a sub class for each event needed for the game
 		//Event object should be move to new Point();

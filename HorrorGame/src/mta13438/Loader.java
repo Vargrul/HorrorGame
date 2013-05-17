@@ -49,14 +49,11 @@ public class Loader {
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, true);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, true);
 	private static boolean playing = false;
-	
+
 	private static List<Point> pathPoints = new ArrayList<Point>();
 
 	final static int effectSlot = EFX10.alGenAuxiliaryEffectSlots();
 	final static int reverbEffect = EFX10.alGenEffects();
-	static ALCdevice openALDevice = null;
-	static ALCcontext openALContext = null;
-	static IntBuffer attribs = new BufferUtils().createIntBuffer(4);
 
 	public void start() {
 		DebugInterface.Initialize(800, 600); // Width and Length of display
@@ -68,13 +65,9 @@ public class Loader {
 	private static void loadTutorialLevel() {
 		tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(0,5,10), new Point(10, 15, 10), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(60, 50, 30, new Point(0,25,10), new Point(60, 5, 10), MATERIALS.ROCK));
-		//tutorialLevel.addRoomList(new Room(50, 10, 20, new Point(0,5,0), new Point(50, 5, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(150, 90, 60, new Point(0,45,10), new Point(150, 65, 10), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(110, 110, 40, new Point(0,55,10), new Point(90, 0, 10), MATERIALS.ROCK));
-		//tutorialLevel.addRoomList(new Room(40, 10, 20, new Point(0,5,0), new Point(35, 0, 0), MATERIALS.ROCK));
-		//tutorialLevel.addRoomList(new Room(10, 50, 20, new Point(5,50,0), new Point(5, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(70, 70, 40, new Point(35,70,10), new Point(35,0, 10), MATERIALS.ROCK));
-		//tutorialLevel.addRoomList(new Room(10, 20, 20, new Point(5,20,0), new Point(5, 0, 0), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(50, 80, 40, new Point(25,80,10), new Point(25, 0, 10), MATERIALS.ROCK));
 		tutorialLevel.addRoomList(new Room(30, 20, 40, new Point(15,20,10), new Point(15, 20, 10), MATERIALS.ROCK));
 		tutorialLevel.getRoomList().get(2).addObsList(new Water(new Point(20, 20, 0), 20, 50, 0, MATERIALS.WATER));
@@ -82,48 +75,18 @@ public class Loader {
 		tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 70, 0),SOUNDS.RAT,false,true, 5.0f));
 		tutorialLevel.getRoomList().get(0).addObsList(new EnvironmentObs(new Point(0, 0, 0),SOUNDS.RAT,false,true, 5.0f));
 		tutorialLevel.getRoomList().get(5).addObsList(new EnvironmentObs(new Point(5, 20, 0),SOUNDS.RAT,false,true, 5.0f));
-		//tutorialLevel.getRoomList().get(3).addObsList(new EnvironmentObs(new Point(40, 0, 0),SOUNDS.MONSTER_CELL_01,true,true));
-		//tutorialLevel.getRoomList().get(4).addObsList(new Monster(new Point(60, 70, 0), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(40, 80, 0),SOUNDS.WATERDROP2,true,true, 0.1f));
 		tutorialLevel.getRoomList().get(2).addObsList(new EnvironmentObs(new Point(110, 30, 0),SOUNDS.WATERDROP1,true,true, 0.1f));
 		tutorialLevel.getRoomList().get(5).addObsList(new Monster(new Point(20, 20, 10), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER1));
 		tutorialLevel.getRoomList().get(3).addObsList(new Monster(new Point(40, 25, 10), 20, 20, 0, MATERIALS.ROCK,SOUNDS.MONSTER2));
 		tutorialLevel.getRoomList().get(4).addObsList(new Trap(new Point(20, 20, 10), 30, 30, 0, MATERIALS.ROCK));
-		//tutorialLevel.getRoomList().get(9).addObsList(new TrapGuillotine(new Point(0, 30, 0), 50, 10, 0, MATERIALS.ROCK));
 		tutorialLevel.autoLevelGenerator(new Point(10,300,0));
 		System.out.println("Loaded level.");
-		for(int i = 0; i < tutorialLevel.getRoomList().get(2).getObsList().size(); i++){
-		System.out.println(tutorialLevel.getRoomList().get(2).getObsList().get(i).toString());
-		}
-
-		initializeReverb();
-		guardVoice.loadReverb(effectSlot);
-		walkSound.loadReverb(effectSlot);
-		playerVoice.loadReverb(effectSlot);
-		walkWaterSound.loadReverb(effectSlot);
-		openDoorSound.loadReverb(effectSlot);
-		trapDeathSound.loadReverb(effectSlot);
-		monsterDeathSound.loadReverb(effectSlot);
-		
 	}
 	// Initiates the tutorial level
-	public static void playTutorialLevel(){
-		if(dI == true){
-			Display.destroy();
-		}
-		loadTutorialLevel();
-		if(dI == true){
-			DebugInterface.Initialize(800, 600); // Width and Length of display
-		}
-		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
-	}
-	// Renders the tutorial level. 
-	public static void renderTutorialLevel(){	
-		if(takeInput == true){
-			input();
-		} 
+
+	public static void intro_Sequence() {
 		if(playStartSequence == true){
-			System.out.println(time - startTime);
 			if(time < (startTime+25800)){
 				takeInput = false;
 				playSounds = false;
@@ -135,33 +98,45 @@ public class Loader {
 				guardVoice.update(guard.getPos());
 				guardVoice.play();
 				playerVoice.play();
-				time = getTime();
 			} else if (time >= (startTime+25800) && time < (startTime+29600)){
 				guard.backward(0.7f);
 				guard.turnRight(0.2f);
 				guard.draw();
 				guardVoice.update(guard.getPos());
-				time = getTime();
-			} else if (time >= (startTime+29600) && time < (startTime+39500)){
-				time = getTime();
-				//player.foward(0.1f);
-				//player.draw();
 			} else if (time >= (startTime+39500) && time < (startTime+48000)){
-				time = getTime();
-				playSounds = true;
 				takeInput = true;
 				player.setSpeed(0.0f);
-			} else if (time >= (startTime+48000) && time < (startTime+56000)){
-				time = getTime();
+			} else if (time >= (startTime+50000) && time < (startTime+56000)){
+				playSounds = true;
 			} else if (time >= (startTime+56000)){
-				time = getTime();
 				playStartSequence = false;
-				System.out.println("ss");
 				takeInput = true;
 				player.setSpeed(0.2f);
 				counter = 0;
 			}
+			time = getTime();
 		}
+	}
+
+	public static void playTutorialLevel(){
+		if(dI == true){
+			Display.destroy();
+		}
+
+		loadTutorialLevel();
+		initializeReverb();
+
+		if(dI == true){
+			DebugInterface.Initialize(800, 600); // Width and Length of display
+		}
+
+		DebugInterface.InitOpenGL(500,500); // Width and Length inside the display (Scaling of perspective here)
+	}
+	// Renders the tutorial level. 
+	public static void renderTutorialLevel(){	
+		intro_Sequence();
+		input();
+
 		if(currentRoom == 6){
 			winMusic.play();
 			if(counter == 0){
@@ -171,16 +146,9 @@ public class Loader {
 				counter++;
 			}
 		}
-		//System.out.println(test.getPos().getX() - player.getPos().getX() + " and " + (test.getPos().getY() - player.getPos().getY()));
-		
+
 		if(tempCurrentRoom != currentRoom){
-			System.out.println(tempCurrentRoom +" "+currentRoom);
 			tempCurrentRoom = currentRoom;
-			
-			for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).getRt60().length ; i++) {
-				System.out.println(tutorialLevel.getRoomList().get(currentRoom).getRt60()[i]);
-			}
-			
 			updateReverb(tutorialLevel.getRoomList().get(currentRoom).getRt60());
 		}
 
@@ -229,12 +197,12 @@ public class Loader {
 				tutorialLevel.getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
-		
+
 		//Draw path taken
 		for(int j = 0; j<pathPoints.size(); j++){
 			pathPoints.get(j).draw();
 		}
-		
+
 		//Scare event in room 2
 		if(currentRoom == 2){
 			if(scareEvent.isTrigger() == true && scareEvent.isActive() == true){
@@ -303,9 +271,7 @@ public class Loader {
 				takeInput = false;
 				openDoorSound.update(player.getPos());
 				openDoorSound.play();
-				//System.out.println(time - startTime);
 			} else if(time <= startTime + 5500){
-				//System.out.println(time);
 				openDoorSound.stop();
 				takeInput = true;
 				playSounds = true;
@@ -320,7 +286,7 @@ public class Loader {
 		player.draw();
 		updateFPS();
 		walkCheck(player);
-		
+
 	}
 
 	public static void input() {
@@ -353,6 +319,13 @@ public class Loader {
 			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
 		}
 
+		guardVoice.loadReverb(effectSlot);
+		walkSound.loadReverb(effectSlot);
+		playerVoice.loadReverb(effectSlot);
+		walkWaterSound.loadReverb(effectSlot);
+		openDoorSound.loadReverb(effectSlot);
+		trapDeathSound.loadReverb(effectSlot);
+		monsterDeathSound.loadReverb(effectSlot);
 	}
 	public static void updateReverb(float[] rt60) {
 		float decayTime, HFRatio;
@@ -363,17 +336,15 @@ public class Loader {
 		}
 		decayTime = temp / rt60.length;
 		decayTime = decayTime / 100;
-		System.out.println(decayTime);
-		
+
 		temp = (rt60[0] + rt60[1]) / 2;
 		HFRatio = ((rt60[4] + rt60[5]) / 2) / temp;
 		HFRatio = HFRatio + 1;
-		System.out.println(HFRatio);
 
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
 		EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
 		EFX10.alAuxiliaryEffectSloti(effectSlot, EFX10.AL_EFFECTSLOT_EFFECT, reverbEffect);
-		
+
 		for (int i = 0; i < tutorialLevel.getRoomList().get(currentRoom).obsList.size(); i++) {
 			tutorialLevel.getRoomList().get(currentRoom).getObsList().get(i).getLoopSound().loadReverb(effectSlot);
 		}
@@ -385,7 +356,6 @@ public class Loader {
 		lastFrame = time;
 		return delta;
 	}
-
 	public static long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}

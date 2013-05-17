@@ -5,6 +5,7 @@ public  enum SOUNDS {
 	MENU_MUSIC("assets/Music/MenuBackground_1.wav"),
 	DOOR("assets/soundEffects/door.wav"),
 	DOORTEST("assets/soundEffects/Door_sound.wav"),
+	REACH("assets/soundEffects/Færdig.wav"),
 	FOOTSTEP_STONE("assets/soundEffects/footstep_stone.wav"),
 	FOOTSTEP_WATER("assets/soundEffects/footstep_water.wav"),
 	GUILLOTINE_TRAP("assets/soundEffects/Guillotine_trap.wav"),

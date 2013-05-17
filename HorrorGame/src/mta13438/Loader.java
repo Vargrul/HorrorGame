@@ -34,22 +34,32 @@ public class Loader {
 	private static int soundNr;
 	private static int soundPlayed = 0;
 	private static List<Point> pathPoints = new ArrayList<Point>();
+	private static List<Point> path1 = new ArrayList<Point>();
+	private static List<Point> path2 = new ArrayList<Point>();
+	private static List<Point> path3 = new ArrayList<Point>();
+	private static List<Point> path4 = new ArrayList<Point>();
+	private static List<Point> path5 = new ArrayList<Point>();
+	private static List<Point> path6 = new ArrayList<Point>();
 	private static boolean testDone = false;
 	private static double bestDistance = 0;
 	private static double yourDistance = 0;
 	private static ArrayList<Integer> soundNumbers = new ArrayList<Integer>();
+	private static ArrayList<Integer> PlayOrder= new ArrayList<Integer>();
 	private static boolean displayResult = false;
+	private static double distance1, distance2, distance3, distance4, distance5, distance6;
+	private static double yourD1, yourD2, yourD3, yourD4, yourD5, yourD6;
 	
 	private static Sound walkSound = new Sound(SOUNDS.FOOTSTEP_STONE, player.getPos(), true, 0.5f);
 	private static Sound walkWaterSound = new Sound(SOUNDS.FOOTSTEP_WATER, player.getPos(), true, 0.5f);
 	
 	//Sound for Navigation testing
-	private static Sound sound1 = new Sound(SOUNDS.DOORTEST, new Point(10, 90, 0), true, 10.0f);
-	private static Sound sound2 = new Sound(SOUNDS.DOORTEST, new Point(50, 60, 0), true, 10.0f);
-	private static Sound sound3 = new Sound(SOUNDS.DOORTEST, new Point(50, 90, 0), true, 10.0f);
-	private static Sound sound4 = new Sound(SOUNDS.DOORTEST, new Point(90, 90, 0), true, 10.0f);
-	private static Sound sound5 = new Sound(SOUNDS.DOORTEST, new Point(10, 45, 0), true, 10.0f);
-	private static Sound sound6 = new Sound(SOUNDS.DOORTEST, new Point(90, 10, 0), true, 10.0f);
+	private static Sound sound1 = new Sound(SOUNDS.DOORTEST, new Point(12, 92, 0), true, 10.0f);
+	private static Sound sound2 = new Sound(SOUNDS.DOORTEST, new Point(52, 62, 0), true, 10.0f);
+	private static Sound sound3 = new Sound(SOUNDS.DOORTEST, new Point(52, 92, 0), true, 10.0f);
+	private static Sound sound4 = new Sound(SOUNDS.DOORTEST, new Point(92, 92, 0), true, 10.0f);
+	private static Sound sound5 = new Sound(SOUNDS.DOORTEST, new Point(12, 47, 0), true, 10.0f);
+	private static Sound sound6 = new Sound(SOUNDS.DOORTEST, new Point(92, 12, 0), true, 10.0f);
+	private static Sound reachSound = new Sound(SOUNDS.REACH, new Point(0, 0, 0), false, 10.0f);
 	private static Sound currentSound;
 	
 	//For visual representation
@@ -126,9 +136,9 @@ public class Loader {
 		System.out.println("Playing Sound " + soundNr + ".");
 		currentSound = (Sound) testSounds.get(soundNr-1);
 		soundOrder.add(currentSound);
+		PlayOrder.add(soundNr);
 		currentSound.play();
 		soundPlayed++;
-		System.out.println("Number of sounds left: " + soundNumbers.size());
 		
 
 		
@@ -174,8 +184,11 @@ public class Loader {
 							if(soundNr == 1){
 								//Stop the current sound
 								currentSound.stop();
+								reachSound.isPlaying = false;
+								reachSound.update(player.getPos());
 								//Remove the last sound from the sound pool
 								if(soundNumbers.size()!=1){
+									reachSound.play();
 									soundNumbers.remove(randomNum);
 									//Randomize next sound
 									randomNum = 0 + (int)(Math.random()*soundNumbers.size());
@@ -186,11 +199,11 @@ public class Loader {
 									currentSound = getNewSound();
 									//Add the new current sound to the order arraylist
 									soundOrder.add(currentSound);
+									PlayOrder.add(soundNr);
 									//Play the new current sound
 									currentSound.play();
 									//Increase number of sounds played
 									soundPlayed++;
-									System.out.println("Number of sounds left: " + soundNumbers.size());
 								}
 								
 							}
@@ -199,8 +212,11 @@ public class Loader {
 							if(soundNr == 2){
 								//Stop the current sound
 								currentSound.stop();
+								reachSound.isPlaying = false;
+								reachSound.update(player.getPos());
 								//Remove the last sound from the sound pool
 								if(soundNumbers.size()!=1){
+									reachSound.play();
 									soundNumbers.remove(randomNum);
 									//Randomize next sound
 									randomNum = 0 + (int)(Math.random()*soundNumbers.size());
@@ -211,11 +227,11 @@ public class Loader {
 									currentSound = getNewSound();
 									//Add the new current sound to the order arraylist
 									soundOrder.add(currentSound);
+									PlayOrder.add(soundNr);
 									//Play the new current sound
 									currentSound.play();
 									//Increase number of sounds played
 									soundPlayed++;
-									System.out.println("Number of sounds left: " + soundNumbers.size());
 								}
 							}
 						break;
@@ -223,8 +239,11 @@ public class Loader {
 							if(soundNr == 3){
 								//Stop the current sound
 								currentSound.stop();
+								reachSound.isPlaying = false;
+								reachSound.update(player.getPos());
 								//Remove the last sound from the sound pool
 								if(soundNumbers.size()!=1){
+									reachSound.play();
 									soundNumbers.remove(randomNum);
 									//Randomize next sound
 									randomNum = 0 + (int)(Math.random()*soundNumbers.size());
@@ -235,11 +254,11 @@ public class Loader {
 									currentSound = getNewSound();
 									//Add the new current sound to the order arraylist
 									soundOrder.add(currentSound);
+									PlayOrder.add(soundNr);
 									//Play the new current sound
 									currentSound.play();
 									//Increase number of sounds played
 									soundPlayed++;
-									System.out.println("Number of sounds left: " + soundNumbers.size());
 								}
 							}
 						break;
@@ -247,8 +266,11 @@ public class Loader {
 							if(soundNr == 4){
 								//Stop the current sound
 								currentSound.stop();
+								reachSound.isPlaying = false;
+								reachSound.update(player.getPos());
 								//Remove the last sound from the sound pool
 								if(soundNumbers.size()!=1){
+									reachSound.play();
 									soundNumbers.remove(randomNum);
 									//Randomize next sound
 									randomNum = 0 + (int)(Math.random()*soundNumbers.size());
@@ -259,11 +281,11 @@ public class Loader {
 									currentSound = getNewSound();
 									//Add the new current sound to the order arraylist
 									soundOrder.add(currentSound);
+									PlayOrder.add(soundNr);
 									//Play the new current sound
 									currentSound.play();
 									//Increase number of sounds played
 									soundPlayed++;
-									System.out.println("Number of sounds left: " + soundNumbers.size());
 								}
 							}
 						break;
@@ -271,8 +293,11 @@ public class Loader {
 							if(soundNr == 5){
 								//Stop the current sound
 								currentSound.stop();
+								reachSound.isPlaying = false;
+								reachSound.update(player.getPos());
 								//Remove the last sound from the sound pool
 								if(soundNumbers.size()!=1){
+									reachSound.play();
 									soundNumbers.remove(randomNum);
 									//Randomize next sound
 									randomNum = 0 + (int)(Math.random()*soundNumbers.size());
@@ -283,11 +308,11 @@ public class Loader {
 									currentSound = getNewSound();
 									//Add the new current sound to the order arraylist
 									soundOrder.add(currentSound);
+									PlayOrder.add(soundNr);
 									//Play the new current sound
 									currentSound.play();
 									//Increase number of sounds played
 									soundPlayed++;
-									System.out.println("Number of sounds left: " + soundNumbers.size());
 								}
 							}
 						break;
@@ -295,8 +320,11 @@ public class Loader {
 							if(soundNr == 6){
 								//Stop the current sound
 								currentSound.stop();
+								reachSound.isPlaying = false;
+								reachSound.update(player.getPos());
 								//Remove the last sound from the sound pool
 								if(soundNumbers.size()!=1){
+									reachSound.play();
 									soundNumbers.remove(randomNum);
 									//Randomize next sound
 									randomNum = 0 + (int)(Math.random()*soundNumbers.size());
@@ -307,11 +335,11 @@ public class Loader {
 									currentSound = getNewSound();
 									//Add the new current sound to the order arraylist
 									soundOrder.add(currentSound);
+									PlayOrder.add(soundNr);
 									//Play the new current sound
 									currentSound.play();
 									//Increase number of sounds played
 									soundPlayed++;
-									System.out.println("Number of sounds left: " + soundNumbers.size());
 								}
 							}
 						break;
@@ -319,6 +347,7 @@ public class Loader {
 						
 						if(soundPlayed==6){
 							if(currentSound.isPlaying == false && displayResult == false ){
+								reachSound.play();
 								displayResult = true;
 								testDone = true;
 								currentSound.stop();
@@ -410,18 +439,72 @@ public class Loader {
 	private static void getFinalDistance() {
 		
 		bestDistance += getDistance(soundOrder.get(0).getPos(), soundOrder.get(1).getPos());
+		distance1 = getDistance(soundOrder.get(0).getPos(), soundOrder.get(1).getPos());
 		bestDistance += getDistance(soundOrder.get(1).getPos(), soundOrder.get(2).getPos());
+		distance2 = getDistance(soundOrder.get(1).getPos(), soundOrder.get(2).getPos());
 		bestDistance += getDistance(soundOrder.get(2).getPos(), soundOrder.get(3).getPos());
+		distance3 = getDistance(soundOrder.get(2).getPos(), soundOrder.get(3).getPos());
 		bestDistance += getDistance(soundOrder.get(3).getPos(), soundOrder.get(4).getPos());
+		distance4 = getDistance(soundOrder.get(3).getPos(), soundOrder.get(4).getPos());
 		bestDistance += getDistance(soundOrder.get(4).getPos(), soundOrder.get(5).getPos());
+		distance5 = getDistance(soundOrder.get(4).getPos(), soundOrder.get(5).getPos());
 		bestDistance += getDistance(soundOrder.get(5).getPos(), soundOrder.get(0).getPos());
+		distance6 = getDistance(soundOrder.get(5).getPos(), soundOrder.get(0).getPos());
 		System.out.println("Best possible distance: " + bestDistance);
+		System.out.println("Distance between sound #1 and sound #2 = "+distance1);
+		System.out.println("Distance between sound #2 and sound #3 = "+distance2);
+		System.out.println("Distance between sound #3 and sound #4 = "+distance3);
+		System.out.println("Distance between sound #4 and sound #5 = "+distance5);
+		System.out.println("Distance between sound #5 and sound #6 = "+distance4);
+		System.out.println("Distance between sound #6 and sound #1 = "+distance6);
 		
+		//Distance for full path
 		for(int i = 0;i<pathPoints.size()-1; i++){
 			yourDistance += getDistance(pathPoints.get(i), pathPoints.get(i+1));
 		}
-		
 		System.out.println("Your distance: " + yourDistance);
+		//Distance for path1
+		for(int i = 0;i<path1.size()-1; i++){
+			yourD1 += getDistance(path1.get(i), path1.get(i+1));
+		}
+		
+		
+		//Distance for path2
+		for(int i = 0;i<path2.size()-1; i++){
+			yourD2 += getDistance(path2.get(i), path2.get(i+1));
+		}
+		
+		
+		//Distance for path3
+		for(int i = 0;i<path3.size()-1; i++){
+			yourD3 += getDistance(path3.get(i), path3.get(i+1));
+		}
+		
+		
+		//Distance for path4
+		for(int i = 0;i<path4.size()-1; i++){
+			yourD4 += getDistance(path4.get(i), path4.get(i+1));
+		}
+		
+		
+		//Distance for path5
+		for(int i = 0;i<path5.size()-1; i++){
+			yourD5 += getDistance(path5.get(i), path5.get(i+1));
+		}
+		
+		
+		//Distance for path6
+		for(int i = 0;i<path6.size()-1; i++){
+			yourD6 += getDistance(path6.get(i), path6.get(i+1));
+		}
+		System.out.println("Player distance between sound #1 and sound #2 = "+(yourD1+10));
+		System.out.println("Player distance between sound #2 and sound #3 = "+(yourD2+10));
+		System.out.println("Player distance between sound #3 and sound #4 = "+(yourD3+10));
+		System.out.println("Player distance between sound #4 and sound #5 = "+(yourD4+10));
+		System.out.println("Player distance between sound #5 and sound #6 = "+(yourD5+10));
+		System.out.println("Player distance between sound #6 and sound #1 = "+(yourD6+10));
+		
+		
 	}
 	
 	
@@ -492,6 +575,42 @@ public class Loader {
 				steps++;
 				pathPoints.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
 				walkSound.play();
+				
+				switch(soundPlayed){
+				case(1):
+					path1.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
+					break;
+				case(2):
+					path2.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
+					break;
+				case(3):
+					path3.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
+					break;
+				case(4):
+					path4.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
+					break;
+				case(5):
+					path5.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
+					break;
+				case(6):
+					path6.add(new Point(player.getPos().getX(),player.getPos().getY(),player.getPos().getZ()));
+					break;
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				//stop water walk
 				//Play normal walk
 			}	

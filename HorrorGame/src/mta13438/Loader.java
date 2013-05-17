@@ -454,8 +454,8 @@ public class Loader {
 		System.out.println("Distance between sound #1 and sound #2 = "+distance1);
 		System.out.println("Distance between sound #2 and sound #3 = "+distance2);
 		System.out.println("Distance between sound #3 and sound #4 = "+distance3);
-		System.out.println("Distance between sound #4 and sound #5 = "+distance5);
-		System.out.println("Distance between sound #5 and sound #6 = "+distance4);
+		System.out.println("Distance between sound #4 and sound #5 = "+distance4);
+		System.out.println("Distance between sound #5 and sound #6 = "+distance5);
 		System.out.println("Distance between sound #6 and sound #1 = "+distance6);
 		
 		//Distance for full path

@@ -111,6 +111,11 @@ public class Level {
 	   	 for(Room room : this.roomList){
 	   		 room.draw();
 	   	 }
+	   	for (int i = 0; i < getRoomList().size(); i++) {
+			for (int j = 0; j < getRoomList().get(i).getObsList().size(); j++) {
+				getRoomList().get(i).getObsList().get(j).draw();
+			}
+		}
 	}
 	// updates spawn point
 	public void updateSpawnPoint(Player player, Level level) {

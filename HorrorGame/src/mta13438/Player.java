@@ -56,6 +56,7 @@ public class Player extends Entity {
 		//Setting the alListener's position and orientation.
 		AL10.alListener3f(AL10.AL_POSITION,   getPos().getX(), getPos().getY(), getPos().getZ());
 		AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
+		AL10.alListenerf(AL10.AL_GAIN, 2f);
 	}
 
 	public void foward(float delta, Level level, int currentRoom) {

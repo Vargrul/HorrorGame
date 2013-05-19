@@ -23,7 +23,6 @@ public class Monster extends Obs {
 	}
 	
 	public void collision(Player player, Level level, int currentRoom){
-		//System.out.println("Collision with monster");
 		level.setMonsterDeath(true);
 	}
 	@Override

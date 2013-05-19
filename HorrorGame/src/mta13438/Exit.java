@@ -30,7 +30,6 @@ public class Exit extends Obs{
 	}
 
 	public void collision(Player player, Level level, int currentRoom){
-		System.out.println("Collision with door");
 		if(!locked){
 			if(getPos().getX() == level.getRoomList().get(currentRoom).getPos().getX()){
 				player.setPos(level.getRoomList().get(currentRoom-1).entrance.getX() - 0.11f, player.getPos().getY(), player.getPos().getZ());	

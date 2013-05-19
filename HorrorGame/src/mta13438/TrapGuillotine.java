@@ -20,7 +20,6 @@ public class TrapGuillotine extends Trap{
 	}
 	@Override
 	public void collision(Player player, Level level, int currentRoom){
-		System.out.println("Collision with guillotine trap");
 		if(trapOn == true){
 			player.kill(level);
 		}
@@ -41,9 +40,5 @@ public class TrapGuillotine extends Trap{
 				counter = 0;
 			}
 		}
-		
-		//trapSound.loop();
-		System.out.println("delta");
-		
 	}
 }

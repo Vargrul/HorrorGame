@@ -21,7 +21,6 @@ public class Water extends Obs {
 	
 	public void collision(Player player, Level level, int currentRoom){
 		player.setInWater(true);
-		System.out.println("Collision Detected with water");
 	}
 	
 	@Override

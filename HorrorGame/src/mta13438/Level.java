@@ -76,6 +76,37 @@ public class Level {
 		return currentRoom;
 	}
 	
+	public boolean getGoThroughDoor() {
+		return goThroughDoor;
+	}
+	public void setGoThroughDoor(boolean goThroughDoor) {
+		this.goThroughDoor = goThroughDoor;
+	}
+
+	public boolean getTrapDeath() {
+		return trapDeath;
+	}
+	public void setTrapDeath(boolean trapDeath) {
+		this.trapDeath = trapDeath;
+	}
+
+	public boolean getMonsterDeath() {
+		return monsterDeath;
+	}
+	public void setMonsterDeath(boolean monsterDeath) {
+		this.monsterDeath = monsterDeath;
+	}
+	
+	public void updateSpawnPoint(Player player, Level level) {
+		Point playerPos = player.getPos();
+		// sets the spawn point to the entrance of the current room
+		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
+		this.goThroughDoor = true;
+	}
+	public Point getSpawnPoint() {
+		return this.spawnPoint;
+	}
+	
 	//Automate the position of the rooms.
 	public void autoLevelGenerator(Point startPoint){
 		for (int i = 0; i < getRoomList().size(); i++){
@@ -116,41 +147,6 @@ public class Level {
 				getRoomList().get(i).getObsList().get(j).draw();
 			}
 		}
-	}
-	// updates spawn point
-	public void updateSpawnPoint(Player player, Level level) {
-		Point playerPos = player.getPos();
-		// sets the spawn point to the entrance of the current room
-		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
-		this.goThroughDoor = true;
-	}
-	
-	public Point getSpawnPoint() {
-		return this.spawnPoint;
-	}
-	
-	public boolean isGoThroughDoor() {
-		return goThroughDoor;
-	}
-
-	public void setGoThroughDoor(boolean goThroughDoor) {
-		this.goThroughDoor = goThroughDoor;
-	}
-
-	public boolean isTrapDeath() {
-		return trapDeath;
-	}
-
-	public void setTrapDeath(boolean trapDeath) {
-		this.trapDeath = trapDeath;
-	}
-
-	public boolean isMonsterDeath() {
-		return monsterDeath;
-	}
-
-	public void setMonsterDeath(boolean monsterDeath) {
-		this.monsterDeath = monsterDeath;
 	}
 
 	public String toString() {

@@ -22,7 +22,7 @@ public class Room {
 		this.dx = 10;
 		this.dz = 10;
 		this.dy = 10;
-		this.material = MATERIALS.ROCK;//Need to add default material
+		this.material = MATERIALS.ROCK;
 		this.doorSize = 4;
 		this.entrance = new Point(0, dy/2-doorSize/2, 0);
 		this.exit = new Point(dx, dy/2-doorSize/2, 0);

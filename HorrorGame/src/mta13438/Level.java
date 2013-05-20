@@ -86,7 +86,6 @@ public class Level {
 				for (int j = 0; j < this.roomList.get(i).getObsList().size(); j++){
 					this.roomList.get(i).getObsList().get(j).setPos(new Point (this.roomList.get(i).getObsList().get(j).getPos().getX()+startPoint.getX(),this.roomList.get(i).getObsList().get(j).getPos().getY()+startPoint.getY(),this.roomList.get(i).getObsList().get(j).getPos().getZ()+startPoint.getZ()));
 				}
-				this.roomList.get(i).generateDoorObs();
 			} else {
 				float entranceY = this.roomList.get(i).entrance.getY();
 				float entranceX = this.roomList.get(i).entrance.getX();
@@ -121,7 +120,7 @@ public class Level {
 	public void updateSpawnPoint(Player player, Level level) {
 		Point playerPos = player.getPos();
 		// sets the spawn point to the entrance of the current room
-		spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
+		this.spawnPoint = level.getRoomList().get(getCurrentRoom(playerPos)).entrance;
 		this.goThroughDoor = true;
 	}
 	

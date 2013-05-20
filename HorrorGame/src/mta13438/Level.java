@@ -136,6 +136,7 @@ public class Level {
 				this.roomList.get(i).getObsList().get(j).getLoopSound().update(this.roomList.get(i).getObsList().get(j).getCenter());
 			}
 		}
+		updateLevelSize();
 	}
 	
 	public void Draw(){
@@ -197,9 +198,9 @@ public class Level {
 			}		
 
 			//adding all the temp values absolute values to get the level size.
-			setDx(Math.abs(dxp + dxm));
-			setDz(Math.abs(dzp + dzm));
-			setDy(Math.abs(dyp + dym));
+			setDx(Math.abs(dxp) + Math.abs(dxm));
+			setDz(Math.abs(dzp) + Math.abs(dzm));
+			setDy(Math.abs(dyp) + Math.abs(dym));
 		}
 	}
 }

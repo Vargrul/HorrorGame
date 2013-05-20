@@ -137,7 +137,7 @@ public class Level {
 		}
 	}
 	
-	public void Draw(){
+	public void draw(){
 	   	 for(Room room : this.roomList){
 	   		 room.draw();
 	   	 }

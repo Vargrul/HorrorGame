@@ -112,7 +112,7 @@ public class Loader {
 		//Draws what is needed and not needed.
 		player.setListener();
 		player.draw();
-		tutorialLevel.Draw();
+		tutorialLevel.draw();
 		drawAtFinish();
 		for(int j = 0; j<pathPoints.size(); j++){
 			pathPoints.get(j).draw();

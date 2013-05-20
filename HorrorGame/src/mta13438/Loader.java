@@ -236,7 +236,7 @@ public class Loader {
 	}
 	public static void playDeathSounds() {
 		// play trap death sound
-		if(tutorialLevel.isTrapDeath() == true){
+		if(tutorialLevel.getTrapDeath() == true){
 			if(counter == 0){
 				startTime = getTime();
 				counter++;
@@ -259,7 +259,7 @@ public class Loader {
 			}
 		}
 		//play monster death sound
-		if(tutorialLevel.isMonsterDeath() == true){
+		if(tutorialLevel.getMonsterDeath() == true){
 			if(counter == 0){
 				startTime = getTime();
 				counter++;
@@ -284,7 +284,7 @@ public class Loader {
 	}
 	public static void playRoomEnterSound() {
 		// play close door sound when entering new room
-		if(tutorialLevel.isGoThroughDoor() == true){
+		if(tutorialLevel.getGoThroughDoor() == true){
 			if(counter == 0){
 				startTime = getTime();
 				counter++;

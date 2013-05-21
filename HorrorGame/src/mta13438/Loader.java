@@ -40,6 +40,8 @@ public class Loader {
 	private static int counter;
 	private static Event scareEvent = new Event(new Point(100, 0, 10), 20, 90, 0, MATERIALS.WATER);
 	private static Entity guard = new Entity(new Point(25,315,10),0.2f,(float)Math.PI);
+	private static double distance = 0;
+	private static boolean pOutput = false;
 
 	private static Sound guardVoice = new Sound(SOUNDS.GUARD, player.getPos(), false, true, 10.0f);
 	private static Sound playerVoice = new Sound(SOUNDS.PLAYERVOICE, player.getPos(), false, true, 10.0f);
@@ -310,6 +312,7 @@ public class Loader {
 	public static void drawAtFinish() {
 		if(currentRoom == 6){
 			winMusic.play();
+			getDistance();
 			if(counter == 0){
 				Display.destroy();
 				DebugInterface.Initialize(800, 600); // Width and Length of display
@@ -345,8 +348,6 @@ public class Loader {
 			float temp = 0;
 			float[] rt60 = tutorialLevel.getRoomList().get(currentRoom).getRt60();
 
-			System.out.println(EFX10.AL_REVERB_DEFAULT_LATE_REVERB_DELAY + " " + EFX10.AL_REVERB_DEFAULT_REFLECTIONS_DELAY);
-
 			for (int i = 0; i < rt60.length; i++) {
 				temp += rt60[i];
 			}
@@ -362,7 +363,6 @@ public class Loader {
 				temp = tutorialLevel.getRoomList().get(currentRoom).getDy()/2;
 			}
 			er = (temp / 10) / speedOfSound;
-			System.out.println(er);
 
 			EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_TIME, decayTime);
 			EFX10.alEffectf(reverbEffect, EFX10.AL_REVERB_DECAY_HFRATIO, HFRatio);
@@ -421,5 +421,23 @@ public class Loader {
 		//Setting the Walking and inWater bools to true to check
 		player.setWalking(false);
 		player.setInWater(false);
+	}
+	
+	private static double calDistance(Point firstS, Point secondS) {
+		double a = Math.abs((firstS.getX()-secondS.getX()));
+		double b = Math.abs((firstS.getY()-secondS.getY()));
+		double distance = Math.sqrt((Math.pow(a, 2)+(Math.pow(b, 2))));
+		return distance;
+	}
+	
+	private static void getDistance(){
+		//Distance for full path
+		if(pOutput == false){
+			for(int i = 0;i<pathPoints.size()-1; i++){
+				distance += calDistance(pathPoints.get(i), pathPoints.get(i+1));
+			}
+			pOutput = true;
+			System.out.println("Distance: " + distance);
+		}
 	}
 }

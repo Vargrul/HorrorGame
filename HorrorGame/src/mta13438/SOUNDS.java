@@ -1,7 +1,7 @@
 package mta13438;
 
 public  enum SOUNDS {
-	//Add sounds and path 
+	//Add sounds and path /HorrorGame/src/assest/Music/MenuBackground_1.wav
 	MENU_MUSIC("assets/Music/MenuBackground_1.wav"),
 	DOOR("assets/soundEffects/Door_sound.wav"),
 	FOOTSTEP_STONE("assets/soundEffects/footstep_stone.wav"),

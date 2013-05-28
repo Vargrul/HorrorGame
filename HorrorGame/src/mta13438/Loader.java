@@ -32,7 +32,7 @@ public class Loader {
 	private static boolean renderRoom = false;
 	private static boolean collision = false;
 	private static boolean playStartSequence = true;
-	private static boolean dI = true;
+	private static boolean dI = false;
 	private static boolean takeInput = true;
 	private static boolean playSounds = true;
 	private static long startTime;
